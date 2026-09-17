@@ -262,7 +262,6 @@ function getListWidget(id, options = {}) {
   el.style.boxSizing = 'border-box';
   el.style.padding = '4px';
   el.style.fontFamily = 'monospace';
-  el.style.fontSize = '12px';
   el.style.lineHeight = '1.4';
   el.style.whiteSpace = 'pre';
   el.style.background = 'var(--background)';
