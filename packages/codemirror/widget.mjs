@@ -252,6 +252,33 @@ function getCanvasWidget(id, options = {}) {
   return canvas;
 }
 
+function getListWidget(id, options = {}) {
+  const { width = 600, height = 100 } = options;
+  let el = document.getElementById(id) || document.createElement('div');
+  el.style.width = width + 'px';
+  el.style.height = height + 'px';
+  el.style.overflowY = 'auto';
+  el.style.overflowX = 'auto';
+  el.style.boxSizing = 'border-box';
+  el.style.padding = '4px';
+  el.style.fontFamily = 'monospace';
+  el.style.fontSize = '12px';
+  el.style.lineHeight = '1.4';
+  el.style.whiteSpace = 'pre';
+  el.style.background = 'var(--background)';
+  el.style.color = 'var(--foreground)';
+  el.style.border = '1px solid var(--lineHighlight)';
+  // reset on every (re-)evaluation instead of persisting scroll state across it
+  el.replaceChildren();
+  el.scrollTop = 0;
+  el.follow = true;
+  el.onscroll = () => {
+    el.follow = el.scrollHeight - el.scrollTop - el.clientHeight < 4;
+  };
+  setWidget(id, el);
+  return el;
+}
+
 registerWidget('_pianoroll', (id, options = {}, pat) => {
   const ctx = getCanvasWidget(id, options).getContext('2d');
   return pat.tag(id).pianoroll({ fold: 1, ...options, ctx, id });
@@ -287,4 +314,10 @@ registerWidget('_spectrum', (id, options = {}, pat) => {
   options = { width: _size, height: _size, ...options, size: _size / 5 };
   const ctx = getCanvasWidget(id, options).getContext('2d');
   return pat.spectrum({ ...options, ctx, id });
+});
+
+registerWidget('_print', (id, options = {}, pat) => {
+  options = { width: 600, height: 100, maxLines: 500, ...options };
+  const el = getListWidget(id, options);
+  return pat.print({ ...options, el, id });
 });
