@@ -25,16 +25,16 @@ const banks = await getBanks(directory, args.flat);
 
 // if --json, output banks and exit
 if (args.json) {
-  // striginfy in expanded format
+  // stringify in expanded format
   const json = JSON.stringify(banks, null, 2);
-  console.log(json);
+  process.stdout.write(json + '\n');
   process.exit(0);
 }
 
 function isAudioFile(f) {
   const ext = f.split('.').slice(-1)[0].toLowerCase();
   return VALID_AUDIO_EXTENSIONS.includes(ext);
-};
+}
 
 async function getFilesInDirectory(directory) {
   let files = [];
