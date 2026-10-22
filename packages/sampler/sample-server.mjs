@@ -87,17 +87,8 @@ let directory = getArgValue('--dir') || process.cwd();
 directory = resolve(directory);
 if (args.includes('--json')) {
   const { banks } = await getBanks(directory, getArgValue('--flat'));
-  const json = JSON.stringify(banks);
-  const outFile = resolve(directory, 'strudel.json');
-  if (existsSync(outFile)) {
-    const answer = await getInput(`Warning: File already exists at ${outFile}. Overwrite? (y/N): `);
-    if (answer.toLowerCase() !== 'y') {
-      console.log('Aborted.');
-      process.exit(0);
-    }
-  }
-  writeFileSync(outFile, json, 'utf8');
-  console.log(`Wrote json to ${outFile}`);
+  const json = JSON.stringify(banks, null, 2);
+  console.log(json);
   process.exit(0);
 }
 
