@@ -1,18 +1,36 @@
 #!/usr/bin/env node
 
 import cowsay from 'cowsay';
-import { createReadStream, existsSync, writeFileSync } from 'fs';
+import { createReadStream, existsSync } from 'fs';
 import { readdir } from 'fs/promises';
 import http from 'http';
 import { join, resolve, sep } from 'path';
-import readline from 'readline';
 import os from 'os';
 
 const LOG = !!process.env.LOG || false;
 const PORT = process.env.PORT || 5432;
 const VALID_AUDIO_EXTENSIONS = ['wav', 'mp3', 'ogg'];
 
-const isAudioFile = (f) => {
+const args = {};
+
+// parse args
+for (const arg of process.argv.slice(2)) {
+  if (arg === '--json') args.json = true;
+  if (arg === '--flat') args.flat = true;
+  if (arg === '--dir') args.dir = process.argv[process.argv.indexOf(arg) + 1];
+}
+
+const directory = resolve(args.dir || process.cwd());
+const banks = await getBanks(directory, args.flat);
+
+// if --json, output banks and exit
+if (args.json) {
+  const json = JSON.stringify(banks, null, 2);
+  console.log(json);
+  process.exit(0);
+}
+
+function isAudioFile(f) {
   const ext = f.split('.').slice(-1)[0].toLowerCase();
   return VALID_AUDIO_EXTENSIONS.includes(ext);
 };
@@ -41,11 +59,11 @@ async function getFilesInDirectory(directory) {
   return files;
 }
 
-async function getBanks(directory, flat = false) {
-  let files = await getFilesInDirectory(directory);
-  let banks = {};
+async function getBanks(directory, flat) {
+  const banks = {};
+  const files = await getFilesInDirectory(directory);
   directory = directory.split(sep).join('/');
-  files = files.map((path) => {
+  files.forEach((path) => {
     path = path.split(sep).join('/');
     const subDir = path.replace(directory, '');
     const subDirFlat = subDir.replaceAll('/', '_').slice(1); // remove initial underscore
@@ -55,41 +73,7 @@ async function getBanks(directory, flat = false) {
     banks[bank].push(subDir);
     return subDir;
   });
-  return { banks, files };
-}
-
-const args = process.argv.slice(2);
-
-function getArgValue(flag) {
-  const i = args.indexOf(flag);
-  if (i !== -1) {
-    const nextIsFlag = args[i + 1]?.startsWith('--') ?? true;
-    if (nextIsFlag) return true;
-    return args[i + 1];
-  }
-}
-
-function getInput(query) {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  return new Promise((resolve) =>
-    rl.question(query, (response) => {
-      rl.close();
-      resolve(response);
-    }),
-  );
-}
-
-let directory = getArgValue('--dir') || process.cwd();
-directory = resolve(directory);
-if (args.includes('--json')) {
-  const { banks } = await getBanks(directory, getArgValue('--flat'));
-  const json = JSON.stringify(banks, null, 2);
-  console.log(json);
-  process.exit(0);
+  return banks;
 }
 
 console.log(
@@ -102,7 +86,6 @@ console.log(
 
 const server = http.createServer(async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  const { banks, files } = await getBanks(directory, getArgValue('--flat'));
   if (req.url === '/') {
     res.setHeader('Content-Type', 'application/json');
     return res.end(JSON.stringify(banks));
