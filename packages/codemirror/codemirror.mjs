@@ -19,7 +19,7 @@ import { isAutoCompletionEnabled } from './autocomplete.mjs';
 import { basicSetup } from './basicSetup.mjs';
 import { flash, isFlashEnabled } from './flash.mjs';
 import { highlightMiniLocations, isPatternHighlightingEnabled, updateMiniLocations } from './highlight.mjs';
-import { keybindings } from './keybindings.mjs';
+import { editorActions, keybindings } from './keybindings.mjs';
 import { sliderPlugin, updateSliderWidgets } from './slider.mjs';
 import { activateTheme, initTheme, theme } from './themes.mjs';
 import { isTooltipEnabled } from './tooltip.mjs';
@@ -101,6 +101,7 @@ export function initEditor({ initialCode = '', onChange, onEvaluate, onStop, roo
       syntaxHighlighting(defaultHighlightStyle),
       EditorView.updateListener.of((v) => onChange(v)),
       drawSelection({ cursorBlinkRate: 0 }),
+      editorActions.of({ onEvaluate, onStop }),
       Prec.highest(
         keymap.of([
           {
