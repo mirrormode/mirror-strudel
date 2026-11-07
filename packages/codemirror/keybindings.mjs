@@ -1,4 +1,4 @@
-import { defaultKeymap } from '@codemirror/commands';
+import { defaultKeymap, toggleLineComment } from '@codemirror/commands';
 import { Facet, Prec, EditorState } from '@codemirror/state';
 import { keymap, ViewPlugin } from '@codemirror/view';
 // import { searchKeymap } from '@codemirror/search';
@@ -33,6 +33,14 @@ export { Vim }; // export for patterns/prebake to define custom actions
 
 Vim.defineEx('write', 'w', (cm) => cm.cm6.state.facet(editorActions).onEvaluate?.());
 Vim.defineEx('quit', 'q', (cm) => cm.cm6.state.facet(editorActions).onStop?.());
+
+Vim.defineOperator('toggleComment', (cm, _args, _ranges, oldAnchor) => {
+  // By the time an operator runs, vim has selected the motion's range in the
+  // real editor so we can just call the normal codemirror command
+  toggleLineComment(cm.cm6);
+  return oldAnchor;
+});
+Vim.mapCommand('gc', 'operator', 'toggleComment', {}, { isEdit: true });
 
 export function keybindings(name) {
   const active = keymaps[name];
