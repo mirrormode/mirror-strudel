@@ -41,12 +41,14 @@ Licensing info for the default sound banks can be found over on the [dough-sampl
 
 There are many ways to contribute to this project! See [contribution guide](./CONTRIBUTING.md). You can find the full list of contributors [here](https://codeberg.org/uzu/strudel/activity/contributors).
 
+Please see [POLICY.md](POLICY.md) for our code of conduct and humane AI/LLM policy.
+
 ## Community
 
-There is a #strudel channel on the TidalCycles discord: <https://discord.com/invite/HGEdXmRkzT>
+Strudel is a member of the 'Uzu' family of pattern-based live coding languages, along with TidalCycles and friends.
 
-You can also ask questions and find related discussions on the tidal club forum: <https://club.tidalcycles.org/>
+There are a range of strudel channels on the Uzu discord: <https://discord.com/invite/HGEdXmRkzT>
 
-The discord and forum is shared with the haskell (tidal) and python (vortex) siblings of this project.
+You can also ask questions and find related discussions on the Uzu web forum: <https://uzu.lurk.org/>
 
 We also have a mastodon account: <a rel="me" href="https://social.toplap.org/@strudel">social.toplap.org/@strudel</a>
