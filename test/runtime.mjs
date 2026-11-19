@@ -97,6 +97,7 @@ const toneHelpersMocked = {
   '_pitchwheel',
   '_pianoroll',
   '_spectrum',
+  '_print',
   'markcss',
   'p',
   'dough',
