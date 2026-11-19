@@ -538,6 +538,9 @@ importers:
       '@strudel/webaudio':
         specifier: workspace:*
         version: link:../webaudio
+      '@strudel/websocket':
+        specifier: workspace:*
+        version: link:../websocket
     devDependencies:
       '@rollup/plugin-replace':
         specifier: ^6.0.2
@@ -722,6 +725,16 @@ importers:
         specifier: ^6.0.11
         version: 6.0.11(@types/node@22.10.10)(jiti@2.4.2)(lightningcss@1.29.1)(terser@5.37.0)(yaml@2.7.0)
 
+  packages/websocket:
+    dependencies:
+      '@strudel/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      vite:
+        specifier: ^6.0.11
+        version: 6.0.11(@types/node@22.10.10)(jiti@2.4.2)(lightningcss@1.29.1)(terser@5.37.0)(yaml@2.7.0)
+
   packages/xen:
     dependencies:
       '@strudel/core':
@@ -857,6 +870,9 @@ importers:
       '@strudel/webaudio':
         specifier: workspace:*
         version: link:../packages/webaudio
+      '@strudel/websocket':
+        specifier: workspace:*
+        version: link:../packages/websocket
       '@strudel/xen':
         specifier: workspace:*
         version: link:../packages/xen

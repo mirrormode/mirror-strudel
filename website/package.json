@@ -48,6 +48,7 @@
     "@strudel/tonal": "workspace:*",
     "@strudel/transpiler": "workspace:*",
     "@strudel/webaudio": "workspace:*",
+    "@strudel/websocket": "workspace:*",
     "@strudel/mondo": "workspace:*",
     "@strudel/xen": "workspace:*",
     "@supabase/supabase-js": "^2.48.1",

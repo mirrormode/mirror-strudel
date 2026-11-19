@@ -43,7 +43,8 @@
     "@strudel/soundfonts": "workspace:*",
     "@strudel/tonal": "workspace:*",
     "@strudel/transpiler": "workspace:*",
-    "@strudel/webaudio": "workspace:*"
+    "@strudel/webaudio": "workspace:*",
+    "@strudel/websocket": "workspace:*"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^6.0.2",
