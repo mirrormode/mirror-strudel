@@ -74,7 +74,7 @@ export function registerControl(names, ...aliases) {
 }
 
 // Constructs a superdirt effect bus control
-const bus = register('bus', function (busid, control_name, busval, pat) {
+const sdbus = register('sdbus', function (busid, control_name, busval, pat) {
   return pat[control_name]('c' + busid).withValue((val) => {
     const newval = { ...val };
     newval['^' + control_name] = [busid, busval];
