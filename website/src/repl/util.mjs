@@ -1,13 +1,15 @@
-import { evalScope, hash2code, logger } from '@strudel/core';
+import * as strudelCore from '@strudel/core';
+import * as strudelWebaudio from '@strudel/webaudio';
 import { settingPatterns } from '../settings.mjs';
-import { setVersionDefaults } from '@strudel/webaudio';
-import { getMetadata } from '../metadata_parser';
+import { getMetadata } from '../metadata_parser.js';
 import { isTauri } from '../tauri.mjs';
 import './Repl.css';
 import { createClient } from '@supabase/supabase-js';
-import { nanoid } from 'nanoid';
 import { writeText } from '@tauri-apps/plugin-clipboard-manager';
-import { $featuredPatterns /* , loadDBPatterns */ } from '@src/user_pattern_utils.mjs';
+import { $featuredPatterns } from '@src/user_pattern_utils.mjs';
+
+const { setVersionDefaults } = strudelWebaudio;
+const { code2hash, errorLogger, evalScope, hash2code, logger } = strudelCore;
 
 // Create a single supabase client for interacting with your database
 export const supabase = createClient(
@@ -69,12 +71,13 @@ export async function getRandomTune() {
 
 export function loadModules() {
   let modules = [
-    import('@strudel/core'),
+    strudelCore,
     import('@strudel/draw'),
+    import('@strudel/edo'),
     import('@strudel/tonal'),
     import('@strudel/mini'),
     import('@strudel/xen'),
-    import('@strudel/webaudio'),
+    strudelWebaudio,
     import('@strudel/codemirror'),
     import('@strudel/hydra'),
     import('@strudel/serial'),
@@ -85,6 +88,7 @@ export function loadModules() {
     import('@strudel/motion'),
     import('@strudel/mqtt'),
     import('@strudel/mondo'),
+    import('@strudel/dough'),
   ];
   if (isTauri()) {
     modules = modules.concat([
@@ -108,10 +112,22 @@ export function confirmDialog(msg) {
     resolve(confirmed);
   });
 }
+export const SETTING_CHANGE_RELOAD_MSG = 'Changing this setting requires the window to reload itself. OK?';
 
-let lastShared;
-
+export function confirmAndReloadPage(onSuccess) {
+  confirmDialog(SETTING_CHANGE_RELOAD_MSG).then((r) => {
+    if (r == true) {
+      try {
+        onSuccess();
+        return window.location.reload();
+      } catch (e) {
+        errorLogger(e);
+      }
+    }
+  });
+}
 //RIP due to SPAM
+// let lastShared;
 // export async function shareCode(codeToShare) {
 //   // const codeToShare = activeCode || code;
 //   if (lastShared === codeToShare) {
@@ -146,9 +162,10 @@ let lastShared;
 //   });
 // }
 
-export async function shareCode() {
+export async function shareCode(codeToShare) {
   try {
-    const shareUrl = window.location.href;
+    const hash = '#' + code2hash(codeToShare);
+    const shareUrl = window.location.origin + window.location.pathname + hash;
     if (isTauri()) {
       await writeText(shareUrl);
     } else {

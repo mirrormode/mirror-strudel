@@ -6,6 +6,8 @@ import {
   getADSRValues,
   getPitchEnvelope,
   getVibratoOscillator,
+  onceEnded,
+  releaseAudioNode,
 } from '@strudel/webaudio';
 import gm from './gm.mjs';
 
@@ -26,7 +28,7 @@ async function loadFont(name) {
     const url = `${soundfontUrl}/${name}.js`;
     const preset = await fetch(url).then((res) => res.text());
     let [_, data] = preset.split('={');
-    return eval('{' + data);
+    return new Function('return {' + data)().zones;
   };
   loadCache[name] = load();
   return loadCache[name];
@@ -164,19 +166,18 @@ export function registerSoundfonts() {
         let envEnd = holdEnd + release + 0.01;
 
         // vibrato
-        let vibratoOscillator = getVibratoOscillator(bufferSource.detune, value, time);
+        const vibratoHandle = getVibratoOscillator(bufferSource.detune, value, time);
         // pitch envelope
         getPitchEnvelope(bufferSource.detune, value, time, holdEnd);
 
         bufferSource.stop(envEnd);
         const stop = (releaseTime) => {};
-        bufferSource.onended = () => {
-          bufferSource.disconnect();
-          vibratoOscillator?.stop();
-          node.disconnect();
+        onceEnded(bufferSource, () => {
+          releaseAudioNode(bufferSource);
+          vibratoHandle?.stop();
           onended();
-        };
-        return { node, stop };
+        });
+        return { node, stop, nodes: { source: [bufferSource], ...vibratoHandle?.nodes } };
       },
       { type: 'soundfont', prebake: true, fonts },
     );

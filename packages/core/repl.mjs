@@ -2,11 +2,20 @@ import { NeoCyclist } from './neocyclist.mjs';
 import { Cyclist } from './cyclist.mjs';
 import { evaluate as _evaluate } from './evaluate.mjs';
 import { errorLogger, logger } from './logger.mjs';
-import { setTime } from './time.mjs';
+import {
+  setCpsFunc,
+  setIsStarted,
+  setPattern as exposeSchedulerPattern,
+  setTime,
+  setScheduleFunc,
+  setClockTime,
+} from './schedulerState.mjs';
 import { evalScope } from './evaluate.mjs';
 import { register, Pattern, isPattern, silence, stack } from './pattern.mjs';
+import { reset_state } from './impure.mjs';
 
 export function repl({
+  onSchedule,
   defaultOutput,
   onEvalError,
   beforeEval,
@@ -23,6 +32,11 @@ export function repl({
   id,
   mondo = false,
 }) {
+  if (defaultOutput) {
+    throw new Error(
+      'defaultOutput has been removed. use onSchedule(hap, time, cps) instead. see https://codeberg.org/uzu/strudel/pulls/2138/',
+    );
+  }
   const state = {
     schedulerError: undefined,
     evalError: undefined,
@@ -47,11 +61,15 @@ export function repl({
   };
 
   const schedulerOptions = {
-    onTrigger: getTrigger({ defaultOutput, getTime }),
+    onSchedule: getSchedule({ onSchedule }),
     getTime,
     onToggle: (started) => {
       updateState({ started });
+      setIsStarted(started);
       onToggle?.(started);
+      if (!started) {
+        reset_state();
+      }
     },
     setInterval,
     clearInterval,
@@ -61,6 +79,8 @@ export function repl({
   // NeoCyclist uses a shared worker to communicate between instances, which is not supported on mobile chrome
   const scheduler =
     sync && typeof SharedWorker != 'undefined' ? new NeoCyclist(schedulerOptions) : new Cyclist(schedulerOptions);
+  setScheduleFunc(schedulerOptions.onSchedule);
+  setCpsFunc(() => scheduler.cps);
   let pPatterns = {};
   let anonymousIndex = 0;
   let allTransform;
@@ -85,9 +105,11 @@ export function repl({
   const setPattern = async (pattern, autostart = true) => {
     pattern = editPattern?.(pattern) || pattern;
     await scheduler.setPattern(pattern, autostart);
+    exposeSchedulerPattern(pattern);
     return pattern;
   };
   setTime(() => scheduler.now()); // TODO: refactor?
+  setClockTime(() => scheduler.getTime()); // TODO: refactor?
 
   const stop = () => scheduler.stop();
   const start = () => scheduler.start();
@@ -102,6 +124,7 @@ export function repl({
    * Changes the global tempo to the given cycles per minute
    *
    * @name setcpm
+   * @tags temporal
    * @alias setCpm
    * @param {number} cpm cycles per minute
    * @example
@@ -115,8 +138,14 @@ export function repl({
 
   // TODO - not documented as jsdoc examples as the test framework doesn't simulate enough context for `each` and `all`..
 
-  /** Applies a function to all the running patterns. Note that the patterns are groups together into a single `stack` before the function is applied. This is probably what you want, but see `each` for
+  let allTransforms = [];
+  /**
+   * Applies a function to all the running patterns. Note that the patterns are grouped together into a single `stack` before the function is applied. This is probably what you want, but see `each` for
    * a version that applies the function to each pattern separately.
+   *
+   * **Note:** Patterns must be labeled (e.g. with `$:`) to be picked up by `all`. An unlabeled
+   * pattern such as `note("c4")` is not registered and will produce no audio when `all` is present.
+   * Use `$: note("c4")` instead.
    * ```
    * $: sound("bd - cp sd")
    * $: sound("hh*8")
@@ -127,18 +156,24 @@ export function repl({
    * $: sound("hh*8")
    * all(x => x.pianoroll())
    * ```
+   *
+   * @tags combiners
    */
-  let allTransforms = [];
   const all = function (transform) {
     allTransforms.push(transform);
     return silence;
   };
   /** Applies a function to each of the running patterns separately. This is intended for future use with upcoming 'stepwise' features. See `all` for a version that applies the function to all the patterns stacked together into a single pattern.
+   *
+   * **Note:** Patterns must be labeled (e.g. with `$:`) to be picked up by `each`. An unlabeled
+   * pattern such as `note("c4")` is not registered and will produce no audio when `each` is present.
+   * Use `$: note("c4")` instead.
    * ```
    * $: sound("bd - cp sd")
    * $: sound("hh*8")
    * each(fast("<2 3>"))
    * ```
+   * @tags combiners
    */
   const each = function (transform) {
     eachTransform = transform;
@@ -152,9 +187,9 @@ export function repl({
         // allows muting a pattern x with x_ or _x
         return silence;
       }
-      if (id === '$') {
+      if (id.includes('$')) {
         // allows adding anonymous patterns with $:
-        id = `$${anonymousIndex}`;
+        id = `${id}${anonymousIndex}`;
         anonymousIndex++;
       }
       pPatterns[id] = this;
@@ -205,6 +240,7 @@ export function repl({
       updateState({ code, pending: true });
       await injectPatternMethods();
       setTime(() => scheduler.now()); // TODO: refactor?
+      setClockTime(() => scheduler.getTime()); // TODO: refactor?
       await beforeEval?.({ code });
       allTransforms = []; // reset all transforms
       shouldHush && hush();
@@ -215,8 +251,19 @@ export function repl({
       let { pattern, meta } = await _evaluate(code, transpiler, transpilerOptions);
       if (Object.keys(pPatterns).length) {
         let patterns = [];
+        let soloActive = false;
         for (const [key, value] of Object.entries(pPatterns)) {
-          patterns.push(value.withState((state) => state.setControls({ id: key })));
+          // handle soloed patterns ex: S$: s("bd!4")
+          const isSolod = key.length > 1 && key.startsWith('S');
+          if (isSolod && soloActive === false) {
+            // first time we see a soloed pattern, clear existing patterns
+            patterns = [];
+            soloActive = true;
+          }
+          if (!soloActive || (soloActive && isSolod)) {
+            const valWithState = value.withState((state) => state.setControls({ id: key }));
+            patterns.push(valWithState);
+          }
         }
         if (eachTransform) {
           // Explicit lambda so only element (not index and array) are passed
@@ -227,26 +274,28 @@ export function repl({
         pattern = eachTransform(pattern);
       }
       if (allTransforms.length) {
-        for (let i in allTransforms) {
-          pattern = allTransforms[i](pattern);
+        for (const transform of allTransforms) {
+          pattern = transform(pattern);
         }
       }
 
       if (!isPattern(pattern)) {
-        const message = `got "${typeof evaluated}" instead of pattern`;
-        throw new Error(message + (typeof evaluated === 'function' ? ', did you forget to call a function?' : '.'));
+        pattern = silence;
       }
+
       logger(`[eval] code updated`);
       pattern = await setPattern(pattern, autostart);
       updateState({
         miniLocations: meta?.miniLocations || [],
         widgets: meta?.widgets || [],
+        sliders: meta?.sliders || [],
         activeCode: code,
         pattern,
         evalError: undefined,
         schedulerError: undefined,
         pending: false,
       });
+
       afterEval?.({ code, pattern, meta });
       return pattern;
     } catch (err) {
@@ -256,24 +305,22 @@ export function repl({
       onEvalError?.(err);
     }
   };
+
   const setCode = (code) => updateState({ code });
   return { scheduler, evaluate, start, stop, pause, setCps, setPattern, setCode, toggle, state };
 }
 
-export const getTrigger =
-  ({ getTime, defaultOutput }) =>
-  async (hap, deadline, duration, cps, t) => {
-    //   ^ this signature is different from hap.context.onTrigger, as set by Pattern.onTrigger(onTrigger)
-    // TODO: get rid of deadline after https://codeberg.org/uzu/strudel/pulls/1004
+export const getSchedule =
+  ({ onSchedule }) =>
+  async (hap, t, cps) => {
     try {
-      if (!hap.context.onTrigger || !hap.context.dominantTrigger) {
-        await defaultOutput(hap, deadline, duration, cps, t);
+      if (!hap.context.onSchedule || !hap.context.dominantSchedule) {
+        await onSchedule(hap, t, cps);
       }
-      if (hap.context.onTrigger) {
-        // call signature of output / onTrigger is different...
-        await hap.context.onTrigger(hap, getTime(), cps, t);
+      if (hap.context.onSchedule) {
+        await hap.context.onSchedule(hap, t, cps);
       }
     } catch (err) {
-      errorLogger(err, 'getTrigger');
+      errorLogger(err, 'getSchedule');
     }
   };

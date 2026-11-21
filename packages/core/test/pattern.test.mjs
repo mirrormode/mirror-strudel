@@ -18,6 +18,7 @@ import {
   fastcat,
   firstOf,
   slowcat,
+  slowcatPrime,
   cat,
   sequence,
   palindrome,
@@ -45,6 +46,7 @@ import {
   rev,
   time,
   run,
+  randrun,
   binaryN,
   pick,
   stackLeft,
@@ -53,9 +55,10 @@ import {
   stepcat,
   sometimes,
   expand,
+  arp,
 } from '../index.mjs';
 
-import { log, logValues } from '../pattern.mjs';
+import { log, logValues, stackCenter } from '../pattern.mjs';
 
 import { steady } from '../signal.mjs';
 
@@ -70,6 +73,10 @@ const twothirds = Fraction(2, 3);
 
 const sameFirst = (a, b) => {
   return expect(a.sortHapsByPart().firstCycle()).toStrictEqual(b.sortHapsByPart().firstCycle());
+};
+
+const sameFirstX = (x, a, b) => {
+  return expect(a.fast(x).sortHapsByPart().firstCycle()).toStrictEqual(b.fast(x).sortHapsByPart().firstCycle());
 };
 
 describe('TimeSpan', () => {
@@ -544,6 +551,9 @@ describe('Pattern', () => {
     });
   });
   describe('slowcat()', () => {
+    it('Can be empty', () => {
+      expect(slowcat().firstCycle()).toStrictEqual([]);
+    });
     it('Can concatenate things slowly', () => {
       expect(
         slowcat('a', 'b')
@@ -576,6 +586,38 @@ describe('Pattern', () => {
       sameFirst(slowcat('a', ['b', 'c']).fast(4), sequence('a', ['b', 'c']).fast(2));
     });
   });
+  describe('slowcatPrime()', () => {
+    it('Can be empty', () => {
+      expect(slowcatPrime().firstCycle()).toStrictEqual([]);
+    });
+    it('Can slowcat patterns swapping back and forth skipping the expected notes', () => {
+      expect(
+        slowcatPrime(fastcat(0, 1, 2, 3).slow(2), fastcat(4, 5, 6, 7).slow(2))
+          .fast(4)
+          .firstCycle()
+          .map((a) => a.value),
+      ).toStrictEqual([0, 1, 6, 7, 0, 1, 6, 7]);
+    });
+    it('Can go into negative time', () => {
+      expect(
+        slowcatPrime(fastcat(0, 1, 2, 3).slow(2), fastcat(4, 5, 6, 7).slow(2))
+          .fast(4)
+          .late(8)
+          .firstCycle()
+          .map((a) => a.value),
+      ).toStrictEqual([0, 1, 6, 7, 0, 1, 6, 7]);
+    });
+  });
+  describe('arp()', () => {
+    it('It wraps around with both positive and negative indices', () => {
+      expect(
+        stack('a', 'b', 'c')
+          .arp(fastcat(-3, -2, -1, 0, 1, 2, 3, 4))
+          .firstCycle()
+          .map((a) => a.value),
+      ).toStrictEqual(['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b']);
+    });
+  });
   describe('rev()', () => {
     it('Can reverse things', () => {
       expect(
@@ -585,6 +627,18 @@ describe('Pattern', () => {
           .sort((a, b) => a.part.begin.sub(b.part.begin))
           .map((a) => a.value),
       ).toStrictEqual(['c', 'b', 'a']);
+    });
+    it('Does not reverse the order of cycles', () => {
+      expect(fastcat('a', 'b', 'c', 'd').slow(2).rev().fast(2).sortHapsByPart().firstCycle()).toStrictEqual(
+        fastcat('b', 'a', 'd', 'c').firstCycle(),
+      );
+    });
+  });
+  describe('revv()', () => {
+    it('Does reverse the order of cycles', () => {
+      expect(fastcat('a', 'b', 'c', 'd').slow(2).revv().fast(2).sortHapsByPart().firstCycle()).toStrictEqual(
+        fastcat('d', 'c', 'b', 'a').firstCycle(),
+      );
     });
   });
   describe('sequence()', () => {
@@ -726,20 +780,6 @@ describe('Pattern', () => {
       expect(sequence(true, false, [true, false]).invert().firstCycle()).toStrictEqual(
         sequence(false, true, [false, true]).firstCycle(),
       );
-    });
-  });
-  describe('signal()', () => {
-    it('Can make saw/saw2', () => {
-      expect(saw.struct(true, true, true, true).firstCycle()).toStrictEqual(
-        sequence(0, 1 / 4, 1 / 2, 3 / 4).firstCycle(),
-      );
-
-      expect(saw2.struct(true, true, true, true).firstCycle()).toStrictEqual(sequence(-1, -0.5, 0, 0.5).firstCycle());
-    });
-    it('Can make isaw/isaw2', () => {
-      expect(isaw.struct(true, true, true, true).firstCycle()).toStrictEqual(sequence(1, 0.75, 0.5, 0.25).firstCycle());
-
-      expect(isaw2.struct(true, true, true, true).firstCycle()).toStrictEqual(sequence(1, 0.5, 0, -0.5).firstCycle());
     });
   });
   describe('_setContext()', () => {
@@ -946,6 +986,17 @@ describe('Pattern', () => {
   describe('run', () => {
     it('Can run', () => {
       expect(run(4).firstCycle()).toStrictEqual(sequence(0, 1, 2, 3).firstCycle());
+    });
+    it('Can go into negative time', () => {
+      expect(run(4).late(1).firstCycle()).toStrictEqual(sequence(0, 1, 2, 3).firstCycle());
+    });
+  });
+  describe('randrun', () => {
+    it('Can randrun', () => {
+      expect(randrun(4).firstCycle()).toStrictEqual(sequence(2, 1, 3, 0).firstCycle());
+    });
+    it('Can go into negative time', () => {
+      expect(randrun(4).late(1).firstCycle()).toStrictEqual(sequence(1, 2, 0, 3).firstCycle());
     });
   });
   describe('binaryN', () => {
@@ -1168,6 +1219,7 @@ describe('Pattern', () => {
       expect(stackRight(fastcat(0, 1, 2), fastcat(3, 4))._steps).toStrictEqual(Fraction(3));
       // maybe this should double when they are either all even or all odd
       expect(stackCentre(fastcat(0, 1, 2), fastcat(3, 4))._steps).toStrictEqual(Fraction(3));
+      expect(stackCenter(fastcat(0, 1, 2), fastcat(3, 4))._steps).toStrictEqual(Fraction(3));
       expect(fastcat(0, 1).ply(3)._steps).toStrictEqual(Fraction(6));
       expect(fastcat(0, 1).setSteps(undefined).ply(3)._steps).toStrictEqual(undefined);
       expect(fastcat(0, 1).fast(3)._steps).toStrictEqual(Fraction(2));
@@ -1273,6 +1325,21 @@ describe('Pattern', () => {
       );
     });
   });
+  describe('isobite', () => {
+    it('can play a melody with a structure', () => {
+      sameFirst(
+        slowcat(0, 1, 2, 3, 4, 5).isobite(fastcat(true, silence, [true, true]).fast(2)),
+        fastcat(0, silence, [1, 2], 3, silence, [4, 5]),
+      );
+    });
+    it('syncopates over multiple cycles if the number of haps in the patterns differ', () => {
+      sameFirstX(
+        4,
+        slowcat(0, 1, 2, 3).isobite(fastcat(true, [true, true])),
+        slowcat(0, [1, 2], 3, [0, 1], 2, [3, 0], 1, [2, 3]).fast(2),
+      );
+    });
+  });
   describe('unjoin', () => {
     it('destructures a pattern into subcycles', () => {
       sameFirst(
@@ -1316,7 +1383,7 @@ describe('Pattern', () => {
 
       // Force a trigger
       haps.forEach((hap) => {
-        hap.context?.onTrigger?.(hap);
+        hap.context?.onSchedule?.(hap);
       });
 
       expect(mockConsoleLog).toHaveBeenCalledWith(
@@ -1334,7 +1401,7 @@ describe('Pattern', () => {
 
       // Force a trigger
       haps.forEach((hap) => {
-        hap.context?.onTrigger?.(hap);
+        hap.context?.onSchedule?.(hap);
       });
 
       expect(mockConsoleLog).toHaveBeenCalledWith(

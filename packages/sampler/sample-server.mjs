@@ -9,6 +9,7 @@ import readline from 'readline';
 import os from 'os';
 
 const LOG = !!process.env.LOG || false;
+const PORT = process.env.PORT || 5432;
 const VALID_AUDIO_EXTENSIONS = ['wav', 'mp3', 'ogg'];
 
 const isAudioFile = (f) => {
@@ -54,7 +55,6 @@ async function getBanks(directory, flat = false) {
     banks[bank].push(subDir);
     return subDir;
   });
-  banks._base = `http://localhost:5432`;
   return { banks, files };
 }
 
@@ -98,6 +98,7 @@ if (args.includes('--json')) {
   }
   writeFileSync(outFile, json, 'utf8');
   console.log(`Wrote json to ${outFile}`);
+  process.exit(0);
 }
 
 console.log(
@@ -134,8 +135,6 @@ const server = http.createServer(async (req, res) => {
   readStream.pipe(res);
 });
 
-// eslint-disable-next-line
-const PORT = process.env.PORT || 5432;
 const IP_ADDRESS = '0.0.0.0';
 let IP;
 const networkInterfaces = os.networkInterfaces();
