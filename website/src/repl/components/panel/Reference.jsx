@@ -219,7 +219,7 @@ export const Reference = memo(function Reference() {
                   __html: entry.description.replaceAll(/<a href="https:\/\//g, `<a target="_blank" href="https://`),
                 }}
               ></p>
-              {entry.params && entry.params.length > 0 && (<p className="font-bold">Arguments</p>)}
+              {entry.params && entry.params.length > 0 && <p className="font-bold">Arguments</p>}
               <ul>
                 {entry.params?.map(({ name, type, description }, i) => (
                   <li key={i}>
@@ -228,11 +228,14 @@ export const Reference = memo(function Reference() {
                 ))}
               </ul>
               {entry.returns && (
-                <p><span className="font-bold">Returns</span> {
-                  entry.returns.map(({ type, description }) => (
-                    <>{type?.names?.join(' | ')} {description ? <> - {getInnerText(description)}</> : ''}</>
-                  ))
-                }</p>
+                <p>
+                  <span className="font-bold">Returns</span>{' '}
+                  {entry.returns.map(({ type, description }) => (
+                    <>
+                      {type?.names?.join(' | ')} {description ? <> - {getInnerText(description)}</> : ''}
+                    </>
+                  ))}
+                </p>
               )}
               {entry.examples?.map((example, j) => (
                 <pre className="bg-background border border-muted" key={j}>
