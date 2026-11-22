@@ -69,7 +69,7 @@ export const bjorklund = function (ons, steps) {
  * @tags temporal
  * @param {number} pulses the number of onsets/beats
  * @param {number} steps the number of steps to fill
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * // The Cuban tresillo pattern.
  * note("c3").euclid(3,8)
@@ -83,7 +83,7 @@ export const bjorklund = function (ons, steps) {
  * @param {number} pulses the number of onsets/beats
  * @param {number} steps the number of steps to fill
  * @param {number} rotation offset in steps
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * // A Samba rhythm necklace from Brazil
  * note("c3").euclidRot(3,16,14)

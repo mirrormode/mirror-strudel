@@ -3009,7 +3009,7 @@ export const as = register('as', (mapping, pat) => {
  * @name scrub
  * @tags samples
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * samples('github:switchangel/pad')
  * s("swpad:0").scrub("{0.1!2 .25@3 0.7!2 <0.8:1.5>}%8")
@@ -3163,7 +3163,7 @@ Pattern.prototype.modulate = function (type, config, idPat) {
  * @param {number | Pattern} [config.retrig] If > 0.5, the LFO will retrigger on each event. Aliases: rt
  * @param {number | Pattern} [config.fxi] FX index to target
  * @param {string | Pattern} id ID to use for this modulator
- * @returns Pattern
+ * @returns {Pattern}
  *
  * @example
  * s("saw").note("F1").lpf(500).lfo()
@@ -3218,7 +3218,7 @@ export const lfo = (config) => pure({}).lfo(config);
  * @param {number | Pattern} [config.rcurve] Snappiness of release curve (-1 = relaxed, 1 = snappy). Aliases: rc
  * @param {number | Pattern} [config.fxi] FX index to target
  * @param {string | Pattern} id ID to use for this modulator
- * @returns Pattern
+ * @returns {Pattern}
  *
  * @example
  * s("saw").note("F1").lpf(500).env({ a: 1 })
@@ -3274,7 +3274,7 @@ export const env = (config) => pure({}).env(config);
  * @param {number | Pattern} [config.dc] DC offset prior to application
  * @param {number | Pattern} [config.fxi] FX index to target
  * @param {string | Pattern} id ID to use for this modulator
- * @returns Pattern
+ * @returns {Pattern}
  *
  * @example
  * modulator: s("one").seg(64).gain(slider(0, 0, 1)).bus(1).dry(0)

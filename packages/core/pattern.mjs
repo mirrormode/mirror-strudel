@@ -89,7 +89,7 @@ export class Pattern {
    * @tags functional
    * @synonyms fmap
    * @param {Function} func to to apply to the value
-   * @returns Pattern
+   * @returns {Pattern}
    * @example
    * "0 1 2".withValue(v => v + 10).log()
    */
@@ -120,7 +120,7 @@ export class Pattern {
    * @param {Function} whole_func
    * @param {Function} func
    * @noAutocomplete
-   * @returns Pattern
+   * @returns {Pattern}
    */
   appWhole(whole_func, pat_val) {
     const pat_func = this;
@@ -157,7 +157,7 @@ export class Pattern {
    * @tags functional
    * @param {Pattern} pat_val
    * @noAutocomplete
-   * @returns Pattern
+   * @returns {Pattern}
    */
   appBoth(pat_val) {
     const pat_func = this;
@@ -185,7 +185,7 @@ export class Pattern {
    * @tags functional
    * @param {Pattern} pat_val
    * @noAutocomplete
-   * @returns Pattern
+   * @returns {Pattern}
    */
   appLeft(pat_val) {
     const pat_func = this;
@@ -219,7 +219,7 @@ export class Pattern {
    * @tags functional
    * @param {Pattern} pat_val
    * @noAutocomplete
-   * @returns Pattern
+   * @returns {Pattern}
    */
   appRight(pat_val) {
     const pat_func = this;
@@ -410,7 +410,7 @@ export class Pattern {
    * @tags internals
    * @param {Fraction | number} begin from time
    * @param {Fraction | number} end to time
-   * @returns Hap[]
+   * @returns {Hap[]}
    * @example
    * const pattern = sequence('a', ['b', 'c'])
    * const haps = pattern.queryArc(0, 1)
@@ -432,7 +432,7 @@ export class Pattern {
    * some calculations easier to express, as all haps are then constrained to
    * happen within a cycle.
    * @tags internals
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   splitQueries() {
@@ -448,7 +448,7 @@ export class Pattern {
    * timespan before passing it to the original pattern.
    * @tags internals
    * @param {Function} func the function to apply
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   withQuerySpan(func) {
@@ -471,7 +471,7 @@ export class Pattern {
    * begin and end time of the query timespan.
    * @tags internals
    * @param {Function} func the function to apply
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   withQueryTime(func) {
@@ -484,7 +484,7 @@ export class Pattern {
    * present, `whole` timespans).
    * @tags internals
    * @param {Function} func
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   withHapSpan(func) {
@@ -496,7 +496,7 @@ export class Pattern {
    * begin and end time of the hap timespans.
    * @tags internals
    * @param {Function} func the function to apply
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   withHapTime(func) {
@@ -509,7 +509,7 @@ export class Pattern {
    * As an end user, you will most likely not need to use this; look at `withContext`, `withHapSpan`, etc. instead.
    * @tags internals
    * @param {Function} func
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    * @example
    * note("[a b, c d] a b c d").s("gm_piano").withHaps(x=>{
@@ -537,7 +537,7 @@ export class Pattern {
    * As an end user, you will most likely not need to use this; look at `withContext`, `withHapSpan`, etc. instead.
    * @tags internals
    * @param {Function} func
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    * @example
    * note("c a f e").withHap(x=>{
@@ -559,7 +559,7 @@ export class Pattern {
    * Returns a new pattern with the context field set to every hap set to the given value.
    * @tags internals
    * @param {*} context
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   setContext(context) {
@@ -570,7 +570,7 @@ export class Pattern {
    * Returns a new pattern with the given function applied to the context field of every hap.
    * @tags internals
    * @param {Function} func
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   withContext(func) {
@@ -585,7 +585,7 @@ export class Pattern {
   /**
    * Returns a new pattern with the context field of every hap set to an empty object.
    * @tags internals
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   stripContext() {
@@ -598,7 +598,7 @@ export class Pattern {
    * @tags internals
    * @param {Number} start start offset
    * @param {Number} end end offset
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   withLoc(start, end) {
@@ -621,7 +621,7 @@ export class Pattern {
    * Returns a new Pattern, which only returns haps that meet the given test.
    * @tags internals
    * @param {Function} hap_test - a function which returns false for haps to be removed from the pattern
-   * @returns Pattern
+   * @returns {Pattern}
    * @example
    * s("bd*8").velocity(rand).filterHaps((h) => (h.whole.begin % 1) < h.value.velocity)
    */
@@ -634,7 +634,7 @@ export class Pattern {
    * inside haps.
    * @tags internals
    * @param {Function} value_test
-   * @returns Pattern
+   * @returns {Pattern}
    * @example
    * const drums = s("bd sd bd sd")
    * kick: drums.filterValues((v) => v.s === 'bd').duck(2)
@@ -649,7 +649,7 @@ export class Pattern {
    * Returns a new pattern, with haps containing undefined values removed from
    * query results.
    * @tags internals
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   removeUndefineds() {
@@ -661,7 +661,7 @@ export class Pattern {
    * with an onset is one with a `whole` timespan that begins at the same time
    * as its `part` timespan.
    * @tags internals
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   onsetsOnly() {
@@ -675,7 +675,7 @@ export class Pattern {
    * Returns a new pattern, with 'continuous' haps (those without 'whole'
    * timespans) removed from query results.
    * @tags internals
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   discreteOnly() {
@@ -742,7 +742,7 @@ export class Pattern {
    * @tags internals
    * @param {Boolean} with_context - set to true, otherwise the context field
    * will be stripped from the resulting haps.
-   * @returns [Hap]
+   * @returns {Hap[]}
    * @noAutocomplete
    */
   firstCycle(with_context = false) {
@@ -777,7 +777,7 @@ export class Pattern {
    * Returns a new pattern, which returns haps sorted in temporal order. Mainly
    * of use when comparing two patterns for equality, in tests.
    * @tags internals
-   * @returns Pattern
+   * @returns {Pattern}
    * @noAutocomplete
    */
   sortHapsByPart() {
@@ -792,7 +792,7 @@ export class Pattern {
   }
 
   /**
-   * Returns a new pattern with all values parsed as numerals.
+   * @Returns {Pattern} a new pattern with all values parsed as numerals.
    * @tags internals
    */
   asNumber() {
@@ -847,7 +847,7 @@ export class Pattern {
    * @name layer
    * @tags combiners
    * @memberof Pattern
-   * @returns Pattern
+   * @returns {Pattern}
    * @example
    * "<0 2 4 6 ~ 4 ~ 2 0!3 ~!5>*8"
    *   .layer(x=>x.add("0,2"))
@@ -862,7 +862,7 @@ export class Pattern {
    * @name superimpose
    * @tags combiners
    * @memberof Pattern
-   * @returns Pattern
+   * @returns {Pattern}
    * @example
    * "<0 2 4 6 ~ 4 ~ 2 0!3 ~!5>*8"
    *   .superimpose(x=>x.add(2))
@@ -1288,7 +1288,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   lt: [(a, b) => a < b],
   /**
@@ -1298,7 +1298,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   gt: [(a, b) => a > b],
   /**
@@ -1308,7 +1308,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   lte: [(a, b) => a <= b],
   /**
@@ -1318,7 +1318,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   gte: [(a, b) => a >= b],
   /**
@@ -1328,7 +1328,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   eq: [(a, b) => a == b],
   /**
@@ -1338,7 +1338,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   eqt: [(a, b) => a === b],
   /**
@@ -1348,7 +1348,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   ne: [(a, b) => a != b],
   /**
@@ -1358,7 +1358,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   net: [(a, b) => a !== b],
   /**
@@ -1368,7 +1368,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   and: [(a, b) => a && b],
   /**
@@ -1378,7 +1378,7 @@ const COMPOSERS = {
    * @tags math
    * @param {any} a
    * @param {any} b
-   * @returns Pattern with boolean value(s)
+   * @returns {Pattern} with boolean value(s)
    */
   or: [(a, b) => a || b],
 
@@ -1625,7 +1625,7 @@ export function reify(thing) {
 
 /**
  * Takes a list of patterns, and returns a pattern of lists.
- *
+ * @returns {Pattern}
  * @tags temporal
  */
 export function sequenceP(pats) {
@@ -2121,7 +2121,7 @@ function stepRegister(name, func, patternify = true, preserveSteps = false, join
  * @name round
  * @tags math
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * n("0.5 1.5 2.5".round()).scale("C:major")
  */
@@ -2135,7 +2135,7 @@ export const round = register('round', function (pat) {
  * @name floor
  * @memberof Pattern
  * @tags math
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * note("42 42.1 42.5 43".floor())
  */
@@ -2152,7 +2152,7 @@ export const log2 = register('log2', (pat) => pat.asNumber().fmap((v) => Math.lo
  * @name ceil
  * @memberof Pattern
  * @tags math
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * note("42 42.1 42.5 43".ceil())
  */
@@ -2163,7 +2163,7 @@ export const ceil = register('ceil', function (pat) {
  * Assumes a numerical pattern, containing unipolar values in the range 0 ..
  * 1. Returns a new pattern with values scaled to the bipolar range -1 .. 1
  * @tags math
- * @returns Pattern
+ * @returns {Pattern}
  * @noAutocomplete
  */
 export const toBipolar = register('toBipolar', function (pat) {
@@ -2174,7 +2174,7 @@ export const toBipolar = register('toBipolar', function (pat) {
  * Assumes a numerical pattern, containing bipolar values in the range -1 .. 1
  * Returns a new pattern with values scaled to the unipolar range 0 .. 1
  * @tags math
- * @returns Pattern
+ * @returns {Pattern}
  * @noAutocomplete
  */
 export const fromBipolar = register('fromBipolar', function (pat) {
@@ -2188,7 +2188,7 @@ export const fromBipolar = register('fromBipolar', function (pat) {
  * @name range
  * @memberof Pattern
  * @tags math
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("[bd sd]*2,hh*8")
  * .cutoff(sine.range(500,4000))
@@ -2204,7 +2204,7 @@ export const range = register('range', function (min, max, pat) {
  * @name rangex
  * @memberof Pattern
  * @tags math
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("[bd sd]*2,hh*8")
  * .cutoff(sine.rangex(500,4000))
@@ -2219,7 +2219,7 @@ export const rangex = register('rangex', function (min, max, pat) {
  * @name range2
  * @memberof Pattern
  * @tags math
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("[bd sd]*2,hh*8")
  * .cutoff(sine2.range2(500,4000))
@@ -2234,7 +2234,7 @@ export const range2 = register('range2', function (min, max, pat) {
  * @name ratio
  * @memberof Pattern
  * @tags math
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * ratio("1, 5:4, 3:2").mul(110)
  * .freq().s("piano")
@@ -2302,9 +2302,9 @@ export const { fastGap, fastgap } = register(['fastGap', 'fastgap'], function (f
     const newWhole = !hap.whole
       ? undefined
       : new TimeSpan(
-          newPart.begin.sub(begin.sub(hap.whole.begin).div(factor)),
-          newPart.end.add(hap.whole.end.sub(end).div(factor)),
-        );
+        newPart.begin.sub(begin.sub(hap.whole.begin).div(factor)),
+        newPart.end.add(hap.whole.end.sub(end).div(factor)),
+      );
     return new Hap(newWhole, newPart, hap.value, hap.context);
   };
   return pat.withQuerySpanMaybe(qf).withHap(ef).splitQueries();
@@ -2350,7 +2350,7 @@ export const ply = register('ply', function (factor, pat) {
  * @synonyms density
  * @memberof Pattern
  * @param {number | Pattern} factor speed up factor
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("bd hh sd hh").fast(2) // s("[bd hh sd hh]*2")
  */
@@ -2386,7 +2386,7 @@ export const hurry = register('hurry', function (r, pat) {
  * @synonyms sparsity
  * @memberof Pattern
  * @param {number | Pattern} factor slow down factor
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("bd hh sd hh").slow(2) // s("[bd hh sd hh]/2")
  */
@@ -2426,7 +2426,7 @@ export const outside = register('outside', function (factor, f, pat) {
  * @memberof Pattern
  * @param {number} n how many cycles
  * @param {function} func function to apply
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * note("c3 d3 e3 g3").lastOf(4, x=>x.rev())
  */
@@ -2443,7 +2443,7 @@ export const lastOf = register('lastOf', function (n, func, pat) {
  * @memberof Pattern
  * @param {number} n how many cycles
  * @param {function} func function to apply
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * note("c3 d3 e3 g3").firstOf(4, x=>x.rev())
  */
@@ -2455,7 +2455,7 @@ export const lastOf = register('lastOf', function (n, func, pat) {
  * @memberof Pattern
  * @param {number} n how many cycles
  * @param {function} func function to apply
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * note("c3 d3 e3 g3").every(4, x=>x.rev())
  */
@@ -2495,7 +2495,7 @@ export const cpm = register('cpm', function (cpm, pat) {
  * @name early
  * @memberof Pattern
  * @param {number | Pattern} cycles number of cycles to nudge left
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * "bd ~".stack("hh ~".early(.1)).s()
  */
@@ -2516,7 +2516,7 @@ export const early = register(
  * @name late
  * @memberof Pattern
  * @param {number | Pattern} cycles number of cycles to nudge right
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * "bd ~".stack("hh ~".late(.1)).s()
  */
@@ -2733,7 +2733,7 @@ export const { invert, inv } = register(
  * @memberof Pattern
  * @param {Pattern} binary_pat
  * @param {function} func
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * "c3 eb3 g3".when("<0 1>/2", x=>x.sub("5")).note()
  */
@@ -2748,7 +2748,7 @@ export const when = register('when', function (on, func, pat) {
  * @memberof Pattern
  * @param {Pattern | number} time offset time
  * @param {function} func function to apply
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * "c3 eb3 g3".off(1/8, x=>x.add(7)).note()
  */
@@ -2762,7 +2762,7 @@ export const off = register('off', function (time_pat, func, pat) {
  * breakbeat feel.
  * @name brak
  * @tags temporal
- * @returns Pattern
+ * @returns {Pattern}
  * @memberof Pattern
  * @example
  * s("bd hh!2 rim").brak()
@@ -2777,7 +2777,7 @@ export const brak = register('brak', function (pat) {
  * @tags temporal
  * @name rev
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * note("c d e g").rev()
  */
@@ -2811,7 +2811,7 @@ export const rev = register(
  * @name revv
  * @tags temporal
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * // This is the same as `<[g e] [d c]>`. If `rev()` is used, you get
  * // the same as `<[d c] [g e]>`, where each cycle reverses, but the order of
@@ -2966,7 +2966,7 @@ export const { echoWith, echowith, stutWith, stutwith } = register(
  * @tags temporal
  * @name echo
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @param {number} times how many times to repeat
  * @param {number} time cycle offset between iterations
  * @param {number} feedback velocity multiplicator for each iteration
@@ -3049,7 +3049,7 @@ export const plyForEach = register(['plyForEach', 'plyforeach'], function (facto
  * @tags temporal
  * @name iter
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * note("0 1 2 3".scale('A minor')).iter(4)
  */
@@ -3078,7 +3078,7 @@ export const iter = register(
  * @name iterBack
  * @synonyms iterback
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * note("0 1 2 3".scale('A minor')).iterBack(4)
  */
@@ -3096,7 +3096,7 @@ export const { iterBack, iterback } = register(
  * @tags temporal
  * @name repeatCycles
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * note(irand(12).add(34)).segment(4).repeatCycles(2).s("gm_acoustic_guitar_nylon")
  */
@@ -3121,7 +3121,7 @@ export const { repeatCycles } = register(
  * @name chunk
  * @synonyms slowChunk, slowchunk
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * "0 1 2 3".chunk(4, x=>x.add(7))
  * .scale("A:minor").note()
@@ -3153,7 +3153,7 @@ export const { chunk, slowchunk, slowChunk } = register(
  * @name chunkBack
  * @synonyms chunkback
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * "0 1 2 3".chunkBack(4, x=>x.add(7))
  * .scale("A:minor").note()
@@ -3174,7 +3174,7 @@ export const { chunkBack, chunkback } = register(
  * @name fastChunk
  * @synonyms fastchunk
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * "<0 8> 1 2 3 4 5 6 7"
  * .scale("C2:major").note()
@@ -3894,7 +3894,7 @@ Pattern.prototype.steps = Pattern.prototype.pace;
  * @name chop
  * @tags samples
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
  * s("rhodes")
@@ -3925,7 +3925,7 @@ export const chop = register('chop', function (n, pat) {
  * @name striate
  * @tags samples
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("numbers:0 numbers:1 numbers:2").striate(6).slow(3)
  */
@@ -3944,7 +3944,7 @@ export const striate = register('striate', function (n, pat) {
  * @name loopAt
  * @tags samples, pitch
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
  * s("rhodes").loopAt(2)
@@ -3967,7 +3967,7 @@ export const { loopAt, loopat } = register(['loopAt', 'loopat'], function (facto
  * @name slice
  * @tags samples
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * samples('github:tidalcycles/dirt-samples')
  * s("breaks165").slice(8, "0 1 <2 2*2> 3 [4 0] 5 6 7".every(3, rev)).slow(0.75)
@@ -4003,7 +4003,7 @@ export const slice = register(
  * @name onTriggerTime
  * @tags external_io
  * @memberof Pattern
- *  @returns Pattern
+ *  @returns {Pattern}
  * @example
  * s("bd!8").onTriggerTime((hap) => {console.log(hap)})
  */
@@ -4079,7 +4079,7 @@ export const fit = register('fit', (pat) =>
  * @tags samples, pitch
  * @memberof Pattern
  * @deprecated
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
  * s("rhodes").loopAtCps(4,1.5).cps(1.5)
@@ -4320,7 +4320,7 @@ export const chebyshev = _distortWithAlg('chebyshev');
  *
  * @name parray
  * @tags combiners
- * @returns Pattern
+ * @returns {Pattern}
  */
 export const parray = (pats) => {
   const pack = (...xs) => xs;
@@ -4388,7 +4388,7 @@ export const phases = (list) => {
  * @name FX
  * @tags superdough
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * $: s("[sbd <hh [bd | lt | oh]>]*4").dec(.4)
  *   .FX(
@@ -4440,7 +4440,7 @@ const _asArrayPattern = (pats) => {
  * @tags generators, superdough
  * @param {KabelsalatExpression | Function} expr Kabelsalat graph definition
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  *
  * @example
  * note("A c e".fast(4)).transpose("<0 2 4 6 8>")
@@ -4480,7 +4480,7 @@ const _asArrayPattern = (pats) => {
  * @param {string} src Source code of the worklet update function
  * @param {...number | ...Pattern} inputs Worklet inputs
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @noAutocomplete
  */
 Pattern.prototype.worklet = function (src, ...inputs) {

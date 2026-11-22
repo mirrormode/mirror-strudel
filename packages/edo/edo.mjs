@@ -38,7 +38,7 @@ const pitchesCache = new Map();
  *
  * @name edoScale
  * @param {string} scale Definition of EDO scale.
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * n("0 2 4 6 4 2").edoScale("C:LLsLLLs:2:1")
  * @example

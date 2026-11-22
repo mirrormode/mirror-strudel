@@ -102,7 +102,7 @@ function scaleOffset(scale, offset, note) {
  *
  * @tags tonal
  * @param {string | number} amount Either number of semitones or interval string.
- * @returns Pattern
+ * @returns {Pattern}
  * @memberof Pattern
  * @name transpose
  * @synonyms trans
@@ -164,7 +164,7 @@ export const { transpose, trans } = register(['transpose', 'trans'], function tr
  * @name scaleTranspose
  * @tags tonal
  * @param {offset} offset number of steps inside the scale
- * @returns Pattern
+ * @returns {Pattern}
  * @synonyms scaleTrans, strans
  * @example
  * "-8 [2,4,6]"
@@ -255,7 +255,7 @@ function _getNearestScaleNote(scaleName, note, preferHigher = true) {
  * @name scale
  * @tags tonal
  * @param {string} scale Name of scale
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * n("0 2 4 6 4 2").scale("C:major")
  * @example

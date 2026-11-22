@@ -65,7 +65,7 @@ const trimFreq = (freq) => parseFloat(freq.toPrecision(10));
  * Assumes a numerical pattern of scale steps, and a scale. Scales accepted are all preset scale names of `tune`, arbitrary edos such as 31edo, or an array of frequency ratios. Assumes scales repeat at octave (2/1). Returns a new pattern with all values mapped to their associated frequency, assuming a base frequency of 220hz. See first 4 examples for the different ways you can input a scale into `xen`
  *
  * @name xen
- * @returns Pattern
+ * @returns {Pattern}
  * @memberof Pattern
  * @param {(string | number[] )} scaleNameOrRatios
  * @tags tonal
@@ -209,7 +209,7 @@ export const xen = register(
  * mini([1 / 1, 16 / 15, 9 / 8, 6 / 5, 5 / 4].join(' ')).withBase("220:1")
  * // mini([1 / 1, 16 / 15, 9 / 8, 6 / 5, 5 / 4].join(' ')).mul(220).freq()
  *
- * @returns Pattern
+ * @returns {Pattern}
  */
 export const withBase = register('withBase', (b, pat) => {
   let base;
