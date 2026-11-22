@@ -73,6 +73,15 @@ export function registerControl(names, ...aliases) {
   return bag;
 }
 
+// Constructs a superdirt effect bus control
+const sdbus = register('sdbus', function (busid, control_name, busval, pat) {
+  return pat[control_name]('c' + busid).withValue((val) => {
+    const newval = { ...val };
+    newval['^' + control_name] = [busid, busval];
+    return newval;
+  });
+});
+
 export function registerMultiControl(names, maxControls, ...aliases) {
   names = Array.isArray(names) ? names : [names];
   let bag = {};

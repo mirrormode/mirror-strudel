@@ -74,12 +74,12 @@ export class Cyclist {
             // query the pattern for events
             const haps = this.pattern
               .queryArc(begin, end, { _cps: this.cps, cyclist: 'cyclist' })
-              .filter((hap) => hap.hasOnset())
+              .filter((hap) => hap.hasOnset() || hap.context.processParts)
               // Sort the haps based on their onset, so cps changes within the
               // tick duration happen in the correct order.
               .sort((a, b) => {
-                const aBegin = a.whole.begin;
-                const bBegin = b.whole.begin;
+                const aBegin = a.part.begin;
+                const bBegin = b.part.begin;
                 // If haps happen at the same time, trigger the haps that cause
                 // cps changes first, so the durations of the simultaneous haps
                 // are adjusted accordingly.
@@ -96,7 +96,7 @@ export class Cyclist {
               });
 
             haps.forEach((hap) => {
-              const targetTime = (hap.whole.begin - this.checkpoint.cycles) / this.cps + this.checkpoint.seconds;
+              const targetTime = (hap.part.begin - this.checkpoint.cycles) / this.cps + this.checkpoint.seconds;
               if (tickEndTime < targetTime) {
                 // If the targetTime exceeds the tickEndTime, this means
                 // the cps has slowed down, and the latter haps from the query
@@ -110,7 +110,7 @@ export class Cyclist {
                 this.cps = hap.value.cps;
                 this.num_ticks_since_checkpoint = 0;
                 this.checkpoint = {
-                  cycles: hap.whole.begin,
+                  cycles: hap.part.begin,
                   seconds: targetTime,
                 };
               }
