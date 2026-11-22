@@ -303,7 +303,8 @@ function sendNote(note, velocity, duration, device, midichan, timeMs) {
 Pattern.prototype.midi = function (midiport, options = {}) {
   if (isPattern(midiport)) {
     throw new Error(
-      `.midi does not accept Pattern input for midiport. Make sure to pass device name with single quotes. Example: .midi('${WebMidi.outputs?.[0]?.name || 'IAC Driver Bus 1'
+      `.midi does not accept Pattern input for midiport. Make sure to pass device name with single quotes. Example: .midi('${
+        WebMidi.outputs?.[0]?.name || 'IAC Driver Bus 1'
       }')`,
     );
   }
@@ -336,7 +337,8 @@ Pattern.prototype.midi = function (midiport, options = {}) {
       const device = getDevice(midiConfig.midiport, outputs);
       const otherOutputs = outputs.filter((o) => o.name !== device.name);
       logger(
-        `Midi enabled! Using "${device.name}". ${otherOutputs?.length ? `Also available: ${getMidiDeviceNamesString(otherOutputs)}` : ''
+        `Midi enabled! Using "${device.name}". ${
+          otherOutputs?.length ? `Also available: ${getMidiDeviceNamesString(otherOutputs)}` : ''
         }`,
       );
     },
@@ -484,7 +486,8 @@ Pattern.prototype.midi = function (midiport, options = {}) {
 async function _initializeInput(input) {
   if (isPattern(input)) {
     throw new Error(
-      `[midi] Midi input cannot be a pattern. Make sure to pass device name with single quotes. Example: midin('${WebMidi.outputs?.[0]?.name || 'IAC Driver Bus 1'
+      `[midi] Midi input cannot be a pattern. Make sure to pass device name with single quotes. Example: midin('${
+        WebMidi.outputs?.[0]?.name || 'IAC Driver Bus 1'
       }')`,
     );
   }
@@ -500,8 +503,9 @@ async function _initializeInput(input) {
     const otherInputs = WebMidi.inputs.filter((o) => o.name !== device.name);
     logger(
       device
-        ? `[midi] Midi enabled! Using "${device.name}". ${otherInputs?.length ? `Also available: ${getMidiDeviceNamesString(otherInputs)}` : ''
-        }`
+        ? `[midi] Midi enabled! Using "${device.name}". ${
+            otherInputs?.length ? `Also available: ${getMidiDeviceNamesString(otherInputs)}` : ''
+          }`
         : `[midi] Midi enabled! Waiting for device "${input}"... Currently connected devices: ${getMidiDeviceNamesString(WebMidi.inputs)}`,
     );
   }
