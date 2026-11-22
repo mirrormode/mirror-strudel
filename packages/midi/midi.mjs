@@ -290,6 +290,12 @@ function sendNote(note, velocity, duration, device, midichan, timeMs) {
  * @tags external_io
  * @param {string | number} midiport MIDI device name or index defaulting to 0
  * @param {object} options Additional MIDI configuration options
+ * @param {boolean} options.isController sending notes for midi controllers. Default is false
+ * @param {number} options.noteOffsetMs note-off offset to prevent glitching in ms. Default is 10 or firefox and 1 otherwise
+ * @param {number} options.midichannel default is 1
+ * @param {number} options.velocity default is 0.9
+ * @param {number} options.gain default is 1
+ * @param {string} options.midimap default is 'default'
  * @example
  * note("c4").midichan(1).midi('IAC Driver Bus 1')
  */
@@ -297,8 +303,7 @@ function sendNote(note, velocity, duration, device, midichan, timeMs) {
 Pattern.prototype.midi = function (midiport, options = {}) {
   if (isPattern(midiport)) {
     throw new Error(
-      `.midi does not accept Pattern input for midiport. Make sure to pass device name with single quotes. Example: .midi('${
-        WebMidi.outputs?.[0]?.name || 'IAC Driver Bus 1'
+      `.midi does not accept Pattern input for midiport. Make sure to pass device name with single quotes. Example: .midi('${WebMidi.outputs?.[0]?.name || 'IAC Driver Bus 1'
       }')`,
     );
   }
@@ -331,8 +336,7 @@ Pattern.prototype.midi = function (midiport, options = {}) {
       const device = getDevice(midiConfig.midiport, outputs);
       const otherOutputs = outputs.filter((o) => o.name !== device.name);
       logger(
-        `Midi enabled! Using "${device.name}". ${
-          otherOutputs?.length ? `Also available: ${getMidiDeviceNamesString(otherOutputs)}` : ''
+        `Midi enabled! Using "${device.name}". ${otherOutputs?.length ? `Also available: ${getMidiDeviceNamesString(otherOutputs)}` : ''
         }`,
       );
     },
@@ -480,8 +484,7 @@ Pattern.prototype.midi = function (midiport, options = {}) {
 async function _initializeInput(input) {
   if (isPattern(input)) {
     throw new Error(
-      `[midi] Midi input cannot be a pattern. Make sure to pass device name with single quotes. Example: midin('${
-        WebMidi.outputs?.[0]?.name || 'IAC Driver Bus 1'
+      `[midi] Midi input cannot be a pattern. Make sure to pass device name with single quotes. Example: midin('${WebMidi.outputs?.[0]?.name || 'IAC Driver Bus 1'
       }')`,
     );
   }
@@ -497,9 +500,8 @@ async function _initializeInput(input) {
     const otherInputs = WebMidi.inputs.filter((o) => o.name !== device.name);
     logger(
       device
-        ? `[midi] Midi enabled! Using "${device.name}". ${
-            otherInputs?.length ? `Also available: ${getMidiDeviceNamesString(otherInputs)}` : ''
-          }`
+        ? `[midi] Midi enabled! Using "${device.name}". ${otherInputs?.length ? `Also available: ${getMidiDeviceNamesString(otherInputs)}` : ''
+        }`
         : `[midi] Midi enabled! Waiting for device "${input}"... Currently connected devices: ${getMidiDeviceNamesString(WebMidi.inputs)}`,
     );
   }
