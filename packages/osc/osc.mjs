@@ -150,7 +150,7 @@ export async function superdirtOutput(hap, targetTime, cps = 1) {
  * @name osc
  * @tags external_io
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  */
 export const osc = register('osc', (pat) => {
   ensureMinimalOutput();

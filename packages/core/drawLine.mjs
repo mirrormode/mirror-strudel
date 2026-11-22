@@ -18,7 +18,7 @@ import Fraction, { gcd } from './fraction.mjs';
  * @tags visualization
  * @param {Pattern} pattern the pattern to use
  * @param {number} chars max number of characters (approximately)
- * @returns string
+ * @returns {string}
  * @example
  * const line = drawLine("0 [1 2 3]", 10); // |0--123|0--123
  * console.log(line);

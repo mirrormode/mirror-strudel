@@ -56,7 +56,7 @@ export async function doughOutput(hap, targetTime, cps = 1) {
  * @name dough
  * @tags external_io
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * $: chord("<Dm9 Dm11 Dm7>").offset("<-1 0 1 0>").voicing()
  * .phaser(3).fm(1.4).fmh(1.01)

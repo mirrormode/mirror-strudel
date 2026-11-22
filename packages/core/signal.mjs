@@ -477,7 +477,7 @@ export const scramble = register('scramble', (n, pat) => {
  * @tags math
  * @param {Function} func Function from seed (or undefined) to seed (or undefined)
  * @param {Pattern} pat Pattern to update
- * @returns Pattern
+ * @returns {Pattern}
  */
 export const withSeed = (func, pat) => {
   return new Pattern((state) => {
@@ -796,7 +796,7 @@ export const degradeByWith = register('degradeByWith', (withPat, x, pat) => {
  * @name degradeBy
  * @memberof Pattern
  * @param {number} amount - a number between 0 and 1
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").degradeBy(0.2)
  * @example
@@ -821,7 +821,7 @@ export const degradeBy = register(
  * @tags temporal
  * @name degrade
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").degrade()
  * @example
@@ -839,7 +839,7 @@ export const degrade = register('degrade', (pat) => pat._degradeBy(0.5), true, t
  * @name undegradeBy
  * @memberof Pattern
  * @param {number} amount - a number between 0 and 1
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").undegradeBy(0.2)
  * @example
@@ -867,7 +867,7 @@ export const undegradeBy = register(
  * @tags temporal
  * @name undegrade
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").undegrade()
  * @example
@@ -888,7 +888,7 @@ export const undegrade = register('undegrade', (pat) => pat._undegradeBy(0.5), t
  * @memberof Pattern
  * @param {number | Pattern} probability - a number between 0 and 1
  * @param {function} function - the transformation to apply
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").sometimesBy(.4, x=>x.speed("0.5"))
  */
@@ -907,7 +907,7 @@ export const sometimesBy = register('sometimesBy', function (patx, func, pat) {
  * @name sometimes
  * @memberof Pattern
  * @param {function} function - the transformation to apply
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").sometimes(x=>x.speed("0.5"))
  */
@@ -924,7 +924,7 @@ export const sometimes = register('sometimes', function (func, pat) {
  * @memberof Pattern
  * @param {number | Pattern} probability - a number between 0 and 1
  * @param {function} function - the transformation to apply
- * @returns Pattern
+ * @returns {Pattern}
  * @tags temporal
  * @example
  * s("bd,hh*8").someCyclesBy(.3, x=>x.speed("0.5"))
@@ -947,7 +947,7 @@ export const someCyclesBy = register('someCyclesBy', function (patx, func, pat) 
  *
  * @name someCycles
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @tags temporal
  * @example
  * s("bd,hh*8").someCycles(x=>x.speed("0.5"))
@@ -962,7 +962,7 @@ export const someCycles = register('someCycles', function (func, pat) {
  *
  * @name often
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @tags temporal
  * @example
  * s("hh*8").often(x=>x.speed("0.5"))
@@ -977,7 +977,7 @@ export const often = register('often', function (func, pat) {
  *
  * @name rarely
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @tags temporal
  * @example
  * s("hh*8").rarely(x=>x.speed("0.5"))
@@ -993,7 +993,7 @@ export const rarely = register('rarely', function (func, pat) {
  * @tags temporal
  * @name almostNever
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").almostNever(x=>x.speed("0.5"))
  */
@@ -1008,7 +1008,7 @@ export const almostNever = register('almostNever', function (func, pat) {
  * @tags temporal
  * @name almostAlways
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").almostAlways(x=>x.speed("0.5"))
  */
@@ -1023,7 +1023,7 @@ export const almostAlways = register('almostAlways', function (func, pat) {
  * @tags temporal
  * @name never
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").never(x=>x.speed("0.5"))
  */
@@ -1038,7 +1038,7 @@ export const never = register('never', function (_, pat) {
  * @tags temporal
  * @name always
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("hh*8").always(x=>x.speed("0.5"))
  */
@@ -1067,7 +1067,7 @@ export function _keyDown(keyname) {
  * @tags external_io
  * @name whenKey
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * s("bd(5,8)").whenKey("Control:j", x => x.segment(16).color("red")).whenKey("Control:i", x => x.fast(2).color("blue"))
  */
@@ -1084,7 +1084,7 @@ export const whenKey = register('whenKey', function (input, func, pat) {
  * @tags external_io
  * @name keyDown
  * @memberof Pattern
- * @returns Pattern
+ * @returns {Pattern}
  * @example
  * keyDown("Control:j").pick([s("bd(5,8)"), s("cp(3,8)")])
  */
