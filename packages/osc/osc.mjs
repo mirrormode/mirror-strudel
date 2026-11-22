@@ -57,9 +57,8 @@ export function parseControlsFromHap(hap, cps) {
 }
 
 let timeOrigin = performance.timeOrigin;
-export async function oscOutput(hap, targetTime, cps = 1) {
-  const ws = await connect();
 
+function getOscTimestamp(targetTime) {
   const timeMs = getClockBridge().getPerformanceTime(targetTime);
   if (!timeMs) {
     logger('[osc] clockbridge not ready');
@@ -73,44 +72,73 @@ export async function oscOutput(hap, targetTime, cps = 1) {
     // shift time after microsleep
     timeOrigin -= deprivation;
   }
-  const ts = timeOrigin + timeMs;
+  return timeOrigin + timeMs;
+}
+
+export async function oscOutput(hap, targetTime, cps = 1) {
+  const ws = await connect();
+  const ts = getOscTimestamp(targetTime);
+  if (!ts) {
+    return;
+  }
 
   const controls = parseControlsFromHap(hap, cps);
   const keyvals = Object.entries(controls).flat();
   const msg = { address: '/dirt/play', args: keyvals, timestamp: ts };
+
+  if ('oschost' in hap.value) {
+    msg.oschost = hap.value.oschost;
+  }
+  if ('oscport' in hap.value) {
+    msg.oscport = hap.value.oscport;
+  }
+
   ws.send(JSON.stringify(msg));
 }
 
-export async function superdirtTrigger(hap, currentTime, cps = 1, targetTime) {
+export async function superdirtOutput(hap, targetTime, cps = 1) {
   const ws = await connect();
+  const ts = getOscTimestamp(targetTime);
+  if (!ts) {
+    return;
+  }
+
   const controls = parseControlsFromHap(hap, cps);
-  const ts = collator.calculateTimestamp(currentTime, targetTime) * 1000;
 
-  let oschost = '127.0.0.1';
-  let oscport = 57120;
-  let bushost = oschost;
-  let busport = 57110;
+  const oschost = hap.value.oschost ?? '127.0.0.1';
+  const oscport = hap.value.oscport ?? 57120;
+  const bushost = oschost;
+  const busport = 57110;
 
-  for (const [k, v] of Object.entries(controls)) {
-    if (k.startsWith('^')) {
-      const bus_idval = v;
-      const msg = JSON.stringify({
-        oschost: bushost,
-        oscport: busport,
-        address: '/c_set',
-        args: bus_idval,
-        timestamp: ts,
-      });
-      // console.log('bus message', msg);
-      ws.send(msg);
-      // So they aren't sent with trigger messages
-      delete controls[k];
+  // send SuperDirt bus/control messages first
+  for (const [key, busIdVal] of Object.entries(controls)) {
+    if (key.startsWith('^')) {
+      ws.send(
+        JSON.stringify({
+          oschost: bushost,
+          oscport: busport,
+          address: '/c_set',
+          args: busIdVal,
+          timestamp: ts,
+        }),
+      );
+      // so they aren't sent with trigger messages
+      delete controls[key];
     }
   }
 
+  // only trigger samples on haps that actually begin here
   if (hap.hasOnset()) {
     const keyvals = Object.entries(controls).flat();
-    ws.send(JSON.stringify({ oschost, oscport, address: '/dirt/play', args: keyvals, timestamp: ts }));
+    ws.send(
+      JSON.stringify({
+        oschost,
+        oscport,
+        address: '/dirt/play',
+        args: keyvals,
+        timestamp: ts,
+      }),
+    );
   }
 }
 
@@ -128,4 +156,7 @@ export const osc = register('osc', (pat) => {
   ensureMinimalOutput();
   return pat.onSchedule(oscOutput);
 });
-export const superdirt = register('superdirt', (pat) => pat._processParts().onTrigger(superdirtTrigger));
+export const superdirt = register('superdirt', (pat) => {
+  ensureMinimalOutput();
+  return pat._processParts().onSchedule(superdirtOutput);
+});
