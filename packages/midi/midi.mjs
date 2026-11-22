@@ -290,6 +290,12 @@ function sendNote(note, velocity, duration, device, midichan, timeMs) {
  * @tags external_io
  * @param {string | number} midiport MIDI device name or index defaulting to 0
  * @param {object} options Additional MIDI configuration options
+ * @param {boolean} options.isController sending notes for midi controllers. Default is false
+ * @param {number} options.noteOffsetMs note-off offset to prevent glitching in ms. Default is 10 or firefox and 1 otherwise
+ * @param {number} options.midichannel default is 1
+ * @param {number} options.velocity default is 0.9
+ * @param {number} options.gain default is 1
+ * @param {string} options.midimap default is 'default'
  * @example
  * note("c4").midichan(1).midi('IAC Driver Bus 1')
  */

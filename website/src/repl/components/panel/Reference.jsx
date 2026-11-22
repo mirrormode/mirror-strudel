@@ -221,11 +221,18 @@ export const Reference = memo(function Reference() {
               ></p>
               {entry.params && entry.params.length > 0 && <p className="font-bold">Arguments</p>}
               <ul>
-                {entry.params?.map(({ name, type, description }, i) => (
-                  <li key={i}>
-                    {name} : {type?.names?.join(' | ')} {description ? <> - {getInnerText(description)}</> : ''}
-                  </li>
-                ))}
+                {entry.params?.map(({ name, type, description }, i) => {
+                  // Check if the param is actually the parameter of an object
+                  const objParamSeperator = name.indexOf('.');
+                  const isObjectParam = objParamSeperator !== -1;
+
+                  return (
+                    <li key={i} className={isObjectParam ? 'list-none' : ''}>
+                      {isObjectParam ? name.substring(objParamSeperator + 1) : name} : {type?.names?.join(' | ')}{' '}
+                      {description ? <> - {getInnerText(description)}</> : ''}
+                    </li>
+                  );
+                })}
               </ul>
               {entry.returns && (
                 <p>

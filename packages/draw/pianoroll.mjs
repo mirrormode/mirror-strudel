@@ -44,30 +44,30 @@ const getValue = (e) => {
  * @synonyms punchcard
  * @tags visualization
  * @param {Object} options Object containing all the optional following parameters as key value pairs:
- * @param {integer} cycles number of cycles to be displayed at the same time - defaults to 4
- * @param {number} playhead location of the active notes on the time axis - 0 to 1, defaults to 0.5
- * @param {boolean} vertical displays the roll vertically - 0 by default
- * @param {boolean} labels displays labels on individual notes (see the label function) - 0 by default
- * @param {boolean} flipTime reverse the direction of the roll - 0 by default
- * @param {boolean} flipValues reverse the relative location of notes on the value axis - 0 by default
- * @param {number} overscan lookup X cycles outside of the cycles window to display notes in advance - 1 by default
- * @param {boolean} hideNegative hide notes with negative time (before starting playing the pattern) - 0 by default
- * @param {boolean} smear notes leave a solid trace - 0 by default
- * @param {boolean} fold notes takes the full value axis width - 0 by default
- * @param {string} active hexadecimal or CSS color of the active notes - defaults to #FFCA28
- * @param {string} inactive hexadecimal or CSS color of the inactive notes - defaults to #7491D2
- * @param {string} background hexadecimal or CSS color of the background - defaults to transparent
- * @param {string} playheadColor hexadecimal or CSS color of the line representing the play head - defaults to white
- * @param {boolean} fill notes are filled with color (otherwise only the label is displayed) - 0 by default
- * @param {boolean} fillActive active notes are filled with color - 0 by default
- * @param {boolean} stroke notes are shown with colored borders - 0 by default
- * @param {boolean} strokeActive active notes are shown with colored borders - 0 by default
- * @param {boolean} hideInactive only active notes are shown - 0 by default
- * @param {boolean} colorizeInactive use note color for inactive notes - 1 by default
- * @param {string} fontFamily define the font used by notes labels - defaults to 'monospace'
- * @param {integer} minMidi minimum note value to display on the value axis - defaults to 10
- * @param {integer} maxMidi maximum note value to display on the value axis - defaults to 90
- * @param {boolean} autorange automatically calculate the minMidi and maxMidi parameters - 0 by default
+ * @param {integer} options.cycles number of cycles to be displayed at the same time - defaults to 4
+ * @param {number} options.playhead location of the active notes on the time axis - 0 to 1, defaults to 0.5
+ * @param {boolean} options.vertical displays the roll vertically - 0 by default
+ * @param {boolean} options.labels displays labels on individual notes (see the label function) - 0 by default
+ * @param {boolean} options.flipTime reverse the direction of the roll - 0 by default
+ * @param {boolean} options.flipValues reverse the relative location of notes on the value axis - 0 by default
+ * @param {number} options.overscan lookup X cycles outside of the cycles window to display notes in advance - 1 by default
+ * @param {boolean} options.hideNegative hide notes with negative time (before starting playing the pattern) - 0 by default
+ * @param {boolean} options.smear notes leave a solid trace - 0 by default
+ * @param {boolean} options.fold notes takes the full value axis width - 0 by default
+ * @param {string} options.active hexadecimal or CSS color of the active notes - defaults to #FFCA28
+ * @param {string} options.inactive hexadecimal or CSS color of the inactive notes - defaults to #7491D2
+ * @param {string} options.background hexadecimal or CSS color of the background - defaults to transparent
+ * @param {string} options.playheadColor hexadecimal or CSS color of the line representing the play head - defaults to white
+ * @param {boolean} options.fill notes are filled with color (otherwise only the label is displayed) - 0 by default
+ * @param {boolean} options.fillActive active notes are filled with color - 0 by default
+ * @param {boolean} options.stroke notes are shown with colored borders - 0 by default
+ * @param {boolean} options.strokeActive active notes are shown with colored borders - 0 by default
+ * @param {boolean} options.hideInactive only active notes are shown - 0 by default
+ * @param {boolean} options.colorizeInactive use note color for inactive notes - 1 by default
+ * @param {string} options.fontFamily define the font used by notes labels - defaults to 'monospace'
+ * @param {integer} options.minMidi minimum note value to display on the value axis - defaults to 10
+ * @param {integer} options.maxMidi maximum note value to display on the value axis - defaults to 90
+ * @param {boolean} options.autorange automatically calculate the minMidi and maxMidi parameters - 0 by default
  * @see _pianoroll
  * @example
  * note("c2 a2 eb2")

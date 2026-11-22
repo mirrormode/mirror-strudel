@@ -131,21 +131,21 @@ function drawSpiral(options) {
  * @name spiral
  * @tags visualization
  * @param {Object} options Object containing all the optional following parameters as key value pairs:
- * @param {number} stretch controls the rotations per cycle ratio, where 1 = 1 cycle / 360 degrees
- * @param {number} size the diameter of the spiral
- * @param {number} thickness line thickness
- * @param {string} cap style of line ends: butt (default), round, square
- * @param {string} inset number of rotations before spiral starts (default 3)
- * @param {string} playheadColor color of playhead, defaults to white
- * @param {number} playheadLength length of playhead in rotations, defaults to 0.02
- * @param {number} playheadThickness thickness of playheadrotations, defaults to thickness
- * @param {number} padding space around spiral
- * @param {number} steady steadyness of spiral vs playhead. 1 = spiral doesn't move, playhead does.
- * @param {number} activeColor color of active segment. defaults to foreground of theme
- * @param {number} inactiveColor color of inactive segments. defaults to gutterForeground of theme
- * @param {boolean} colorizeInactive wether or not to colorize inactive segments, defaults to 0
- * @param {boolean} fade wether or not past and future should fade out. defaults to 1
- * @param {boolean} logSpiral wether or not the spiral should be logarithmic. defaults to 0
+ * @param {number} options.stretch controls the rotations per cycle ratio, where 1 = 1 cycle / 360 degrees
+ * @param {number} options.size the diameter of the spiral
+ * @param {number} options.thickness line thickness
+ * @param {string} options.cap style of line ends: butt (default), round, square
+ * @param {string} options.inset number of rotations before spiral starts (default 3)
+ * @param {string} options.playheadColor color of playhead, defaults to white
+ * @param {number} options.playheadLength length of playhead in rotations, defaults to 0.02
+ * @param {number} options.playheadThickness thickness of playheadrotations, defaults to thickness
+ * @param {number} options.padding space around spiral
+ * @param {number} options.steady steadyness of spiral vs playhead. 1 = spiral doesn't move, playhead does.
+ * @param {number} options.activeColor color of active segment. defaults to foreground of theme
+ * @param {number} options.inactiveColor color of inactive segments. defaults to gutterForeground of theme
+ * @param {boolean} options.colorizeInactive wether or not to colorize inactive segments, defaults to 0
+ * @param {boolean} options.fade wether or not past and future should fade out. defaults to 1
+ * @param {boolean} options.logSpiral wether or not the spiral should be logarithmic. defaults to 0
  * @example
  * note("c2 a2 eb2")
  * .euclid(5,8)
