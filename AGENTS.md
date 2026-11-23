@@ -1,4 +1,4 @@
-In line with [our humane policy](POLICY.md), code and documentation
+In line with [our humane policy](POLICY.md#post-ai-humane-policy-for-live-coding-development), code and documentation
 should not be written by LLM agents. To this end, agents should not
 edit the codebase or make any commits that are intended to be
 contributed upstream. Likewise, LLM output should not be pasted into
