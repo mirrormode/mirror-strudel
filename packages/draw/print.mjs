@@ -63,12 +63,13 @@ function appendLine(el, text, maxLines) {
  *
  * @name print
  * @tags visualization
- * @param {number} width widget width in px, `_print` only. defaults to 600
- * @param {number} height widget height in px, `_print` only. defaults to 100
- * @param {number} maxLines max lines kept, `_print` only. defaults to 500
- * @param {number} round decimal digits for the event time. defaults to 4. `0`
+ * @param {object} options object that may have the following arguments
+ * @param {number} options.width widget width in px, `_print` only. defaults to 600
+ * @param {number} options.height widget height in px, `_print` only. defaults to 100
+ * @param {number} options.maxLines max lines kept, `_print` only. defaults to 500
+ * @param {number} options.round decimal digits for the event time. defaults to 4. `0`
  *     shows only the cycle
- * @param {number} padding integer digits reserved for the cycle, so it stays
+ * @param {number} options.padding integer digits reserved for the cycle, so it stays
  *     aligned once cycles reach 10 or 100. defaults to 3
  * @example
  * s("bd sd hh cp").print()

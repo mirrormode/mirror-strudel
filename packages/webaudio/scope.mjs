@@ -99,12 +99,13 @@ function clearScreen(smear = 0, smearRGB = `0,0,0`, ctx = getDrawContext()) {
  * Renders an oscilloscope for the frequency domain of the audio signal.
  * @name fscope
  * @tags visualization
- * @param {string} color line color as hex or color name. defaults to white.
- * @param {number} scale scales the y-axis. Defaults to 0.25
- * @param {number} pos y-position relative to screen height. 0 = top, 1 = bottom of screen
- * @param {number} lean y-axis alignment where 0 = top and 1 = bottom
- * @param {number} min min value
- * @param {number} max max value
+ * @param {object} config object that may have the following arguments
+ * @param {string} config.color line color as hex or color name. defaults to white.
+ * @param {number} config.scale scales the y-axis. Defaults to 0.25
+ * @param {number} config.pos y-position relative to screen height. 0 = top, 1 = bottom of screen
+ * @param {number} config.lean y-axis alignment where 0 = top and 1 = bottom
+ * @param {number} config.min min value
+ * @param {number} config.max max value
  * @example
  * s("sawtooth").fscope()
  */

@@ -123,7 +123,7 @@ export class Pattern {
    * pattern of functions.
    * @tags functional
    * @param {Function} whole_func
-   * @param {Function} func
+   * @param {Function} pat_val
    * @noAutocomplete
    * @returns {Pattern}
    */
@@ -1143,7 +1143,8 @@ const COMPOSERS = {
    *
    * See examples below
    * @name set
-   * @param {Pattern} pat
+   * @param {Pattern} a
+   * @param {Pattern} b
    * @returns {Pattern}
    * @memberof Pattern
    * @tags internals, combiners
@@ -1168,7 +1169,7 @@ const COMPOSERS = {
    *
    * See examples below
    * @name keep
-   * @param {Pattern} pat
+   * @param {Pattern} a
    * @memberof Pattern
    * @returns {Pattern}
    * @tags internals, combiners
@@ -1524,7 +1525,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
  * Note that we say the _default_ method, because alignments can also be set explicitly with calls like
  * 'add.mix', 'set.squeeze', etc.
  *
- * @param {string} method Default join method to use. Options: 'in', 'out', 'mix', 'squeeze', 'squeezeout', 'reset', 'restart', 'poly'
+ * @param {string} alignment Default join method to use. Options: 'in', 'out', 'mix', 'squeeze', 'squeezeout', 'reset', 'restart', 'poly'
  * @tags combiners
  * @example
  * setDefaultJoin('mix') // also try 'in', 'out', 'squeeze', etc.
@@ -1832,7 +1833,7 @@ export function slowcat(...pats) {
 
 /** Concatenation: combines a list of patterns, switching between them successively, one per cycle. Unlike slowcat, this version will skip cycles.
  * @tags combiners
- * @param {...any} items - The items to concatenate
+ * @param {...any} pats The items to concatenate
  * @return {Pattern}
  */
 export function slowcatPrime(...pats) {
@@ -1851,7 +1852,7 @@ export function slowcatPrime(...pats) {
 /** The given items are con**cat**enated, where each one takes one cycle.
  *
  * @tags combiners
- * @param {...any} items - The items to concatenate
+ * @param {...any} pats The items to concatenate
  * @synonyms slowcat
  * @return {Pattern}
  * @example
@@ -2310,9 +2311,9 @@ export const { fastGap, fastgap } = register(['fastGap', 'fastgap'], function (f
     const newWhole = !hap.whole
       ? undefined
       : new TimeSpan(
-          newPart.begin.sub(begin.sub(hap.whole.begin).div(factor)),
-          newPart.end.add(hap.whole.end.sub(end).div(factor)),
-        );
+        newPart.begin.sub(begin.sub(hap.whole.begin).div(factor)),
+        newPart.end.add(hap.whole.end.sub(end).div(factor)),
+      );
     return new Hap(newWhole, newPart, hap.value, hap.context);
   };
   return pat.withQuerySpanMaybe(qf).withHap(ef).splitQueries();
@@ -4353,7 +4354,7 @@ const _ensureListPattern = (list) => {
  *
  * @name partials
  * @tags superdough
- * @param {number[] | Pattern} magnitudes List of [0, 1] magnitudes for partials. 0th entry is the fundamental harmonic (i.e. DC offset is skipped)
+ * @param {number[] | Pattern} list [0, 1] magnitudes for partials. 0th entry is the fundamental harmonic (i.e. DC offset is skipped)
  * @memberof Pattern
  * @example
  * s("user").seg(16).n(irand(8)).scale("A:major")
@@ -4376,7 +4377,7 @@ export const partials = (list) => {
  *
  * @name phases
  * @tags superdough
- * @param {number[] | Pattern} phases List of [0, 1) phases for partials. 0th entry is the fundamental phase (i.e. DC offset is skipped)
+ * @param {number[] | Pattern} list of [0, 1) phases for partials. 0th entry is the fundamental phase (i.e. DC offset is skipped)
  * @memberof Pattern
  * @example
  * // Phase cancellation

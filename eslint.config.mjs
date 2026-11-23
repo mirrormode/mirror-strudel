@@ -100,19 +100,19 @@ export default [
       "jsdoc/require-jsdoc": 0,
       "jsdoc/check-tag-names": 0,
       "jsdoc/tag-lines": 0,
-      "jsdoc/valid-types": 0,
       "jsdoc/no-undefined-types": 0,
       "jsdoc/require-returns-description": 0,
       "jsdoc/require-param-description": 0,
       "jsdoc/no-multi-asterisks": 0,
       "jsdoc/multiline-blocks": 0,
       "jsdoc/check-alignment": 0,
+      "jsdoc/valid-types": 0,
       //the good stuff
       "jsdoc/reject-any-type": 0,
       "jsdoc/reject-function-type": 0,
       "jsdoc/require-returns": 0,
       "jsdoc/require-param": 0,
-      "jsdoc/check-param-names": 0,
+      "jsdoc/check-param-names": "warn",
     }
   })
 ];

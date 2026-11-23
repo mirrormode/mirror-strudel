@@ -324,7 +324,7 @@ export const getRandsAtTime = (t, n = 1, seed = 0) => {
  *
  * @name useRNG
  * @tags generators, math
- * @param {string} mod - Mode. One of 'legacy', 'precise'
+ * @param {string} mode One of 'legacy', 'precise'
  * @example
  * useRNG('legacy')
  * // Repeats every 300 cycles
@@ -528,7 +528,7 @@ export const _brandBy = (p) => rand.fmap((x) => x < p);
  *
  * @name brandBy
  * @tags generators
- * @param {number} probability - a number between 0 and 1
+ * @param {number} pPat probability - a number between 0 and 1
  * @example
  * s("hh*10").pan(brandBy(0.2))
  */
@@ -551,7 +551,7 @@ export const _irand = (i) => rand.fmap((x) => Math.trunc(x * i));
  *
  * @name irand
  * @tags generators
- * @param {number} n max value (exclusive)
+ * @param {number} ipat max value (exclusive)
  * @example
  * // randomly select scale notes from 0 - 7 (= C to C)
  * n(irand(8)).struct("x x*2 x x*3").scale("C:minor")

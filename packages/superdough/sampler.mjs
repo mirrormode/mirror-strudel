@@ -39,8 +39,8 @@ function humanFileSize(bytes, si) {
  * @name getDuration
  * @synonym getDur
  * @tags samples
- * @param {string} sampleName
- * @param {number} (optional) n
+ * @param {string} s sampleName
+ * @param {number} [n]
  *
  * @example
  * // Set a patterns cycle length to exactly the length of the sample
