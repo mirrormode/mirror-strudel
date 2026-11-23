@@ -145,7 +145,7 @@ export const getFrequency = (hap) => {
     typeof hap == 'object'
       ? hap
       : // default: interpret value as midi note.
-      { value: hap, context: { type: 'note' } };
+        { value: hap, context: { type: 'note' } };
   // if value is number => interpret as midi number as long as its not marked as frequency
   if (typeof value === 'object') {
     if (value.freq) {

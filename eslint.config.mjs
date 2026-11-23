@@ -97,18 +97,18 @@ export default [
   jsdoc({
     config: 'flat/recommended-error',
     rules: {
-      "jsdoc/no-undefined-types": ["error", { definedTypes: ["Pattern", "Hap", "KabelsalatExpression"] }],
-      "jsdoc/check-tag-names": ["error", { definedTags: ["tags", "synonyms", "noAutocomplete", "superdirtOnly"] }],
-      "jsdoc/no-defaults": 0, //removes defaults with not alternative
-      "jsdoc/require-jsdoc": 0,
-      "jsdoc/tag-lines": 0,
-      "jsdoc/require-returns-description": 0,
-      "jsdoc/require-param-description": 0,
-      "jsdoc/no-multi-asterisks": 0,
-      "jsdoc/multiline-blocks": 0,
-      "jsdoc/check-alignment": 0,
-      "jsdoc/reject-any-type": 0,
-      "jsdoc/reject-function-type": 0
-    }
-  })
+      'jsdoc/no-undefined-types': ['error', { definedTypes: ['Pattern', 'Hap', 'KabelsalatExpression'] }],
+      'jsdoc/check-tag-names': ['error', { definedTags: ['tags', 'synonyms', 'noAutocomplete', 'superdirtOnly'] }],
+      'jsdoc/no-defaults': 0, //removes defaults with not alternative
+      'jsdoc/require-jsdoc': 0,
+      'jsdoc/tag-lines': 0,
+      'jsdoc/require-returns-description': 0,
+      'jsdoc/require-param-description': 0,
+      'jsdoc/no-multi-asterisks': 0,
+      'jsdoc/multiline-blocks': 0,
+      'jsdoc/check-alignment': 0,
+      'jsdoc/reject-any-type': 0,
+      'jsdoc/reject-function-type': 0,
+    },
+  }),
 ];

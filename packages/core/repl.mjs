@@ -316,15 +316,15 @@ export function repl({
 
 export const getSchedule =
   ({ onSchedule }) =>
-    async (hap, t, cps) => {
-      try {
-        if (!hap.context.onSchedule || !hap.context.dominantSchedule) {
-          await onSchedule(hap, t, cps);
-        }
-        if (hap.context.onSchedule) {
-          await hap.context.onSchedule(hap, t, cps);
-        }
-      } catch (err) {
-        errorLogger(err, 'getSchedule');
+  async (hap, t, cps) => {
+    try {
+      if (!hap.context.onSchedule || !hap.context.dominantSchedule) {
+        await onSchedule(hap, t, cps);
       }
-    };
+      if (hap.context.onSchedule) {
+        await hap.context.onSchedule(hap, t, cps);
+      }
+    } catch (err) {
+      errorLogger(err, 'getSchedule');
+    }
+  };
