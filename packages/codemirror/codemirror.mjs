@@ -44,9 +44,9 @@ export const extensions = {
   isMultiCursorEnabled: (on) =>
     on
       ? [
-          EditorState.allowMultipleSelections.of(true),
-          EditorView.clickAddsSelectionRange.of((ev) => ev.metaKey || ev.ctrlKey),
-        ]
+        EditorState.allowMultipleSelections.of(true),
+        EditorView.clickAddsSelectionRange.of((ev) => ev.metaKey || ev.ctrlKey),
+      ]
       : [],
 };
 export const compartments = Object.fromEntries(Object.keys(extensions).map((key) => [key, new Compartment()]));
@@ -398,7 +398,7 @@ function s4() {
 /**
  * Overrides the css of highlighted events. Make sure to use single quotes!
  * @name markcss
- * @tag visualization
+ * @tags visualization
  * @example
  * note("c a f e")
  * .markcss('text-decoration:underline')

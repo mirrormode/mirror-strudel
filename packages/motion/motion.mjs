@@ -5,7 +5,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The accelerometer's x-axis value ranges from 0 to 1.
  * @name accelerationX
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms accX
  * @tags external_io
  * @example
@@ -16,7 +16,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The accelerometer's y-axis value ranges from 0 to 1.
  * @name accelerationY
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms accY
  * @tags external_io
  * @example
@@ -27,7 +27,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The accelerometer's z-axis value ranges from 0 to 1.
  * @name accelerationZ
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms accZ
  * @tags external_io
  * @example
@@ -38,7 +38,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's gravity x-axis value ranges from 0 to 1.
  * @name gravityX
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms gravX
  * @tags external_io
  * @example
@@ -49,7 +49,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's gravity y-axis value ranges from 0 to 1.
  * @name gravityY
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms gravY
  * @tags external_io
  * @example
@@ -60,7 +60,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's gravity z-axis value ranges from 0 to 1.
  * @name gravityZ
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms gravZ
  * @tags external_io
  * @example
@@ -71,7 +71,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's rotation around the alpha-axis value ranges from 0 to 1.
  * @name rotationAlpha
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms rotA, rotZ, rotationZ
  * @tags external_io
  * @example
@@ -82,7 +82,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's rotation around the beta-axis value ranges from 0 to 1.
  * @name rotationBeta
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms rotB, rotX, rotationX
  * @tags external_io
  * @example
@@ -93,7 +93,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's rotation around the gamma-axis value ranges from 0 to 1.
  * @name rotationGamma
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms rotG, rotY, rotationY
  * @tags external_io
  * @example
@@ -104,7 +104,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's orientation alpha value ranges from 0 to 1.
  * @name orientationAlpha
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms oriA, oriZ, orientationZ
  * @tags external_io
  * @example
@@ -115,7 +115,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's orientation beta value ranges from 0 to 1.
  * @name orientationBeta
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms oriB, oriX, orientationX
  * @tags external_io
  * @example
@@ -126,7 +126,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's orientation gamma value ranges from 0 to 1.
  * @name orientationGamma
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms oriG, oriY, orientationY
  * @tags external_io
  * @example
@@ -137,7 +137,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's absolute orientation alpha value ranges from 0 to 1.
  * @name absoluteOrientationAlpha
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms absOriA, absOriZ, absoluteOrientationZ
  * @tags external_io
  * @example
@@ -148,7 +148,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's absolute orientation beta value ranges from 0 to 1.
  * @name absoluteOrientationBeta
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms absOriB, absOriX, absoluteOrientationX
  * @tags external_io
  * @example
@@ -159,7 +159,7 @@ import { signal } from '../core/signal.mjs';
 /**
  *  The device's absolute orientation gamma value ranges from 0 to 1.
  * @name absoluteOrientationGamma
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms absOriG, absOriY, absoluteOrientationY
  * @tags external_io
  * @example

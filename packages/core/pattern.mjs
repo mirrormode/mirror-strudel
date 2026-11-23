@@ -3610,7 +3610,7 @@ export function stepalt(...groups) {
  * Takes the given number of steps from a pattern (dropping the rest).
  * A positive number will take steps from the start of a pattern, and a negative number from the end.
  * @tags stepwise
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * "bd cp ht mt".take("2").sound()
  * // The same as "bd cp".sound()
@@ -3655,7 +3655,7 @@ export const take = stepRegister('take', function (i, pat) {
  * Drops the given number of steps from a pattern.
  * A positive number will drop steps from the start of a pattern, and a negative number from the end.
  * @tags stepwise
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * "tha dhi thom nam".drop("1").sound().bank("mridangam")
  * @example
@@ -3787,7 +3787,7 @@ export const growlist = (amount, pat) => pat.growlist(amount);
  * that number of times.
  * A positive number will progressively drop steps from the start of a pattern, and a negative number from the end.
  * @tags stepwise
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * "tha dhi thom nam".shrink("1").sound()
  * .bank("mridangam")
@@ -3827,7 +3827,7 @@ export const shrink = register(
  * that number of times.
  * A positive number will progressively grow steps from the start of a pattern, and a negative number from the end.
  * @tags stepwise
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * "tha dhi thom nam".grow("1").sound()
  * .bank("mridangam")

@@ -37,7 +37,7 @@ function humanFileSize(bytes, si) {
  * Note: `must` be called with await, otherwise you'll get a pending Promise object.
  *
  * @name getDuration
- * @synonym getDur
+ * @synonyms getDur
  * @tags samples
  * @param {string} s sampleName
  * @param {number} [n]

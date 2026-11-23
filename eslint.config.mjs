@@ -98,9 +98,9 @@ export default [
     config: 'flat/recommended-error',
     rules: {
       "jsdoc/no-undefined-types": ["error", { definedTypes: ["Pattern", "Hap", "KabelsalatExpression"] }],
+      "jsdoc/check-tag-names": ["error", { definedTags: ["tags", "synonyms", "noAutocomplete", "superdirtOnly"] }],
       "jsdoc/no-defaults": 0, //removes defaults with not alternative
       "jsdoc/require-jsdoc": 0,
-      "jsdoc/check-tag-names": 0,
       "jsdoc/tag-lines": 0,
       "jsdoc/require-returns-description": 0,
       "jsdoc/require-param-description": 0,

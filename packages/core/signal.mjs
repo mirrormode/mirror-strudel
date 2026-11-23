@@ -42,7 +42,7 @@ export const signal = (func) => {
 /**
  *  A sawtooth signal between 0 and 1.
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  * @example
  * note("<c3 [eb3,g3] g2 [g3,bb3]>*8")
@@ -57,7 +57,7 @@ export const saw = signal((t) => _mod(t, 1));
 /**
  *  A sawtooth signal between -1 and 1 (like `saw`, but bipolar).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const saw2 = saw.toBipolar();
@@ -65,7 +65,7 @@ export const saw2 = saw.toBipolar();
 /**
  *  A sawtooth signal between 1 and 0 (like `saw`, but flipped).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  * @example
  * note("<c3 [eb3,g3] g2 [g3,bb3]>*8")
@@ -80,7 +80,7 @@ export const isaw = signal((t) => 1 - _mod(t, 1));
 /**
  *  A sawtooth signal between 1 and -1 (like `saw2`, but flipped).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const isaw2 = isaw.toBipolar();
@@ -88,14 +88,14 @@ export const isaw2 = isaw.toBipolar();
 /**
  *  A sine signal between -1 and 1 (like `sine`, but bipolar).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const sine2 = signal((t) => Math.sin(Math.PI * 2 * t));
 
 /**
  *  A sine signal between 0 and 1.
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  * @example
  * n(sine.segment(16).range(0,15))
@@ -107,7 +107,7 @@ export const sine = sine2.fromBipolar();
 /**
  *  A cosine signal between 0 and 1.
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  * @example
  * n(stack(sine,cosine).segment(16).range(0,15))
@@ -119,14 +119,14 @@ export const cosine = sine._early(Fraction(1).div(4));
 /**
  *  A cosine signal between -1 and 1 (like `cosine`, but bipolar).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const cosine2 = sine2._early(Fraction(1).div(4));
 
 /**
  *  A square signal between 0 and 1.
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  * @example
  * n(square.segment(4).range(0,7)).scale("C:minor")
@@ -137,7 +137,7 @@ export const square = signal((t) => Math.floor(_mod(t * 2, 2)));
 /**
  *  A square signal between -1 and 1 (like `square`, but bipolar).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const square2 = square.toBipolar();
@@ -145,7 +145,7 @@ export const square2 = square.toBipolar();
 /**
  *  A square signal between 1 and 0 (like `square` but flipped).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const isquare = signal((t) => 1 - Math.floor(_mod(t * 2, 2)));
@@ -153,7 +153,7 @@ export const isquare = signal((t) => 1 - Math.floor(_mod(t * 2, 2)));
 /**
  *  A square signal between 1 and -1 (like `isquare`, but bipolar).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const isquare2 = isquare.toBipolar();
@@ -161,7 +161,7 @@ export const isquare2 = isquare.toBipolar();
 /**
  *  A triangle signal between 0 and 1.
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  * @example
  * n(tri.segment(8).range(0,7)).scale("C:minor")
@@ -172,7 +172,7 @@ export const tri = fastcat(saw, isaw);
 /**
  *  A triangle signal between -1 and 1 (like `tri`, but bipolar).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const tri2 = fastcat(saw2, isaw2);
@@ -180,7 +180,7 @@ export const tri2 = fastcat(saw2, isaw2);
 /**
  *  An inverted triangle signal between 1 and 0 (like `tri`, but flipped).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  * @example
  * n(itri.segment(8).range(0,7)).scale("C:minor")
@@ -191,7 +191,7 @@ export const itri = fastcat(isaw, saw);
 /**
  *  An inverted triangle signal between -1 and 1 (like `itri`, but bipolar).
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const itri2 = fastcat(isaw2, saw2);
@@ -199,7 +199,7 @@ export const itri2 = fastcat(isaw2, saw2);
 /**
  *  A signal representing the cycle time.
  *
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags generators
  */
 export const time = signal(id);
@@ -208,7 +208,7 @@ export const time = signal(id);
  *  The mouse's x position value ranges from 0 to 1.
  * @name mousex
  * @synonyms mouseX
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags external_io
  * @example
  * n(mousex.segment(4).range(0,7)).scale("C:minor")
@@ -219,7 +219,7 @@ export const time = signal(id);
  *  The mouse's y position value ranges from 0 to 1.
  * @name mousey
  * @synonyms mouseY
- * @return {Pattern}
+ * @returns {Pattern}
  * @tags external_io
  * @example
  * n(mousey.segment(4).range(0,7)).scale("C:minor")
