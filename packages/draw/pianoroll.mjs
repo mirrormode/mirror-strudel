@@ -288,8 +288,8 @@ export function getDrawOptions(drawTime, options = {}) {
 
 export const getPunchcardPainter =
   (options = {}) =>
-  (ctx, time, haps, drawTime) =>
-    __pianoroll({ ctx, time, haps, ...getDrawOptions(drawTime, options) });
+    (ctx, time, haps, drawTime) =>
+      __pianoroll({ ctx, time, haps, ...getDrawOptions(drawTime, options) });
 
 Pattern.prototype.punchcard = function (options) {
   return this.onPaint(getPunchcardPainter(options));
@@ -301,6 +301,7 @@ Pattern.prototype.punchcard = function (options) {
  *
  * @name wordfall
  * @tags visualization
+ * @returns {Pattern}
  */
 Pattern.prototype.wordfall = function (options) {
   return this.punchcard({ vertical: 1, labels: 1, stroke: 0, fillActive: 1, active: 'white', ...options });

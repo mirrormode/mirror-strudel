@@ -325,6 +325,7 @@ export const getRandsAtTime = (t, n = 1, seed = 0) => {
  * @name useRNG
  * @tags generators, math
  * @param {string} mode One of 'legacy', 'precise'
+ * @returns {void}
  * @example
  * useRNG('legacy')
  * // Repeats every 300 cycles
@@ -336,6 +337,7 @@ export const useRNG = (mode = 'legacy') => (RNG_MODE = mode);
 /**
  * A discrete pattern of numbers from 0 to n-1
  * @tags generators
+ * @returns {Pattern}
  * @example
  * n(run(4)).scale("C4:pentatonic")
  * // n("0 1 2 3").scale("C4:pentatonic")
@@ -348,6 +350,7 @@ export const run = (n) => saw.range(0, n).round().segment(n);
  * @name binary
  * @tags generators
  * @param {number} n - input number to convert to binary
+ * @returns {Pattern}
  * @example
  * "hh".s().struct(binary(5))
  * // "hh".s().struct("1 0 1")
@@ -364,6 +367,7 @@ export const binary = (n) => {
  * @tags generators
  * @param {number} n - input number to convert to binary
  * @param {number} nBits - pattern length, defaults to 16
+ * @returns {Pattern}
  * @example
  * "hh".s().struct(binaryN(55532, 16))
  * // "hh".s().struct("1 1 0 1 1 0 0 0 1 1 1 0 1 1 0 0")
@@ -381,6 +385,8 @@ export const binaryN = (n, nBits = 16) => {
  * @name binaryL
  * @tags generators
  * @param {number} n - input number to convert to binary
+ * @returns {Pattern}
+ * @example
  * s("saw").seg(8)
  *   .partials(binaryL(irand(4096).add(1)))
  */
@@ -396,6 +402,7 @@ export const binaryL = (n) => {
  * @tags generators
  * @param {number} n - input number to convert to binary
  * @param {number} nBits - pattern length, defaults to 16
+ * @returns {Pattern}
  */
 export const binaryNL = (n, nBits = 16) => {
   return reify(n)
@@ -415,6 +422,7 @@ export const binaryNL = (n, nBits = 16) => {
  * @name randL
  * @tags generators
  * @param {number} n Number of random numbers to sample
+ * @returns {Pattern}
  * @example
  * s("saw").seg(16).n(irand(12)).scale("F1:minor")
  *   .partials(randL(8))
@@ -529,6 +537,7 @@ export const _brandBy = (p) => rand.fmap((x) => x < p);
  * @name brandBy
  * @tags generators
  * @param {number} pPat probability - a number between 0 and 1
+ * @returns {Pattern}
  * @example
  * s("hh*10").pan(brandBy(0.2))
  */
@@ -552,6 +561,7 @@ export const _irand = (i) => rand.fmap((x) => Math.trunc(x * i));
  * @name irand
  * @tags generators
  * @param {number} ipat max value (exclusive)
+ * @returns {Pattern}
  * @example
  * // randomly select scale notes from 0 - 7 (= C to C)
  * n(irand(8)).struct("x x*2 x x*3").scale("C:minor")

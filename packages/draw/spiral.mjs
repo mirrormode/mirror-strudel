@@ -146,6 +146,7 @@ function drawSpiral(options) {
  * @param {boolean} options.colorizeInactive wether or not to colorize inactive segments, defaults to 0
  * @param {boolean} options.fade wether or not past and future should fade out. defaults to 1
  * @param {boolean} options.logSpiral wether or not the spiral should be logarithmic. defaults to 0
+ * @returns {Pattern}
  * @example
  * note("c2 a2 eb2")
  * .euclid(5,8)

@@ -187,6 +187,7 @@ export function registerWaveTable(key, tables, params) {
  *
  * @name tables
  * @tags wavetable
+ * @returns {void}
  */
 export const tables = async (url, frameLen, json, options = {}) => {
   if (json !== undefined) return _processTables(json, url, frameLen);

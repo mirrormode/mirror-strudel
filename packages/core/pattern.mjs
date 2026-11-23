@@ -109,10 +109,6 @@ export class Pattern {
     return new Pattern((state) => this.query(func(state)));
   }
 
-  /**
-   * see `withValue`
-   * @noAutocomplete
-   */
   fmap(func) {
     return this.withValue(func);
   }
@@ -693,6 +689,7 @@ export class Pattern {
    * intended for use in tests.
    * @tags internals
    * @noAutocomplete
+   * @returns {Pattern}
    */
   defragmentHaps() {
     // remove continuous haps
@@ -762,6 +759,7 @@ export class Pattern {
    * Accessor for a list of values returned by querying the first cycle.
    * @tags internals
    * @noAutocomplete
+   * @returns {number[]}
    */
   get firstCycleValues() {
     return this.firstCycle().map((hap) => hap.value);
@@ -771,6 +769,7 @@ export class Pattern {
    * More human-readable version of the `firstCycleValues` accessor.
    * @tags internals
    * @noAutocomplete
+   * @returns {string[]}
    */
   get showFirstCycle() {
     return this.firstCycle().map(
@@ -797,7 +796,7 @@ export class Pattern {
   }
 
   /**
-   * @Returns {Pattern} a new pattern with all values parsed as numerals.
+   * @returns {Pattern} a new pattern with all values parsed as numerals.
    * @tags internals
    */
   asNumber() {
@@ -930,6 +929,7 @@ export class Pattern {
    * Attaches a function that is called for each hap onset.
    * @name onSchedule
    * @memberof Pattern
+   * @returns {Pattern}
    * @example
    * s("bd sd").onSchedule((hap, time, cps) => {
    *   console.log('hap scheduled', time, cps);
@@ -966,6 +966,7 @@ export class Pattern {
    * @tags visualization
    * @name log
    * @memberof Pattern
+   * @returns {Pattern}
    * @example
    * s("bd sd").log()
    */
@@ -981,6 +982,7 @@ export class Pattern {
    * @tags visualization
    * @name logValues
    * @memberof Pattern
+   * @returns {Pattern}
    * @example
    * s("bd sd").gain("0.25 0.5 1").n("2 1 0").logValues()
    */
@@ -1015,6 +1017,7 @@ export class Pattern {
    * @tags temporal
    * @name into
    * @memberof Pattern
+   * @returns {Pattern}
    * @example
    * sound("bd sd ht lt").into("1 0", hurry(2))
    */
@@ -1461,6 +1464,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
    * Applies the given structure to the pattern:
    *
    * @tags temporal
+   * @returns {Pattern}
    * @example
    * note("c,eb,g")
    *   .struct("x ~ x ~ ~ x ~ x ~ ~ ~ x ~ x ~ ~")
@@ -1477,6 +1481,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
    *
    * @tags temporal
    * @memberof Pattern
+   * @returns {Pattern}
    * @example
    * note("c [eb,g] d [eb,g]").mask("<1 [0 1]>")
    */
@@ -1491,6 +1496,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
    *
    * @tags temporal
    * @memberof Pattern
+   * @returns {Pattern}
    * @example
    * s("[<bd lt> sd]*2, hh*8").reset("<x@3 x(5,8)>")
    */
@@ -1506,6 +1512,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
    *
    * @tags temporal
    * @memberof Pattern
+   * @returns {Pattern}
    * @example
    * s("[<bd lt> sd]*2, hh*8").restart("<x@3 x(5,8)>")
    */
@@ -1570,6 +1577,7 @@ export const pm = polymeter;
  * @name gap
  * @tags generators
  * @param  {number} steps
+ * @returns {Pattern}
  * @example
  * gap(3) // "~@3"
  */
@@ -1649,7 +1657,7 @@ export function sequenceP(pats) {
  * The given items are played at the same time at the same length.
  *
  * @tags temporal
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms polyrhythm, pr
  * @example
  * stack("g3", "b3", ["e4", "d4"]).note()
@@ -1702,7 +1710,7 @@ function _stackWith(func, pats) {
  *
  * @name stackLeft
  * @tags temporal, stepwise, combiners
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * stackLeft("0 1 2 3", "3 4", "[4 5 6] 7 8 9 10").scale("c:minor").note()
  * @example
@@ -1721,7 +1729,7 @@ export function stackLeft(...pats) {
  *
  * @name stackRight
  * @tags temporal, stepwise, combiners
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * stackRight("0 1 2 3", "3 4", "[4 5 6] 7 8 9 10").scale("c:minor").note()
  * @example
@@ -1740,7 +1748,7 @@ export function stackRight(...pats) {
  * @name stackCenter
  * @tags temporal, stepwise, combiners
  * @synonyms stackCentre
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * stackCenter("0 1 2 3", "3 4", "[4 5 6] 7 8 9 10").scale("c:minor").note()
  * @example
@@ -1769,7 +1777,7 @@ export function stackCentre(...pats) {
  * Shorthand for `pm(patterns).pace(m)` where m is the max step count in the input patterns
  * @name stackRepeat
  * @tags temporal, stepwise, combiners
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * stackRepeat("0 1 2 3", "3 4", "[4 5 6] 7 8 9 10").scale("c:minor").note()
  * @example
@@ -1801,7 +1809,7 @@ export function stackBy(by, ...pats) {
  * Concatenation: combines a list of patterns, switching between them successively, one per cycle.
  *
  * @tags combiners
- * @return {Pattern}
+ * @returns {Pattern}
  * @synonyms cat
  * @example
  * slowcat("e5", "b4", ["d5", "c5"])
@@ -1834,7 +1842,7 @@ export function slowcat(...pats) {
 /** Concatenation: combines a list of patterns, switching between them successively, one per cycle. Unlike slowcat, this version will skip cycles.
  * @tags combiners
  * @param {...any} pats The items to concatenate
- * @return {Pattern}
+ * @returns {Pattern}
  */
 export function slowcatPrime(...pats) {
   if (!pats.length) {
@@ -1854,7 +1862,7 @@ export function slowcatPrime(...pats) {
  * @tags combiners
  * @param {...any} pats The items to concatenate
  * @synonyms slowcat
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * cat("e5", "b4", ["d5", "c5"]).note()
  * // "<e5 b4 [d5 c5]>".note()
@@ -1874,7 +1882,7 @@ export function cat(...pats) {
  * Takes a variable number of arrays with two elements specifying the number of cycles and the pattern to use.
  *
  * @tags combiners
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * arrange(
  *   [4, "<c a f e>(3,8)"],
@@ -1892,7 +1900,7 @@ export function arrange(...sections) {
  * Unlike `arrange`, you specify a start and stop time for each pattern rather than duration, which
  * means that patterns can overlap.
  * @tags combiners
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * seqPLoop(
  * [0, 2, "bd(3,8)"],
@@ -1930,17 +1938,13 @@ export function fastcat(...pats) {
   return result;
 }
 
-/** See `fastcat`
- * @name sequence
- * @tags combiners
- */
 export function sequence(...pats) {
   return fastcat(...pats);
 }
 
 /** Like **cat**, but the items are crammed into one cycle.
  * @tags combiners
- * @synonyms fastcat
+ * @synonyms fastcat, sequence
  * @example
  * seq("e5", "b4", ["d5", "c5"]).note()
  * // "e5 b4 [d5 c5]".note()
@@ -2016,6 +2020,7 @@ export const func = curry((a, b) => reify(b).func(a));
  * @param {function} func function with 1 or more params, where last is the current pattern
  * @param {bool} patternify defaults to true; if set to false, you will have more control over the arguments to `func` as they will be
  *   in their raw form and it will be up to you to patternify them and/or query them for values
+ * @returns {object}
  * @example
  * const vlpf = register('vlpf', (freq, pat) => {
  *   return pat.fmap((v) => ({...v, cutoff: freq * (v.velocity ?? 1) }));
@@ -2861,6 +2866,7 @@ export const press = register('press', function (pat) {
  * Silences a pattern.
  * @tags temporal
  * @memberof Pattern
+ * @returns {Pattern}
  * @example
  * stack(
  *   s("bd").hush(),
@@ -3296,6 +3302,7 @@ export const hsl = register('hsl', (h, s, l, pat) => {
  * @name tag
  * @tags temporal
  * @param {string} tag anything unique
+ * @returns {Pattern}
  * @memberof Pattern
  * @example
  * s("saw!16").note("F1")
@@ -3450,6 +3457,7 @@ export function _polymeterListSteps(steps, ...args) {
  * Aligns the steps of the patterns, creating polymeters. The patterns are repeated until they all fit the cycle. For example, in the below the first pattern is repeated twice, and the second is repeated three times, to fit the lowest common multiple of six steps.
  * @tags stepwise
  * @synonyms pm
+ * @returns {Pattern}
  * @example
  * // The same as note("{c eb g, c2 g2}%6")
  * polymeter("c eb g", "c2 g2").note()
@@ -3483,7 +3491,7 @@ export function polymeter(...args) {
  * @name stepcat
  * @tags stepwise
  * @synonyms timeCat, timecat
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * stepcat([3,"e3"],[1, "g3"]).note()
  * // the same as "e3@3 g3".note()
@@ -3540,7 +3548,7 @@ export function stepcat(...timepats) {
  * Similar to `stepcat`, but if an argument is a list, the whole pattern will alternate between the elements in the list.
  *
  * @tags stepwise
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * stepalt(["bd cp", "mt"], "bd").sound()
  * // The same as "bd cp bd mt bd".sound()
@@ -3825,7 +3833,7 @@ export const grow = register(
  * number of steps per cycle is therefore usually recommended.
  *
  * @tags stepwise
- * @return {Pattern}
+ * @returns {Pattern}
  * @example
  * "[c g]".tour("e f", "e f g", "g f e c").note()
  * .sound("folkharp")
@@ -4101,6 +4109,7 @@ export const { loopAtCps, loopatcps } = register(['loopAtCps', 'loopatcps'], fun
 
 /** exposes a custom value at query time. basically allows mutating state without evaluation
  * @tags internals
+ * @returns {Pattern}
  */
 export const ref = (accessor) =>
   pure(1)
@@ -4117,6 +4126,7 @@ let fadeGain = (p) => (p < 0.5 ? 1 : 1 - (p - 0.5) / 0.5);
  *
  * @name xfade
  * @tags amplitude
+ * @returns {Pattern}
  * @example
  * xfade(s("bd*2"), "<0 .25 .5 .75 1>", s("hh*8"))
  */
@@ -4139,6 +4149,7 @@ Pattern.prototype.xfade = function (pos, b) {
  * especially useful for creating rhythms
  * @name beat
  * @tags temporal
+ * @returns {Pattern}
  * @example
  * s("bd").beat("0,7,10", 16)
  * @example
@@ -4203,6 +4214,7 @@ export const _morph = (from, to, by) => {
  * Takes two binary rhythms represented as lists of 1s and 0s, and a number
  * between 0 and 1 that morphs between them. The two lists should contain the same
  * number of true values.
+ * @returns {Pattern}
  * @example
  * sound("hh").struct(morph([1,0,1,0,1,0,1,0], // straight rhythm
  *                          [1,1,0,1,0,1,0], // wonky rhythm
@@ -4355,6 +4367,7 @@ const _ensureListPattern = (list) => {
  * @name partials
  * @tags superdough
  * @param {number[] | Pattern} list [0, 1] magnitudes for partials. 0th entry is the fundamental harmonic (i.e. DC offset is skipped)
+ * @returns {Pattern}
  * @memberof Pattern
  * @example
  * s("user").seg(16).n(irand(8)).scale("A:major")
@@ -4379,6 +4392,7 @@ export const partials = (list) => {
  * @tags superdough
  * @param {number[] | Pattern} list of [0, 1) phases for partials. 0th entry is the fundamental phase (i.e. DC offset is skipped)
  * @memberof Pattern
+ * @returns {Pattern}
  * @example
  * // Phase cancellation
  * s("saw").seg(8).n(irand(12)).scale("G#1:minor")
@@ -4514,9 +4528,10 @@ export const worklet = (...args) => pure({}).worklet(...args);
  *
  * @name base
  * @tags generators
- * @param {number} n - number to convert (can be a pattern or array)
- * @param {number} b - base to convert to (defaults to 10) (can be a pattern)
- * @param {number} d - max number of digits to produce for each n (defaults to 0 for all) (can be a pattern)
+ * @param {number | Pattern | number[]} n - number to convert
+ * @param {number | Pattern} b - base to convert to (defaults to 10)
+ * @param {number | Pattern} d - max number of digits to produce for each n (defaults to 0 for all)
+ * @returns {number | Pattern}
  * @example
  * $: note(base("7175 543", 10, 3)).scale("c:major").s("saw")
  * // $: note("1 7 5 5 4 3").scale("c:major").s("saw")

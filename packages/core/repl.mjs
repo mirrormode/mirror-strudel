@@ -127,6 +127,7 @@ export function repl({
    * @tags temporal
    * @alias setCpm
    * @param {number} cpm cycles per minute
+   * @returns {pattern}
    * @example
    * setcpm(140/4) // =140 bpm in 4/4
    * $: s("bd*4,[- sd]*2").bank('tr707')
@@ -156,7 +157,7 @@ export function repl({
    * $: sound("hh*8")
    * all(x => x.pianoroll())
    * ```
-   *
+   * @returns {pattern}
    * @tags combiners
    */
   const all = function (transform) {
@@ -174,6 +175,7 @@ export function repl({
    * each(fast("<2 3>"))
    * ```
    * @tags combiners
+   * @returns {pattern}
    */
   const each = function (transform) {
     eachTransform = transform;
@@ -312,15 +314,15 @@ export function repl({
 
 export const getSchedule =
   ({ onSchedule }) =>
-  async (hap, t, cps) => {
-    try {
-      if (!hap.context.onSchedule || !hap.context.dominantSchedule) {
-        await onSchedule(hap, t, cps);
+    async (hap, t, cps) => {
+      try {
+        if (!hap.context.onSchedule || !hap.context.dominantSchedule) {
+          await onSchedule(hap, t, cps);
+        }
+        if (hap.context.onSchedule) {
+          await hap.context.onSchedule(hap, t, cps);
+        }
+      } catch (err) {
+        errorLogger(err, 'getSchedule');
       }
-      if (hap.context.onSchedule) {
-        await hap.context.onSchedule(hap, t, cps);
-      }
-    } catch (err) {
-      errorLogger(err, 'getSchedule');
-    }
-  };
+    };

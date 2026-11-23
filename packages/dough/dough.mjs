@@ -22,6 +22,7 @@ let D;
  * @name initDough
  * @tags external_io
  * @memberof Pattern
+ * @returns {Promise<void>}
  * @example
  * await initDough()
  * $: chord("<Dm9 Dm11 Dm7>").offset("<-1 0 1 0>").voicing()

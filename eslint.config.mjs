@@ -110,7 +110,6 @@ export default [
       //the good stuff
       "jsdoc/reject-any-type": 0,
       "jsdoc/reject-function-type": 0,
-      "jsdoc/require-returns": 0,
       "jsdoc/require-param": 0,
       "jsdoc/check-param-names": "warn",
     }

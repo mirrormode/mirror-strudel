@@ -71,6 +71,7 @@ function appendLine(el, text, maxLines) {
  *     shows only the cycle
  * @param {number} options.padding integer digits reserved for the cycle, so it stays
  *     aligned once cycles reach 10 or 100. defaults to 3
+ * @returns {Pattern}
  * @example
  * s("bd sd hh cp").print()
  * @example

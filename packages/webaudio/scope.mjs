@@ -106,6 +106,7 @@ function clearScreen(smear = 0, smearRGB = `0,0,0`, ctx = getDrawContext()) {
  * @param {number} config.lean y-axis alignment where 0 = top and 1 = bottom
  * @param {number} config.min min value
  * @param {number} config.max max value
+ * @returns {Pattern}
  * @example
  * s("sawtooth").fscope()
  */

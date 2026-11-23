@@ -157,6 +157,7 @@ export function pitchwheel({
  * @param {number} options.hapRadius
  * @param {string} options.mode
  * @param {number} options.margin
+ * @returns {Pattern}
  * @example
  * n("0 .. 12").scale("C:chromatic")
  * .s("sawtooth")

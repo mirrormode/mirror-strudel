@@ -41,7 +41,7 @@ function humanFileSize(bytes, si) {
  * @tags samples
  * @param {string} s sampleName
  * @param {number} [n]
- *
+ * @returns {Promise<object>}
  * @example
  * // Set a patterns cycle length to exactly the length of the sample
  * samples('github:tidalcycles/dirt-samples')
