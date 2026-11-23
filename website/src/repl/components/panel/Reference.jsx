@@ -5,7 +5,7 @@ import { Textbox } from '@src/repl/components/panel/SettingsTab';
 import { settingsMap, useSettings } from '@src/settings.mjs';
 import { computeAvailableFunctions } from '@src/jsDocsUtils.mjs';
 
-const availableFunctions = computeAvailableFunctions(jsdocJson)
+const availableFunctions = computeAvailableFunctions(jsdocJson);
 
 const tagCounts = {};
 const ignoredTags = ['superdirt'];

@@ -118,7 +118,7 @@ export const SIDEBAR: Sidebar = {
       { text: 'Sounds', link: 'technical-manual/sounds' },
       { text: 'Docs', link: 'technical-manual/docs' },
       { text: 'Testing', link: 'technical-manual/testing' },
-      { text: 'API Reference', link: 'reference' }
+      { text: 'API Reference', link: 'reference' },
       // { text: 'Internals', link: 'technical-manual/internals' },
     ],
   },
