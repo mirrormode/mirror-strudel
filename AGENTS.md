@@ -9,7 +9,7 @@ own business, whether for research, analysis, bug discovery or other
 assistive technology, so long as the output is not included in any
 contributions to our projects.
 
-Strudel is [AGPL licensed](LICENSE.md), and so any code integrated with it also
+Strudel is [AGPL licensed](LICENSE), and so any code integrated with it also
 comes under that license. This should be carefully considered before
 distributing software integrated with strudel, including making it
 available over a network.
