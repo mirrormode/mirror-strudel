@@ -15,7 +15,7 @@ export function JsDoc({ name, h = undefined, hideDescription, punchcard, canvasH
     return <div>Could not load docs for ${name}</div>;
   }
   const CustomHeading = h ? `h${h}` : undefined;
-  const description = parseAndReplaceLink(item.description ?? '', (name) => `<code>${name}</code>`);
+  const description = parseAndReplaceLink(item.description ?? '');
   return (
     <>
       {!!h && <CustomHeading id={name}>{item.longname}</CustomHeading>}
