@@ -3,38 +3,9 @@ import { memo, useEffect, useMemo, useState, Fragment } from 'react';
 import jsdocJson from '../../../../../doc.json';
 import { Textbox } from '@src/repl/components/panel/SettingsTab';
 import { settingsMap, useSettings } from '@src/settings.mjs';
+import { computeAvailableFunctions } from '@src/jsDocsUtils.mjs';
 
-const isValid = ({ name, description, tags = [] }) => {
-  const isSuperdirtOnly = tags.includes('superdirt') && !tags.includes('superdough');
-  return name && !name.startsWith('_') && !!description && !isSuperdirtOnly;
-};
-
-const availableFunctions = (() => {
-  const seen = new Set(); // avoid repetition
-  const functions = [];
-  for (const doc of jsdocJson.docs) {
-    if (!isValid(doc)) continue;
-    if (seen.has(doc.name)) continue;
-
-    // jsdoc also uses "tags" for when you use @something in the comments and it doesn't know what
-    // @something is. We only want data from comments like `@tags superdough` here.
-    // If nothing is specified, we default to "untagged" for debugging
-    doc.tags = doc.tags?.filter((t) => t && typeof t === 'string') || ['untagged'];
-
-    const synonyms = doc.synonyms || [];
-    let names = [doc.name];
-    seen.add(doc.name);
-    for (const s of synonyms) {
-      if (!s || seen.has(s)) continue;
-      names.push(s);
-      seen.add(s);
-    }
-    doc.allNames = names.join(' ');
-    doc.synonyms = names.slice(1);
-    functions.push(doc);
-  }
-  return functions.sort((a, b) => /* a.meta.filename.localeCompare(b.meta.filename) +  */ a.name.localeCompare(b.name));
-})();
+const availableFunctions = computeAvailableFunctions(jsdocJson)
 
 const tagCounts = {};
 const ignoredTags = ['superdirt'];
@@ -199,7 +170,7 @@ export const Reference = memo(function Reference() {
             <section key={i} className="font-sans">
               <div className="flex flex-row items-center mt-8 justify-between">
                 <h3 className="font-mono my-0 pt-4" id={`doc-${entry.name}`}>
-                  {entry.name}
+                  <a href={`/reference#${entry.longname}`}>{entry.name}</a>
                 </h3>
                 {entry.tags && (
                   <span className="ml-2 text-xs text-foreground border border-muted px-1 py-0.5">
