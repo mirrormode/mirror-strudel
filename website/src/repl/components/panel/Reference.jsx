@@ -3,6 +3,7 @@ import { memo, useEffect, useMemo, useState, Fragment } from 'react';
 import jsdocJson from '../../../../../doc.json';
 import { Textbox } from '@src/repl/components/panel/SettingsTab';
 import { settingsMap, useSettings } from '@src/settings.mjs';
+import { JsDoc } from '@src/docs/JsDoc';
 
 const isValid = ({ name, description, tags = [] }) => {
   const isSuperdirtOnly = tags.includes('superdirt') && !tags.includes('superdough');
@@ -207,48 +208,7 @@ export const Reference = memo(function Reference() {
                   </span>
                 )}
               </div>
-              {!!entry.synonyms_text && (
-                <p>
-                  Synonyms: <code>{entry.synonyms_text}</code>
-                </p>
-              )}
-
-              <p
-                dangerouslySetInnerHTML={{
-                  // If we have an external url make sure it opens in another tab to not interrupt the player
-                  __html: entry.description.replaceAll(/<a href="https:\/\//g, `<a target="_blank" href="https://`),
-                }}
-              ></p>
-              {entry.params && entry.params.length > 0 && <p className="font-bold">Arguments</p>}
-              <ul>
-                {entry.params?.map(({ name, type, description }, i) => {
-                  // Check if the param is actually the parameter of an object
-                  const objParamSeperator = name.indexOf('.');
-                  const isObjectParam = objParamSeperator !== -1;
-
-                  return (
-                    <li key={i} className={isObjectParam ? 'list-none' : ''}>
-                      {isObjectParam ? name.substring(objParamSeperator + 1) : name} : {type?.names?.join(' | ')}{' '}
-                      {description ? <> - {getInnerText(description)}</> : ''}
-                    </li>
-                  );
-                })}
-              </ul>
-              {entry.returns && (
-                <p>
-                  <span className="font-bold">Returns</span>{' '}
-                  {entry.returns.map(({ type, description }) => (
-                    <>
-                      {type?.names?.join(' | ')} {description ? <> - {getInnerText(description)}</> : ''}
-                    </>
-                  ))}
-                </p>
-              )}
-              {entry.examples?.map((example, j) => (
-                <pre className="bg-background border border-muted" key={j}>
-                  {example}
-                </pre>
-              ))}
+              <JsDoc name={entry.longname} hideMiniRepl></JsDoc>
             </section>
           )) || <p className="font-sans">Search or select a tag to get started.</p>}
           {detailVisibleFunctions.length > 0 && <div className="h-screen" />}
