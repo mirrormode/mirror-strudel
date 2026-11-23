@@ -601,8 +601,8 @@ export class Pattern {
    * Returns a new pattern with the given location information added to the
    * context of every hap.
    * @tags internals
-   * @param {Number} start start offset
-   * @param {Number} end end offset
+   * @param {number} start start offset
+   * @param {number} end end offset
    * @returns {Pattern}
    * @noAutocomplete
    */
@@ -745,7 +745,7 @@ export class Pattern {
    * Queries the pattern for the first cycle, returning Haps. Mainly of use when
    * debugging a pattern.
    * @tags internals
-   * @param {Boolean} with_context - set to true, otherwise the context field
+   * @param {boolean} with_context - set to true, otherwise the context field
    * will be stripped from the resulting haps.
    * @returns {Hap[]}
    * @noAutocomplete
@@ -1475,6 +1475,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
    * Returns silence when mask is 0 or "~"
    *
    * @tags temporal
+   * @memberof Pattern
    * @example
    * note("c [eb,g] d [eb,g]").mask("<1 [0 1]>")
    */
@@ -1488,6 +1489,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
    * Resets the pattern to the start of the cycle for each onset of the reset pattern.
    *
    * @tags temporal
+   * @memberof Pattern
    * @example
    * s("[<bd lt> sd]*2, hh*8").reset("<x@3 x(5,8)>")
    */
@@ -1502,6 +1504,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
    * While reset will only reset the current cycle, restart will start from cycle 0.
    *
    * @tags temporal
+   * @memberof Pattern
    * @example
    * s("[<bd lt> sd]*2, hh*8").restart("<x@3 x(5,8)>")
    */
@@ -2856,6 +2859,7 @@ export const press = register('press', function (pat) {
 /**
  * Silences a pattern.
  * @tags temporal
+ * @memberof Pattern
  * @example
  * stack(
  *   s("bd").hush(),
@@ -3263,10 +3267,10 @@ export const { ribbon, rib } = register(['ribbon', 'rib'], (offset, cycles, pat)
  * Sets the pattern's color to the given [hsla](https://www.w3schools.com/htmL/html_colors_hsl.asp)
  *
  * @name hsla
- * @param {Number} hue (0 - 360)
- * @param {Number} saturation percentage (0 - 100)
- * @param {Number} lightness percentage (0 - 100)
- * @param {Number} alpha (transparency) (0.0 - 1.0)
+ * @param {number} hue (0 - 360)
+ * @param {number} saturation percentage (0 - 100)
+ * @param {number} lightness percentage (0 - 100)
+ * @param {number} alpha (transparency) (0.0 - 1.0)
  * @tags visualization
  */
 export const hsla = register('hsla', (h, s, l, a, pat) => {
@@ -3277,9 +3281,9 @@ export const hsla = register('hsla', (h, s, l, a, pat) => {
  * Sets the pattern's color to the given [hsl](https://www.w3schools.com/htmL/html_colors_hsl.asp)
  *
  * @name hsl
- * @param {Number} hue (0 - 360)
- * @param {Number} saturation percentage (0 - 100)
- * @param {Number} lightness percentage (0 - 100)
+ * @param {number} hue (0 - 360)
+ * @param {number} saturation percentage (0 - 100)
+ * @param {number} lightness percentage (0 - 100)
  * @tags visualization
  */
 export const hsl = register('hsl', (h, s, l, pat) => {
@@ -3291,6 +3295,7 @@ export const hsl = register('hsl', (h, s, l, pat) => {
  * @name tag
  * @tags temporal
  * @param {string} tag anything unique
+ * @memberof Pattern
  * @example
  * s("saw!16").note("F1")
  *   .lpf(tri.range(40, 80).slow(4)).lpenv(5).lpq(4).lpd(0.15)
@@ -4008,7 +4013,7 @@ export const slice = register(
  * @name onTriggerTime
  * @tags external_io
  * @memberof Pattern
- *  @returns {Pattern}
+ * @returns {Pattern}
  * @example
  * s("bd!8").onTriggerTime((hap) => {console.log(hap)})
  */
@@ -4349,6 +4354,7 @@ const _ensureListPattern = (list) => {
  * @name partials
  * @tags superdough
  * @param {number[] | Pattern} magnitudes List of [0, 1] magnitudes for partials. 0th entry is the fundamental harmonic (i.e. DC offset is skipped)
+ * @memberof Pattern
  * @example
  * s("user").seg(16).n(irand(8)).scale("A:major")
  *   .partials([1, 0, 1, 0, 0, 1])
@@ -4371,6 +4377,7 @@ export const partials = (list) => {
  * @name phases
  * @tags superdough
  * @param {number[] | Pattern} phases List of [0, 1) phases for partials. 0th entry is the fundamental phase (i.e. DC offset is skipped)
+ * @memberof Pattern
  * @example
  * // Phase cancellation
  * s("saw").seg(8).n(irand(12)).scale("G#1:minor")

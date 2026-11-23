@@ -158,7 +158,7 @@ export const { transpose, trans } = register(['transpose', 'trans'], function tr
 
 /**
  * Transposes notes inside the scale by the number of steps.
- * Expected to be called on a Pattern which already has a {@link Pattern#scale}
+ * Expected to be called on a Pattern which already has a {@link Pattern.scale}
  *
  * @memberof Pattern
  * @name scaleTranspose
@@ -255,6 +255,7 @@ function _getNearestScaleNote(scaleName, note, preferHigher = true) {
  * @name scale
  * @tags tonal
  * @param {string} scale Name of scale
+ * @memberof Pattern
  * @returns {Pattern}
  * @example
  * n("0 2 4 6 4 2").scale("C:major")

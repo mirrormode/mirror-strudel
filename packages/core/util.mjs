@@ -132,7 +132,7 @@ export const getPlayableNoteValue = (hap) => {
  * @tags pitch
  * @synonyms getFreq
  * @param {Hap | note | number} input
- * @returns {Number}
+ * @returns {number}
  * @example
  * i("4 8 9 10 - - 5 7 9 11 - -").tune("tranh3")
  * .mul(getFreq('c3'))

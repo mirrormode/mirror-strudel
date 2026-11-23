@@ -113,7 +113,6 @@ export default [
       "jsdoc/require-returns": 0,
       "jsdoc/require-param": 0,
       "jsdoc/check-param-names": 0,
-      "jsdoc/check-types": 0
     }
   })
 ];

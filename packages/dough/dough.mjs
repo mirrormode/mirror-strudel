@@ -51,7 +51,7 @@ export async function doughOutput(hap, targetTime, cps = 1) {
 
 /**
  *
- * Uses dough as the audio engine. more info at https://dough.strudel.cc
+ * Uses dough as the audio engine. more info [here](https://dough.strudel.cc)
  *
  * @name dough
  * @tags external_io

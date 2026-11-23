@@ -130,7 +130,7 @@ function drawSpiral(options) {
  *
  * @name spiral
  * @tags visualization
- * @param {Object} options Object containing all the optional following parameters as key value pairs:
+ * @param {object} options Object containing all the optional following parameters as key value pairs:
  * @param {number} options.stretch controls the rotations per cycle ratio, where 1 = 1 cycle / 360 degrees
  * @param {number} options.size the diameter of the spiral
  * @param {number} options.thickness line thickness

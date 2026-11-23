@@ -624,6 +624,7 @@ export const chooseIn = (...xs) => chooseInWith(rand, xs);
  * the range 0 .. 1.
  * @tags temporal
  * @param  {...any} xs
+ * @memberof Pattern
  * @returns {Pattern}
  */
 Pattern.prototype.choose = function (...xs) {
@@ -635,6 +636,7 @@ Pattern.prototype.choose = function (...xs) {
  * in the range -1 .. 1
  * @tags temporal
  * @param  {...any} xs
+ * @memberof Pattern
  * @returns {Pattern}
  */
 Pattern.prototype.choose2 = function (...xs) {

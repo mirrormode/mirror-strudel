@@ -93,7 +93,7 @@ export const setVoicingRange = (name, range) => addVoicings(name, voicingRegistr
  * @tags tonal
  * @memberof Pattern
  * @param {string} name identifier for the voicing dictionary
- * @param {Object} dictionary maps chord symbol to possible voicings
+ * @param {object} dictionary maps chord symbol to possible voicings
  * @param {Array} range min, max note
  * @example
  * addVoicings('cookie', {

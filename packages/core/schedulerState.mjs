@@ -13,7 +13,7 @@ let isStarted;
 /**
  * @name getTime
  * @tags internals
- * @returns {Number} the current cycle time as a number
+ * @returns {number} the current cycle time as a number
  */
 export function getTime() {
   if (!time) {
@@ -30,7 +30,7 @@ let clockTime;
 /**
  * @name getClockTime
  * @tags internals
- * @returns {Number} the current clock time in seconds (onSchedule time)
+ * @returns {number} the current clock time in seconds (onSchedule time)
  */
 export function getClockTime() {
   if (!clockTime) {
@@ -50,7 +50,7 @@ export function setCpsFunc(func) {
 /**
  * @name getCps
  * @tags internals
- * @returns {Number} the current cycles per second
+ * @returns {number} the current cycles per second
  */
 export function getCps() {
   return cpsFunc?.();

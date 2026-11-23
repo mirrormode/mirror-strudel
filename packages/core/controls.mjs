@@ -2992,7 +2992,7 @@ export const getControlName = (alias) => {
  *
  * @name as
  * @tags combiners
- * @param {String | Array} mapping the control names that are set
+ * @param {string | Array} mapping the control names that are set
  * @example
  * "c:.5 a:1 f:.25 e:.8".as("note:clip")
  * @example
@@ -3158,7 +3158,7 @@ Pattern.prototype.modulate = function (type, config, idPat) {
  *
  * @name lfo
  * @tags lfo, superdough
- * @param {Object} config LFO configuration.
+ * @param {object} config LFO configuration.
  * @param {string | Pattern} [config.control] Node to modulate. Aliases: c
  * @param {string | Pattern} [config.subControl] Sub-control name to append to the control key. Aliases: sc
  * @param {number | Pattern} [config.rate] Modulation rate. Aliases: r
@@ -3213,7 +3213,7 @@ export const lfo = (config) => pure({}).lfo(config);
  *
  * @name env
  * @tags envelope, superdough
- * @param {Object} config Envelope configuration.
+ * @param {object} config Envelope configuration.
  * @param {string | Pattern} [config.control] Node to modulate. Aliases: c
  * @param {string | Pattern} [config.subControl] Sub-control name to append to the control key. Aliases: sc
  * @param {number | Pattern} [config.depth] Relative modulation depth. Aliases: dep, dr
@@ -3274,7 +3274,7 @@ export const env = (config) => pure({}).env(config);
  *
  * @name bmod
  * @tags superdough
- * @param {Object} config Bus modulation configuration.
+ * @param {object} config Bus modulation configuration.
  * @param {string | Pattern} [config.bus] Bus to get modulation signal from
  * @param {string | Pattern} [config.control] Node to modulate. Aliases: c
  * @param {string | Pattern} [config.subControl] Sub-control name to append to the control key. Aliases: sc

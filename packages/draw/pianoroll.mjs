@@ -43,7 +43,7 @@ const getValue = (e) => {
  * @name pianoroll
  * @synonyms punchcard
  * @tags visualization
- * @param {Object} options Object containing all the optional following parameters as key value pairs:
+ * @param {object} options Object containing all the optional following parameters as key value pairs:
  * @param {integer} options.cycles number of cycles to be displayed at the same time - defaults to 4
  * @param {number} options.playhead location of the active notes on the time axis - 0 to 1, defaults to 0.5
  * @param {boolean} options.vertical displays the roll vertically - 0 by default
