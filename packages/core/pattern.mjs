@@ -48,6 +48,7 @@ export class Pattern {
    * Create a pattern. As an end user, you will most likely not create a Pattern directly.
    *
    * @param {function} query - The function that maps a `State` to an array of `Hap`.
+   * @param {number | undefined} [steps=undefined]
    * @noAutocomplete
    */
   constructor(query, steps = undefined) {
@@ -411,6 +412,7 @@ export class Pattern {
    * @tags internals
    * @param {Fraction | number} begin from time
    * @param {Fraction | number} end to time
+   * @param {object} [controls]
    * @returns {Hap[]}
    * @example
    * const pattern = sequence('a', ['b', 'c'])
@@ -848,6 +850,7 @@ export class Pattern {
 
   /**
    * Layers the result of the given function(s). Like `superimpose`, but without the original pattern:
+   * @param {...any} funcs
    * @name layer
    * @tags combiners
    * @memberof Pattern
@@ -863,6 +866,7 @@ export class Pattern {
 
   /**
    * Superimposes the result of the given function(s) on top of the original pattern:
+   * @param {...any} funcs
    * @name superimpose
    * @tags combiners
    * @memberof Pattern
@@ -927,6 +931,8 @@ export class Pattern {
 
   /**
    * Attaches a function that is called for each hap onset.
+   * @param {Function} onSchedule
+   * @param {boolean} [dominant]
    * @name onSchedule
    * @memberof Pattern
    * @returns {Pattern}
@@ -963,6 +969,8 @@ export class Pattern {
 
   /**
    * Writes the content of the current event to the console (visible in the side menu).
+   * @param {Function} [func]
+   * @param {Function} [getData]
    * @tags visualization
    * @name log
    * @memberof Pattern
@@ -979,6 +987,7 @@ export class Pattern {
   /**
    * A simplified version of `log` which writes all "values" (various configurable parameters)
    * within the event to the console (visible in the side menu).
+   * @param {Function} func
    * @tags visualization
    * @name logValues
    * @memberof Pattern
@@ -1014,6 +1023,8 @@ export class Pattern {
    * source pattern to be looped, and for an (optional) given function to be
    * applied. False values result in the corresponding part of the source pattern
    * to be played unchanged.
+   * @param {Pattern} pieces
+   * @param {Pattern} func
    * @tags temporal
    * @name into
    * @memberof Pattern
@@ -1463,6 +1474,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
   /**
    * Applies the given structure to the pattern:
    *
+   * @param {...any} args
    * @tags temporal
    * @returns {Pattern}
    * @example
@@ -1479,6 +1491,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
   /**
    * Returns silence when mask is 0 or "~"
    *
+   * @param {...any} args
    * @tags temporal
    * @memberof Pattern
    * @returns {Pattern}
@@ -1494,6 +1507,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
   /**
    * Resets the pattern to the start of the cycle for each onset of the reset pattern.
    *
+   * @param {...any} args
    * @tags temporal
    * @memberof Pattern
    * @returns {Pattern}
@@ -1510,6 +1524,7 @@ const ALIGNMENT_KEYS = ALIGNMENTS.map((how) => how.toLowerCase());
    * Restarts the pattern for each onset of the restart pattern.
    * While reset will only reset the current cycle, restart will start from cycle 0.
    *
+   * @param {...any} args
    * @tags temporal
    * @memberof Pattern
    * @returns {Pattern}
@@ -1598,6 +1613,7 @@ export const nothing = gap(0);
 /**
  * A discrete value that repeats once per cycle.
  *
+ * @param {number} value
  * @tags generators
  * @returns {Pattern}
  * @example
@@ -1642,6 +1658,7 @@ export function reify(thing) {
 
 /**
  * Takes a list of patterns, and returns a pattern of lists.
+ * @param {Pattern[]} pats
  * @returns {Pattern}
  * @tags temporal
  */
@@ -1656,6 +1673,7 @@ export function sequenceP(pats) {
 /**
  * The given items are played at the same time at the same length.
  *
+ * @param {...any} pats
  * @tags temporal
  * @returns {Pattern}
  * @synonyms polyrhythm, pr
@@ -1708,6 +1726,7 @@ function _stackWith(func, pats) {
 /**
  * The input patterns are aligned to the left, with silence padded to the shorter pattern(s) in the final steps if there's a stepcount disparity. See also `stackRight` and `stackCenter/stackCentre`
  *
+ * @param {...any} pats
  * @name stackLeft
  * @tags temporal, stepwise, combiners
  * @returns {Pattern}
@@ -1727,6 +1746,7 @@ export function stackLeft(...pats) {
 /**
  * The input patterns are aligned to the right, with silence padded to the shorter pattern(s) in the initial steps if there's a stepcount disparity. See also `stackLeft` and `stackCenter/stackCentre`
  *
+ * @param {...any} pats
  * @name stackRight
  * @tags temporal, stepwise, combiners
  * @returns {Pattern}
@@ -1745,6 +1765,7 @@ export function stackRight(...pats) {
 
 /**
  * The input patterns are aligned to the right, with silence padded to the shorter pattern(s) in the initial steps if there's a stepcount disparity. See also `stackLeft` and `stackRight`
+ * @param {...any} pats
  * @name stackCenter
  * @tags temporal, stepwise, combiners
  * @synonyms stackCentre
@@ -1775,6 +1796,7 @@ export function stackCentre(...pats) {
 
 /**
  * Shorthand for `pm(patterns).pace(m)` where m is the max step count in the input patterns
+ * @param {...any} pats
  * @name stackRepeat
  * @tags temporal, stepwise, combiners
  * @returns {Pattern}
@@ -1808,6 +1830,7 @@ export function stackBy(by, ...pats) {
 /**
  * Concatenation: combines a list of patterns, switching between them successively, one per cycle.
  *
+ * @param {...any} pats
  * @tags combiners
  * @returns {Pattern}
  * @synonyms cat
@@ -1881,6 +1904,7 @@ export function cat(...pats) {
  * Allows to arrange multiple patterns together over multiple cycles.
  * Takes a variable number of arrays with two elements specifying the number of cycles and the pattern to use.
  *
+ * @param {...any} sections
  * @tags combiners
  * @returns {Pattern}
  * @example
@@ -1899,6 +1923,7 @@ export function arrange(...sections) {
  * Similarly to `arrange`, allows you to arrange multiple patterns together over multiple cycles.
  * Unlike `arrange`, you specify a start and stop time for each pattern rather than duration, which
  * means that patterns can overlap.
+ * @param {...any} parts
  * @tags combiners
  * @returns {Pattern}
  * @example
@@ -2017,9 +2042,11 @@ export const func = curry((a, b) => reify(b).func(a));
  *
  * @tags functional
  * @param {string | string[]} name name of the function, or an array of names to be used as synonyms
- * @param {function} func function with 1 or more params, where last is the current pattern
- * @param {bool} patternify defaults to true; if set to false, you will have more control over the arguments to `func` as they will be
+ * @param {Function} func function with 1 or more params, where last is the current pattern
+ * @param {bool} [patternify=false] defaults to true; if set to false, you will have more control over the arguments to `func` as they will be
  *   in their raw form and it will be up to you to patternify them and/or query them for values
+ * @param {bool} [preserveSteps=false]
+ * @param {(Pattern)=>Pattern} [join=(x) => x.innerJoin()]
  * @returns {object}
  * @example
  * const vlpf = register('vlpf', (freq, pat) => {
@@ -2439,7 +2466,7 @@ export const outside = register('outside', function (factor, f, pat) {
  * @name lastOf
  * @memberof Pattern
  * @param {number} n how many cycles
- * @param {function} func function to apply
+ * @param {Function} func function to apply
  * @returns {Pattern}
  * @example
  * note("c3 d3 e3 g3").lastOf(4, x=>x.rev())
@@ -2456,7 +2483,7 @@ export const lastOf = register('lastOf', function (n, func, pat) {
  * @name firstOf
  * @memberof Pattern
  * @param {number} n how many cycles
- * @param {function} func function to apply
+ * @param {Function} func function to apply
  * @returns {Pattern}
  * @example
  * note("c3 d3 e3 g3").firstOf(4, x=>x.rev())
@@ -2468,7 +2495,7 @@ export const lastOf = register('lastOf', function (n, func, pat) {
  * @name every
  * @memberof Pattern
  * @param {number} n how many cycles
- * @param {function} func function to apply
+ * @param {Function} func function to apply
  * @returns {Pattern}
  * @example
  * note("c3 d3 e3 g3").every(4, x=>x.rev())
@@ -2746,7 +2773,7 @@ export const { invert, inv } = register(
  * @name when
  * @memberof Pattern
  * @param {Pattern} binary_pat
- * @param {function} func
+ * @param {Function} func
  * @returns {Pattern}
  * @example
  * "c3 eb3 g3".when("<0 1>/2", x=>x.sub("5")).note()
@@ -2761,7 +2788,7 @@ export const when = register('when', function (on, func, pat) {
  * @name off
  * @memberof Pattern
  * @param {Pattern | number} time offset time
- * @param {function} func function to apply
+ * @param {Function} func function to apply
  * @returns {Pattern}
  * @example
  * "c3 eb3 g3".off(1/8, x=>x.add(7)).note()
@@ -2964,7 +2991,7 @@ export const { juxFlip, flux } = register(['juxFlip', 'juxflip', 'flux'], functi
  * @synonyms echowith, stutWith, stutwith
  * @param {number} times how many times to repeat
  * @param {number} time cycle offset between iterations
- * @param {function} func function to apply, given the pattern and the iteration index
+ * @param {Function} func function to apply, given the pattern and the iteration index
  * @example
  * "<0 [2 4]>"
  * .echoWith(4, 1/8, (p,n) => p.add(n*2))
@@ -3021,7 +3048,7 @@ export const applyN = register('applyN', function (n, func, p) {
  * @name plyWith
  * @synonyms plywith
  * @param {number} factor how many times to repeat
- * @param {function} func function to apply, given the pattern
+ * @param {Function} func function to apply, given the pattern
  * @example
  * "<0 [2 4]>"
  * .plyWith(4, (p) => p.add(2))
@@ -3044,7 +3071,7 @@ export const plyWith = register(['plyWith', 'plywith'], function (factor, func, 
  * @name plyForEach
  * @synonyms plyforeach
  * @param {number} factor how many times to repeat
- * @param {function} func function to apply, given the pattern and the iteration index
+ * @param {Function} func function to apply, given the pattern and the iteration index
  * @example
  * "<0 [2 4]>"
  * .plyForEach(4, (p,n) => p.add(n*2))
@@ -3133,6 +3160,11 @@ export const { repeatCycles } = register(
 
 /**
  * Divides a pattern into a given number of parts, then cycles through those parts in turn, applying the given function to each part in turn (one part per cycle).
+ * @param {number} n
+ * @param {Function} func
+ * @param {Pattern} pat
+ * @param {boolean} [back=false]
+ * @param {boolean} [fast=false]
  * @tags temporal, functional
  * @name chunk
  * @synonyms slowChunk, slowchunk
@@ -3455,6 +3487,7 @@ export function _polymeterListSteps(steps, ...args) {
  * *Experimental*
  *
  * Aligns the steps of the patterns, creating polymeters. The patterns are repeated until they all fit the cycle. For example, in the below the first pattern is repeated twice, and the second is repeated three times, to fit the lowest common multiple of six steps.
+ * @param {...any} args
  * @tags stepwise
  * @synonyms pm
  * @returns {Pattern}
@@ -3488,6 +3521,7 @@ export function polymeter(...args) {
 /** 'Concatenates' patterns like `fastcat`, but proportional to a number of steps per cycle.
  * The steps can either be inferred from the pattern, or provided as a [length, pattern] pair.
  * Has the alias `timecat`.
+ * @param {...any} timepats
  * @name stepcat
  * @tags stepwise
  * @synonyms timeCat, timecat
@@ -3547,6 +3581,7 @@ export function stepcat(...timepats) {
  * Concatenates patterns stepwise, according to an inferred 'steps per cycle'.
  * Similar to `stepcat`, but if an argument is a list, the whole pattern will alternate between the elements in the list.
  *
+ * @param {...any} groups
  * @tags stepwise
  * @returns {Pattern}
  * @example
@@ -3832,6 +3867,8 @@ export const grow = register(
  * on successive repetitions. The patterns are added together stepwise, with all repetitions taking place over a single cycle. Using `pace` to set the
  * number of steps per cycle is therefore usually recommended.
  *
+ * @param {Pattern} pat
+ * @param {...any} many
  * @tags stepwise
  * @returns {Pattern}
  * @example
@@ -3859,6 +3896,7 @@ Pattern.prototype.tour = function (...many) {
  * 'zips' together the steps of the provided patterns. This can create a long repetition, taking place over a single, dense cycle.
  * Using `pace` to set the number of steps per cycle is therefore usually recommended.
  *
+ * @param {...any} pats
  * @tags stepwise
  * @returns {Pattern}
  * @example
@@ -3960,6 +3998,9 @@ export const striate = register('striate', function (n, pat) {
 
 /**
  * Makes the sample fit the given number of cycles by changing the speed.
+ * @param {number} factor
+ * @param {Pattern} pat
+ * @param {number} [cps=0.5]
  * @name loopAt
  * @tags samples, pitch
  * @memberof Pattern
@@ -4019,6 +4060,7 @@ export const slice = register(
  *
  * make something happen on event time
  * uses browser timeout which is innacurate for audio tasks
+ * @param {Function} func
  * @name onTriggerTime
  * @tags external_io
  * @memberof Pattern
@@ -4108,8 +4150,9 @@ export const { loopAtCps, loopatcps } = register(['loopAtCps', 'loopatcps'], fun
 });
 
 /** exposes a custom value at query time. basically allows mutating state without evaluation
- * @tags internals
+ * @param {() => Pattern} accessor
  * @returns {Pattern}
+ * @tags internals
  */
 export const ref = (accessor) =>
   pure(1)
@@ -4124,6 +4167,9 @@ let fadeGain = (p) => (p < 0.5 ? 1 : 1 - (p - 0.5) / 0.5);
  * - .5 = (both equal)
  * - 1 = (no left, full right)
  *
+ * @param {Pattern} a
+ * @param {Pattern} pos
+ * @param {Pattern} b
  * @name xfade
  * @tags amplitude
  * @returns {Pattern}
@@ -4147,6 +4193,7 @@ Pattern.prototype.xfade = function (pos, b) {
 /**
  * creates a structure pattern from divisions of a cycle
  * especially useful for creating rhythms
+ * @param {Function} join
  * @name beat
  * @tags temporal
  * @returns {Pattern}
@@ -4214,6 +4261,9 @@ export const _morph = (from, to, by) => {
  * Takes two binary rhythms represented as lists of 1s and 0s, and a number
  * between 0 and 1 that morphs between them. The two lists should contain the same
  * number of true values.
+ * @param {Pattern | number[]} frompat
+ * @param {Pattern | number[]} topat
+ * @param {Pattern | number} bypat
  * @returns {Pattern}
  * @example
  * sound("hh").struct(morph([1,0,1,0,1,0,1,0], // straight rhythm
@@ -4341,6 +4391,7 @@ export const chebyshev = _distortWithAlg('chebyshev');
 /**
  * Turns a list of patterns into a single pattern which outputs list-values
  *
+ * @param {Pattern[]} pats
  * @name parray
  * @tags combiners
  * @returns {Pattern}
@@ -4412,6 +4463,7 @@ export const phases = (list) => {
  * Establishes an FX chain. Can be called by chaining .FX(fx1).FX(fx2)..
  * calls and/or in a single .FX(fx1, fx2, ..) call. The fx1, .. are _patterns_ which
  * establish the controls of the given effect. See examples.
+ * @param {...any} effects
  * @name FX
  * @tags superdough
  * @memberof Pattern

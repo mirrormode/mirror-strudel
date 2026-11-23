@@ -97,6 +97,7 @@ export default [
   jsdoc({
     config: 'flat/recommended-error',
     rules: {
+      "jsdoc/no-defaults": 0, //removes defaults with not alternative
       "jsdoc/require-jsdoc": 0,
       "jsdoc/check-tag-names": 0,
       "jsdoc/tag-lines": 0,
@@ -106,11 +107,9 @@ export default [
       "jsdoc/no-multi-asterisks": 0,
       "jsdoc/multiline-blocks": 0,
       "jsdoc/check-alignment": 0,
-      "jsdoc/valid-types": 0,
-      //the good stuff
       "jsdoc/reject-any-type": 0,
       "jsdoc/reject-function-type": 0,
-      "jsdoc/require-param": 0,
+      "jsdoc/valid-types": "warn",
       "jsdoc/check-param-names": "warn",
     }
   })

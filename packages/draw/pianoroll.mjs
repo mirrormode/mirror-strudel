@@ -299,6 +299,12 @@ Pattern.prototype.punchcard = function (options) {
  * Displays a vertical pianoroll with event labels.
  * Supports all the same options as pianoroll.
  *
+ * @param {object} options
+ * @param {number} options.vertical
+ * @param {number} options.labels
+ * @param {number} options.stroke
+ * @param {number} options.fillActive
+ * @param {string} options.active
  * @name wordfall
  * @tags visualization
  * @returns {Pattern}

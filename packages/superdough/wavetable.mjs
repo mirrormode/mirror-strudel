@@ -185,6 +185,10 @@ export function registerWaveTable(key, tables, params) {
 /**
  * Loads a collection of wavetables to use with `s`
  *
+ * @param {string} url
+ * @param {*} frameLen
+ * @param {string} json
+ * @param {object} options
  * @name tables
  * @tags wavetable
  * @returns {void}

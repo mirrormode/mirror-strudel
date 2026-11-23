@@ -200,7 +200,7 @@ export const xen = register(
  * but you can specify a different original base with the standard optional array syntax '`:`'
  * @name withBase
  * @param {number} base
- * @param {number} (optional) originalBase
+ * @param {number} [originalBase]
  * @tags tonal
  *
  * @example

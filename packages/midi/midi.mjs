@@ -113,6 +113,7 @@ function githubPath(base, subpath = '') {
 
 /**
  * configures the default midimap, which is used when no "midimap" port is set
+ * @param {*} mapping
  * @tags external_io, midi
  * @example
  * defaultmidimap({ lpf: 74 })
@@ -127,6 +128,7 @@ let loadCache = {};
 
 /**
  * Adds midimaps to the registry. Inside each midimap, control names (e.g. lpf) are mapped to cc numbers.
+ * @param {string | object} map
  * @tags external_io, midi
  * @example
  * midimaps({ mymap: { lpf: 74 } })
@@ -480,6 +482,7 @@ Pattern.prototype.midi = function (midiport, options = {}) {
 
 /**
  * Initialize a midi input device
+ * @param {string} input
  * @returns {MidiInput}
  */
 async function _initializeInput(input) {

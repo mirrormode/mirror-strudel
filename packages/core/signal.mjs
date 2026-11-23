@@ -336,6 +336,7 @@ export const useRNG = (mode = 'legacy') => (RNG_MODE = mode);
 
 /**
  * A discrete pattern of numbers from 0 to n-1
+ * @param {number} n
  * @tags generators
  * @returns {Pattern}
  * @example
@@ -655,6 +656,7 @@ Pattern.prototype.choose2 = function (...xs) {
 
 /**
  * Picks one of the elements at random each cycle.
+ * @param {...any} xs
  * @tags temporal
  * @synonyms randcat
  * @returns {Pattern}
@@ -708,6 +710,7 @@ export const wchoose = (...pairs) => wchooseWith(rand, ...pairs);
 
 /**
  * Picks one of the elements at random each cycle by giving a probability to each element
+ * @param {...any} pairs
  * @tags temporal
  * @synonyms wrandcat
  * @returns {Pattern}
@@ -899,7 +902,7 @@ export const undegrade = register('undegrade', (pat) => pat._undegradeBy(0.5), t
  * @name sometimesBy
  * @memberof Pattern
  * @param {number | Pattern} probability - a number between 0 and 1
- * @param {function} function - the transformation to apply
+ * @param {Function} function - the transformation to apply
  * @returns {Pattern}
  * @example
  * s("hh*8").sometimesBy(.4, x=>x.speed("0.5"))
@@ -918,7 +921,7 @@ export const sometimesBy = register('sometimesBy', function (patx, func, pat) {
  * @tags temporal
  * @name sometimes
  * @memberof Pattern
- * @param {function} function - the transformation to apply
+ * @param {Function} function - the transformation to apply
  * @returns {Pattern}
  * @example
  * s("hh*8").sometimes(x=>x.speed("0.5"))
@@ -935,7 +938,7 @@ export const sometimes = register('sometimes', function (func, pat) {
  * @name someCyclesBy
  * @memberof Pattern
  * @param {number | Pattern} probability - a number between 0 and 1
- * @param {function} function - the transformation to apply
+ * @param {Function} function - the transformation to apply
  * @returns {Pattern}
  * @tags temporal
  * @example

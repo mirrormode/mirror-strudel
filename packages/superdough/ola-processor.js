@@ -36,6 +36,8 @@ class OLAProcessor extends AudioWorkletProcessor {
 
   /** Handles dynamic reallocation of input/output channels buffer
    * (channel numbers may vary during lifecycle)
+   * @param {*} inputs
+   * @param {*} outputs
    * @tags internals
    **/
   reallocateChannelsIfNeeded(inputs, outputs) {
@@ -92,6 +94,7 @@ class OLAProcessor extends AudioWorkletProcessor {
 
   /**
    * Read next web audio block to input buffers
+   * @param {*} inputs
    * @tags internals
    **/
   readInputs(inputs) {
@@ -114,6 +117,7 @@ class OLAProcessor extends AudioWorkletProcessor {
   }
 
   /** Write next web audio block from output buffers
+   * @param {*} outputs
    * @tags internals
    **/
   writeOutputs(outputs) {

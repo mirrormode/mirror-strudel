@@ -157,7 +157,8 @@ export function repl({
    * $: sound("hh*8")
    * all(x => x.pianoroll())
    * ```
-   * @returns {pattern}
+   * @param {(Pattern) => Pattern} transform
+   * @returns {Pattern}
    * @tags combiners
    */
   const all = function (transform) {
@@ -175,6 +176,7 @@ export function repl({
    * each(fast("<2 3>"))
    * ```
    * @tags combiners
+   * @param {(Pattern) => Pattern} transform
    * @returns {pattern}
    */
   const each = function (transform) {

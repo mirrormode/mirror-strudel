@@ -130,6 +130,7 @@ async function aliasBankPath(path) {
  * Optionally accepts a single argument string of a path to a JSON file containing bank aliases.
  * @param {string} bank - The bank to alias
  * @param {string} alias - The alias to use for the bank
+ * @param {...any} args
  * @returns {void}
  * @tags samples
  */
