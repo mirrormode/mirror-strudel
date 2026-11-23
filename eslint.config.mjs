@@ -108,8 +108,7 @@ export default [
       "jsdoc/multiline-blocks": 0,
       "jsdoc/check-alignment": 0,
       "jsdoc/reject-any-type": 0,
-      "jsdoc/reject-function-type": 0,
-      "jsdoc/check-param-names": "warn",
+      "jsdoc/reject-function-type": 0
     }
   })
 ];

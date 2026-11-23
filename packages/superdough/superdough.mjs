@@ -128,9 +128,7 @@ async function aliasBankPath(path) {
  * Register an alias for a bank of sounds.
  * Optionally accepts a single argument map of bank aliases.
  * Optionally accepts a single argument string of a path to a JSON file containing bank aliases.
- * @param {string} bank - The bank to alias
- * @param {string} alias - The alias to use for the bank
- * @param {...any} args
+ * @param {...any} args either one or two arguments. first argument is bank to alias. Second argument is alias to use for the bank.
  * @returns {void}
  * @tags samples
  */

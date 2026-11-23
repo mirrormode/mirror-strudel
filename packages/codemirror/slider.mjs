@@ -113,14 +113,15 @@ export const sliderPlugin = ViewPlugin.fromClass(
   },
 );
 
+/* eslint jsdoc/check-param-names: "off"  */
 /**
  * Displays a slider widget to allow the user manipulate a value
  *
  * @name slider
  * @tags external_io, visualization
  * @param {number} value Initial value
- * @param {number} [min] Minimum value - optional, defaults to 0
- * @param {number} [max] Maximum value - optional, defaults to 1
+ * @param {number} [min=0] Minimum value - optional, defaults to 0
+ * @param {number} [max=1] Maximum value - optional, defaults to 1
  * @param {number} [step] Step size - optional
  * @returns {Pattern}
  */
