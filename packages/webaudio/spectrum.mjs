@@ -7,10 +7,10 @@ import { analysers, getAnalyzerData } from 'superdough';
  * @name spectrum
  * @tags visualization
  * @param {object} config optional config with options:
- * @param {integer} thickness line thickness in px (default 3)
- * @param {integer} speed scroll speed (default 1)
- * @param {integer} min min db (default -80)
- * @param {integer} max max db (default 0)
+ * @param {number} [thickness=3] line thickness in px (default 3)
+ * @param {number} [speed=1] scroll speed (default 1)
+ * @param {number} [min=-80] min db (default -80)
+ * @param {number} [max=0] max db (default 0)
  * @example
  * n("<0 4 <2 3> 1>*3")
  * .off(1/8, add(n(5)))

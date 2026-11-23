@@ -2043,9 +2043,9 @@ export const func = curry((a, b) => reify(b).func(a));
  * @tags functional
  * @param {string | string[]} name name of the function, or an array of names to be used as synonyms
  * @param {Function} func function with 1 or more params, where last is the current pattern
- * @param {bool} [patternify=false] defaults to true; if set to false, you will have more control over the arguments to `func` as they will be
+ * @param {boolean} [patternify=false] defaults to true; if set to false, you will have more control over the arguments to `func` as they will be
  *   in their raw form and it will be up to you to patternify them and/or query them for values
- * @param {bool} [preserveSteps=false]
+ * @param {boolean} [preserveSteps=false]
  * @param {(Pattern)=>Pattern} [join=(x) => x.innerJoin()]
  * @returns {object}
  * @example
