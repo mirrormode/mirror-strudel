@@ -384,7 +384,7 @@ export const { warpsync } = registerControl('warpsync');
  * @name source
  * @tags external_io, superdough
  * @synonyms src
- * @param {function} getSource
+ * @param {Function} getSource
  * @synonyms src
  *
  */

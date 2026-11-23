@@ -47,7 +47,7 @@ export class Pattern {
   /**
    * Create a pattern. As an end user, you will most likely not create a Pattern directly.
    *
-   * @param {function} query - The function that maps a `State` to an array of `Hap`.
+   * @param {Function} query - The function that maps a `State` to an array of `Hap`.
    * @param {number | undefined} [steps=undefined]
    * @noAutocomplete
    */

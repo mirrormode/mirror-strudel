@@ -109,7 +109,6 @@ export default [
       "jsdoc/check-alignment": 0,
       "jsdoc/reject-any-type": 0,
       "jsdoc/reject-function-type": 0,
-      "jsdoc/valid-types": "warn",
       "jsdoc/check-param-names": "warn",
     }
   })
