@@ -28,6 +28,7 @@ const _pick = function (lookup, pat, modulo = true) {
 
 /** * Picks patterns (or plain values) either from a list (by index) or a lookup table (by name).
  * Similar to `inhabit`, but maintains the structure of the original patterns.
+ * The lookup can also be a pattern of objects, such as a pattern of controls, in which case each of its events is used as the lookup table.
  * @tags combiners
  * @param {Pattern} pat
  * @param {*} xs
@@ -40,6 +41,10 @@ const _pick = function (lookup, pat, modulo = true) {
  * sound("<0!2 [0,1] 1>".pick(["bd(3,8)", "sd sd"]))
  * @example
  * s("<a!2 [a,b] b>".pick({a: "bd(3,8)", b: "sd sd"}))
+ * @example
+ * // pick a field out of a pattern of objects
+ * const pat = sound("bd cp").speed("<2 3>")
+ * pat.fast("speed".pick(pat))
  */
 
 export const pick = function (lookup, pat) {

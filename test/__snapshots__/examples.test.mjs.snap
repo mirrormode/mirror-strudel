@@ -9592,6 +9592,31 @@ exports[`runs examples > example "pick" example index 3 1`] = `
 ]
 `;
 
+exports[`runs examples > example "pick" example index 4 1`] = `
+[
+  "[ 0/1 → 1/4 | s:bd speed:2 ]",
+  "[ 1/4 → 1/2 | s:cp speed:2 ]",
+  "[ 1/2 → 3/4 | s:bd speed:3 ]",
+  "[ 3/4 → 1/1 | s:cp speed:3 ]",
+  "[ 1/1 → 7/6 | s:bd speed:3 ]",
+  "[ 7/6 → 4/3 | s:cp speed:3 ]",
+  "[ 4/3 → 3/2 | s:bd speed:2 ]",
+  "[ 3/2 → 5/3 | s:cp speed:2 ]",
+  "[ 5/3 → 11/6 | s:bd speed:3 ]",
+  "[ 11/6 → 2/1 | s:cp speed:3 ]",
+  "[ 2/1 → 9/4 | s:bd speed:2 ]",
+  "[ 9/4 → 5/2 | s:cp speed:2 ]",
+  "[ 5/2 → 11/4 | s:bd speed:3 ]",
+  "[ 11/4 → 3/1 | s:cp speed:3 ]",
+  "[ 3/1 → 19/6 | s:bd speed:3 ]",
+  "[ 19/6 → 10/3 | s:cp speed:3 ]",
+  "[ 10/3 → 7/2 | s:bd speed:2 ]",
+  "[ 7/2 → 11/3 | s:cp speed:2 ]",
+  "[ 11/3 → 23/6 | s:bd speed:3 ]",
+  "[ 23/6 → 4/1 | s:cp speed:3 ]",
+]
+`;
+
 exports[`runs examples > example "pickF" example index 0 1`] = `
 [
   "[ 0/1 → 1/4 | s:hh ]",

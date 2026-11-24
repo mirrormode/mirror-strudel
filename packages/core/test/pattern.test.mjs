@@ -1169,6 +1169,15 @@ describe('Pattern', () => {
         ),
       );
     });
+    it('Can pick values from a pattern of objects', () => {
+      const pat = slowcat({ s: 'bd', speed: 2 }, { s: 'cp', speed: 3 });
+      expect(
+        pure('speed')
+          .pick(pat)
+          .queryArc(0, 2)
+          .map((hap) => hap.value),
+      ).toStrictEqual([2, 3]);
+    });
   });
   describe('pickmod', () => {
     it('Wraps indexes', () => {
