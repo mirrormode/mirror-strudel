@@ -15,7 +15,7 @@ import { getDevice } from './util.mjs';
  */
 export class MidiInput {
   /**
-   *
+   * Constructs a new Midi input device
    * @param {string | number} input MIDI device name or index defaulting to 0
    */
   constructor(input) {

@@ -798,7 +798,8 @@ export class Pattern {
   }
 
   /**
-   * @returns {Pattern} a new pattern with all values parsed as numerals.
+   * Creates a new pattern with all values parsed as numerals.
+   * @returns {Pattern}
    * @tags internals
    */
   asNumber() {

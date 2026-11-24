@@ -72,6 +72,7 @@ export const getEventOffsetMs = (targetTimeSeconds, currentTimeSeconds) => {
 
 const pcs = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 /**
+ * converts midi values into notes
  * @param {number} n
  * @deprecated only used in workshop (first-notes)
  * @noAutocomplete

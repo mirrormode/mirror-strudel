@@ -11,9 +11,10 @@ let scheduleFunc;
 let isStarted;
 
 /**
+ * Get the current cycle time as a number
  * @name getTime
  * @tags internals
- * @returns {number} the current cycle time as a number
+ * @returns {number}
  */
 export function getTime() {
   if (!time) {
@@ -28,9 +29,10 @@ export function setTime(func) {
 
 let clockTime;
 /**
+ * Get the current clock time in seconds (onSchedule time)
  * @name getClockTime
  * @tags internals
- * @returns {number} the current clock time in seconds (onSchedule time)
+ * @returns {number}
  */
 export function getClockTime() {
   if (!clockTime) {
@@ -48,9 +50,10 @@ export function setCpsFunc(func) {
 }
 
 /**
+ * Get the current cycles per second
  * @name getCps
  * @tags internals
- * @returns {number} the current cycles per second
+ * @returns {number}
  */
 export function getCps() {
   return cpsFunc?.();

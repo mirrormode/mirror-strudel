@@ -116,6 +116,7 @@ export default [
           ],
         },
       ],
+      'jsdoc/require-description': 'error',
       'jsdoc/no-defaults': 0, //removes defaults with not alternative
       'jsdoc/require-jsdoc': 0,
       'jsdoc/tag-lines': 0,
