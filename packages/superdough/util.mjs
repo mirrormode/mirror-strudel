@@ -112,6 +112,9 @@ export function getCommonSampleInfo(hapValue, bank) {
 
 /** Selects entries from `source` and renames them via `map`
  * @tags internals
+ * @param {object} source
+ * @param {*} map
+ * @returns {*}
  */
 export const pickAndRename = (source, map) => {
   return Object.fromEntries(Object.entries(map).map(([newKey, oldKey]) => [newKey, source[oldKey]]));

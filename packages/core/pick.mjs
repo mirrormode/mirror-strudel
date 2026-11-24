@@ -77,7 +77,7 @@ export const pickmod = register('pickmod', function (lookup, pat) {
  * @tags combiners, functional
  * @param {Pattern} pat
  * @param {Pattern} lookup a pattern of indices or names
- * @param {function[] | object} lookup the array or lookup object of functions from which to pull
+ * @param {Function[] | object} lookup the array or lookup object of functions from which to pull
  * @returns {Pattern}
  * @example
  * s("bd [rim hh]").pickF("<0 1 2>", [rev,jux(rev),fast(2)])
@@ -97,7 +97,7 @@ export const pickF = register('pickF', function (pickPattern, lookup, pat) {
  * @tags combiners
  * @param {Pattern} pat
  * @param {Pattern} lookup a pattern of indices or names
- * @param {function[] | object} lookup the array or lookup object of functions from which to pull
+ * @param {Function[] | object} lookup the array or lookup object of functions from which to pull
  * @returns {Pattern}
  */
 export const pickmodF = register('pickmodF', function (pickPattern, lookup, pat) {

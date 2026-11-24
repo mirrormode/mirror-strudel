@@ -15,7 +15,7 @@ import { getDevice } from './util.mjs';
  */
 export class MidiInput {
   /**
-   *
+   * Constructs a new Midi input device
    * @param {string | number} input MIDI device name or index defaulting to 0
    */
   constructor(input) {
@@ -34,6 +34,7 @@ export class MidiInput {
    * Implementation for the cc() factory function tied to this specific input.
    * @param {number} cc MIDI CC number
    * @param {number | undefined} chan MIDI channel (1-16) or undefined for all channels
+   * @returns {Pattern}
    */
   createCC(cc, chan) {
     const lookupMap = chan === undefined ? this._refs : this._refsByChan[chan];

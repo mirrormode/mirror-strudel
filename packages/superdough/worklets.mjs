@@ -647,6 +647,7 @@ class PhaseVocoderProcessor extends OLAProcessor {
   }
 
   /** Apply Hann window in-place
+   * @param {number[]} input
    * @tags internals
    */
   applyHannWindow(input) {
@@ -695,6 +696,7 @@ class PhaseVocoderProcessor extends OLAProcessor {
   }
 
   /** Shift peaks and regions of influence by pitchFactor into new specturm
+   * @param {number} pitchFactor
    * @tags internals
    */
   shiftPeaks(pitchFactor) {

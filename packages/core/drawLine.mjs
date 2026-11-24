@@ -16,7 +16,7 @@ import Fraction, { gcd } from './fraction.mjs';
  * - "." silence
  *
  * @tags visualization
- * @param {Pattern} pattern the pattern to use
+ * @param {Pattern} pat the pattern to use
  * @param {number} chars max number of characters (approximately)
  * @returns {string}
  * @example

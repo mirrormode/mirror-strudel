@@ -41,7 +41,7 @@ export let maxPolyphony = DEFAULT_MAX_POLYPHONY;
  *
  * @name setMaxPolyphony
  * @tags superdough
- * @param {number} Max polyphony. Defaults to 128
+ * @param {number} polyphony Max polyphony. Defaults to 128
  * @example
  * setMaxPolyphony(4)
  * n(irand(24).seg(8)).scale("C#3:minor").room(1).release(4).gain(0.5)
@@ -75,7 +75,7 @@ export function applyGainCurve(val) {
  *
  * @name setGainCurve
  * @tags amplitude, superdough
- * @param {Function} function to apply to all gain values
+ * @param {Function} newGainCurveFunc function to apply to all gain values
  * @example
  * setGainCurve((x) => x * x) // quadratic gain
  * s("bd*4").gain(0.5) // equivalent to 0.25 gain normally
@@ -128,9 +128,8 @@ async function aliasBankPath(path) {
  * Register an alias for a bank of sounds.
  * Optionally accepts a single argument map of bank aliases.
  * Optionally accepts a single argument string of a path to a JSON file containing bank aliases.
- * @param {string} bank - The bank to alias
- * @param {string} alias - The alias to use for the bank
- *
+ * @param {...any} args either one or two arguments. first argument is bank to alias. Second argument is alias to use for the bank.
+ * @returns {void}
  * @tags samples
  */
 export async function aliasBank(...args) {

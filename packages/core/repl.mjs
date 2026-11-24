@@ -127,6 +127,7 @@ export function repl({
    * @tags temporal
    * @alias setCpm
    * @param {number} cpm cycles per minute
+   * @returns {pattern}
    * @example
    * setcpm(140/4) // =140 bpm in 4/4
    * $: s("bd*4,[- sd]*2").bank('tr707')
@@ -156,7 +157,8 @@ export function repl({
    * $: sound("hh*8")
    * all(x => x.pianoroll())
    * ```
-   *
+   * @param {function(Pattern):Pattern} transform
+   * @returns {Pattern}
    * @tags combiners
    */
   const all = function (transform) {
@@ -174,6 +176,8 @@ export function repl({
    * each(fast("<2 3>"))
    * ```
    * @tags combiners
+   * @param {function(Pattern):Pattern} transform
+   * @returns {pattern}
    */
   const each = function (transform) {
     eachTransform = transform;

@@ -91,11 +91,10 @@ export const setVoicingRange = (name, range) => addVoicings(name, voicingRegistr
  *
  * @name addVoicings
  * @tags tonal
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {string} name identifier for the voicing dictionary
- * @param {Object} dictionary maps chord symbol to possible voicings
+ * @param {object} dictionary maps chord symbol to possible voicings
  * @param {Array} range min, max note
- * @returns {Pattern}
  * @example
  * addVoicings('cookie', {
  *   7: ['3M 7m 9M 12P 15P', '7m 10M 13M 16M 19P'],
@@ -135,7 +134,7 @@ const getVoicing = (chord, dictionaryName, lastVoicing) => {
  *
  * @name voicings
  * @tags tonal
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {string} dictionary which voicing dictionary to use.
  * @returns {Pattern}
  * @example
@@ -160,7 +159,7 @@ export const voicings = register('voicings', function (dictionary, pat) {
  *
  * @name rootNotes
  * @tags tonal
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {octave} octave octave to use
  * @returns {Pattern}
  * @example

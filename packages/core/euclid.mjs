@@ -64,7 +64,7 @@ export const bjorklund = function (ons, steps) {
  *
  * A negative number of steps changes it into `euclidLegato`.
  *
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @name euclid
  * @tags temporal
  * @param {number} pulses the number of onsets/beats
@@ -77,7 +77,7 @@ export const bjorklund = function (ons, steps) {
 
 /**
  * Like `euclid`, but has an additional parameter for 'rotating' the resulting sequence.
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @name euclidRot
  * @tags temporal
  * @param {number} pulses the number of onsets/beats
@@ -194,7 +194,7 @@ export const { euclidrot, euclidRot } = register(['euclidrot', 'euclidRot'], fun
  *
  * A negative number of steps changes it into `euclid`.
  * @name euclidLegato
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @tags temporal
  * @param {number} pulses the number of onsets/beats
  * @param {number} steps the number of steps to fill
@@ -215,7 +215,7 @@ export const euclidLegato = register(['euclidLegato'], function (pulses, steps, 
  *
  * A negative number of steps changes it into `euclidRot`.
  * @name euclidLegatoRot
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @tags temporal
  * @param {number} pulses the number of onsets/beats
  * @param {number} steps the number of steps to fill
@@ -237,7 +237,7 @@ export const euclidLegatoRot = register(['euclidLegatoRot'], function (pulses, s
  * Inspired by the work of Malcom Braff.
  * @name euclidish
  * @synonyms eish
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @tags temporal
  * @param {number} pulses the number of onsets
  * @param {number} steps the number of steps to fill

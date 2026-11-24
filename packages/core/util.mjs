@@ -72,8 +72,11 @@ export const getEventOffsetMs = (targetTimeSeconds, currentTimeSeconds) => {
 
 const pcs = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
 /**
+ * converts midi values into notes
+ * @param {number} n
  * @deprecated only used in workshop (first-notes)
  * @noAutocomplete
+ * @returns {string}
  */
 export const midi2note = (n) => {
   const oct = Math.floor(n / 12) - 1;
@@ -131,8 +134,8 @@ export const getPlayableNoteValue = (hap) => {
  * @name getFrequency
  * @tags pitch
  * @synonyms getFreq
- * @param {Hap | note | number} input
- * @returns {Number}
+ * @param {Hap | note | number} hap input
+ * @returns {number}
  * @example
  * i("4 8 9 10 - - 5 7 9 11 - -").tune("tranh3")
  * .mul(getFreq('c3'))

@@ -148,14 +148,16 @@ export function pitchwheel({
  * Renders a pitch circle to visualize frequencies within one octave
  * @name pitchwheel
  * @tags visualization
- * @param {number} hapcircles
- * @param {number} circle
- * @param {number} edo
- * @param {string} root
- * @param {number} thickness
- * @param {number} hapRadius
- * @param {string} mode
- * @param {number} margin
+ * @param {object} options
+ * @param {number} options.hapcircles
+ * @param {number} options.circle
+ * @param {number} options.edo
+ * @param {string} options.root
+ * @param {number} options.thickness
+ * @param {number} options.hapRadius
+ * @param {string} options.mode
+ * @param {number} options.margin
+ * @returns {Pattern}
  * @example
  * n("0 .. 12").scale("C:chromatic")
  * .s("sawtooth")

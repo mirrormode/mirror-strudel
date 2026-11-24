@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
+import { jsdoc } from 'eslint-plugin-jsdoc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -93,4 +94,39 @@ export default [
       },
     },
   },
+  jsdoc({
+    config: 'flat/recommended-error',
+    rules: {
+      'jsdoc/no-undefined-types': [
+        'error',
+        { definedTypes: ['Pattern', 'Pattern.prototype', 'Hap', 'KabelsalatExpression'] },
+      ],
+      'jsdoc/check-tag-names': ['error', { definedTags: ['tags', 'synonyms', 'noAutocomplete', 'superdirtOnly'] }],
+      'jsdoc/no-restricted-syntax': [
+        'error',
+        {
+          contexts: [
+            {
+              //@memberof without a .prototype
+              comment:
+                'JsdocBlock:has(JsdocTag[tag="memberof"]:not([name=/\\.prototype(?:\\s|$)/]):not([description=/\\.prototype(?:\\s|$)/]))',
+              context: 'any',
+              message: "Use '@memberof <Name>.prototype'. Without, it's considered a static function.",
+            },
+          ],
+        },
+      ],
+      'jsdoc/require-description': 'error',
+      'jsdoc/no-defaults': 0, //removes defaults with not alternative
+      'jsdoc/require-jsdoc': 0,
+      'jsdoc/tag-lines': 0,
+      'jsdoc/require-returns-description': 0,
+      'jsdoc/require-param-description': 0,
+      'jsdoc/no-multi-asterisks': 0,
+      'jsdoc/multiline-blocks': 0,
+      'jsdoc/check-alignment': 0,
+      'jsdoc/reject-any-type': 0,
+      'jsdoc/reject-function-type': 0,
+    },
+  }),
 ];

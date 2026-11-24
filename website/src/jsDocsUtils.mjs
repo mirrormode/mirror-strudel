@@ -1,7 +1,8 @@
 /**
  * compute the list of all function with jsDoc documentation
  *
- * returns the list of functions in the same structure as the jsdoc json
+ * @param {object} jsdocJson
+ * @returns {object[]} the list of functions in the same structure as the jsdoc json
  */
 export const computeAvailableFunctions = (jsdocJson) => {
   const seen = new Set(); // avoid repetition

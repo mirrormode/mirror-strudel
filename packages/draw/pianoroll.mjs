@@ -43,31 +43,31 @@ const getValue = (e) => {
  * @name pianoroll
  * @synonyms punchcard
  * @tags visualization
- * @param {Object} options Object containing all the optional following parameters as key value pairs:
- * @param {integer} options.cycles number of cycles to be displayed at the same time - defaults to 4
- * @param {number} options.playhead location of the active notes on the time axis - 0 to 1, defaults to 0.5
- * @param {boolean} options.vertical displays the roll vertically - 0 by default
- * @param {boolean} options.labels displays labels on individual notes (see the label function) - 0 by default
- * @param {boolean} options.flipTime reverse the direction of the roll - 0 by default
- * @param {boolean} options.flipValues reverse the relative location of notes on the value axis - 0 by default
- * @param {number} options.overscan lookup X cycles outside of the cycles window to display notes in advance - 1 by default
- * @param {boolean} options.hideNegative hide notes with negative time (before starting playing the pattern) - 0 by default
- * @param {boolean} options.smear notes leave a solid trace - 0 by default
- * @param {boolean} options.fold notes takes the full value axis width - 0 by default
- * @param {string} options.active hexadecimal or CSS color of the active notes - defaults to #FFCA28
- * @param {string} options.inactive hexadecimal or CSS color of the inactive notes - defaults to #7491D2
- * @param {string} options.background hexadecimal or CSS color of the background - defaults to transparent
- * @param {string} options.playheadColor hexadecimal or CSS color of the line representing the play head - defaults to white
- * @param {boolean} options.fill notes are filled with color (otherwise only the label is displayed) - 0 by default
- * @param {boolean} options.fillActive active notes are filled with color - 0 by default
- * @param {boolean} options.stroke notes are shown with colored borders - 0 by default
- * @param {boolean} options.strokeActive active notes are shown with colored borders - 0 by default
- * @param {boolean} options.hideInactive only active notes are shown - 0 by default
- * @param {boolean} options.colorizeInactive use note color for inactive notes - 1 by default
- * @param {string} options.fontFamily define the font used by notes labels - defaults to 'monospace'
- * @param {integer} options.minMidi minimum note value to display on the value axis - defaults to 10
- * @param {integer} options.maxMidi maximum note value to display on the value axis - defaults to 90
- * @param {boolean} options.autorange automatically calculate the minMidi and maxMidi parameters - 0 by default
+ * @param {object} [options] Object containing all the optional following parameters as key value pairs:
+ * @param {number} [options.cycles=4] number of cycles to be displayed at the same time - defaults to 4
+ * @param {number} [options.playhead=0.5] location of the active notes on the time axis - 0 to 1, defaults to 0.5
+ * @param {boolean} [options.vertical=0] displays the roll vertically - 0 by default
+ * @param {boolean} [options.labels=0] displays labels on individual notes (see the label function) - 0 by default
+ * @param {boolean} [options.flipTime=0] reverse the direction of the roll - 0 by default
+ * @param {boolean} [options.flipValues=0] reverse the relative location of notes on the value axis - 0 by default
+ * @param {number} [options.overscan=1] lookup X cycles outside of the cycles window to display notes in advance - 1 by default
+ * @param {boolean} [options.hideNegative=0] hide notes with negative time (before starting playing the pattern) - 0 by default
+ * @param {boolean} [options.smear=0] notes leave a solid trace - 0 by default
+ * @param {boolean} [options.fold=0] notes takes the full value axis width - 0 by default
+ * @param {string} [options.active=#FFCA28] hexadecimal or CSS color of the active notes - defaults to #FFCA28
+ * @param {string} [options.inactive='#7491D2'] hexadecimal or CSS color of the inactive notes - defaults to #7491D2
+ * @param {string} [options.background='transparent'] hexadecimal or CSS color of the background - defaults to transparent
+ * @param {string} [options.playheadColor='white'] hexadecimal or CSS color of the line representing the play head - defaults to white
+ * @param {boolean} [options.fill=0] notes are filled with color (otherwise only the label is displayed) - 0 by default
+ * @param {boolean} [options.fillActive=0] active notes are filled with color - 0 by default
+ * @param {boolean} [options.stroke=0] notes are shown with colored borders - 0 by default
+ * @param {boolean} [options.strokeActive=0] active notes are shown with colored borders - 0 by default
+ * @param {boolean} [options.hideInactive=0] only active notes are shown - 0 by default
+ * @param {boolean} [options.colorizeInactive=1] use note color for inactive notes - 1 by default
+ * @param {string} [options.fontFamily='monospace'] define the font used by notes labels - defaults to 'monospace'
+ * @param {number} [options.minMidi=10] minimum note value to display on the value axis - defaults to 10
+ * @param {number} [options.maxMidi=90] maximum note value to display on the value axis - defaults to 90
+ * @param {boolean} [options.autorange=0] automatically calculate the minMidi and maxMidi parameters - 0 by default
  * @see _pianoroll
  * @example
  * note("c2 a2 eb2")
@@ -299,8 +299,15 @@ Pattern.prototype.punchcard = function (options) {
  * Displays a vertical pianoroll with event labels.
  * Supports all the same options as pianoroll.
  *
+ * @param {object} options
+ * @param {number} options.vertical
+ * @param {number} options.labels
+ * @param {number} options.stroke
+ * @param {number} options.fillActive
+ * @param {string} options.active
  * @name wordfall
  * @tags visualization
+ * @returns {Pattern}
  */
 Pattern.prototype.wordfall = function (options) {
   return this.punchcard({ vertical: 1, labels: 1, stroke: 0, fillActive: 1, active: 'white', ...options });

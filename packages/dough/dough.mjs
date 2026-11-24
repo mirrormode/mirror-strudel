@@ -21,7 +21,8 @@ let D;
  *
  * @name initDough
  * @tags external_io
- * @memberof Pattern
+ * @memberof Pattern.prototype
+ * @returns {Promise<void>}
  * @example
  * await initDough()
  * $: chord("<Dm9 Dm11 Dm7>").offset("<-1 0 1 0>").voicing()
@@ -51,11 +52,11 @@ export async function doughOutput(hap, targetTime, cps = 1) {
 
 /**
  *
- * Uses dough as the audio engine. more info at https://dough.strudel.cc
+ * Uses dough as the audio engine. more info [here](https://dough.strudel.cc)
  *
  * @name dough
  * @tags external_io
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * $: chord("<Dm9 Dm11 Dm7>").offset("<-1 0 1 0>").voicing()

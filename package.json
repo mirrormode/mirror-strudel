@@ -67,14 +67,15 @@
     "dependency-tree": "^11.0.1",
     "eslint": "^9.19.0",
     "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^65.5.3",
     "events": "^3.3.0",
     "globals": "^15.14.0",
     "jsdoc": "^4.0.4",
     "jsdoc-json": "^2.0.2",
     "lerna": "^8.1.9",
     "prettier": "^3.4.2",
-    "vitest": "^3.0.4",
-    "vite-plugin-bundle-audioworklet": "workspace:*"
+    "vite-plugin-bundle-audioworklet": "workspace:*",
+    "vitest": "^3.0.4"
   },
   "engines": {
     "node": ">=18.0.0"

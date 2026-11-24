@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 // TODO: swap below line with above one when firefox supports esm imports in service workers
 // see https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker?retiredLocale=de#browser_compatibility
 // import createClock from './zyklus.mjs';

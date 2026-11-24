@@ -37,11 +37,11 @@ function humanFileSize(bytes, si) {
  * Note: `must` be called with await, otherwise you'll get a pending Promise object.
  *
  * @name getDuration
- * @synonym getDur
+ * @synonyms getDur
  * @tags samples
- * @param {string} sampleName
- * @param {number} (optional) n
- *
+ * @param {string} s sampleName
+ * @param {number} [n]
+ * @returns {Promise<object>}
  * @example
  * // Set a patterns cycle length to exactly the length of the sample
  * samples('github:tidalcycles/dirt-samples')

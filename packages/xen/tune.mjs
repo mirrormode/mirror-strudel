@@ -13,7 +13,7 @@ import { register } from '@strudel/core';
  * Assumes pattern contains numerical scale degrees on the `i` control (see examples below). Accepts a scale name or list of frequencies (see all available names at the link on the reference). Returns a new pattern with all values mapped to a frequency ratio. Similar to `xen`.
  * @name tune
  * @returns {Pattern}
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {(string | number[] )} scale
  * @deprecated
  * @example
