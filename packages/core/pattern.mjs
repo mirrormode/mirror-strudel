@@ -2046,7 +2046,7 @@ export const func = curry((a, b) => reify(b).func(a));
  * @param {boolean} [patternify=false] defaults to true; if set to false, you will have more control over the arguments to `func` as they will be
  *   in their raw form and it will be up to you to patternify them and/or query them for values
  * @param {boolean} [preserveSteps=false]
- * @param {(Pattern)=>Pattern} [join=(x) => x.innerJoin()]
+ * @param {function(Pattern):Pattern} [join=(x) => x.innerJoin()]
  * @returns {object}
  * @example
  * const vlpf = register('vlpf', (freq, pat) => {
@@ -2343,9 +2343,9 @@ export const { fastGap, fastgap } = register(['fastGap', 'fastgap'], function (f
     const newWhole = !hap.whole
       ? undefined
       : new TimeSpan(
-          newPart.begin.sub(begin.sub(hap.whole.begin).div(factor)),
-          newPart.end.add(hap.whole.end.sub(end).div(factor)),
-        );
+        newPart.begin.sub(begin.sub(hap.whole.begin).div(factor)),
+        newPart.end.add(hap.whole.end.sub(end).div(factor)),
+      );
     return new Hap(newWhole, newPart, hap.value, hap.context);
   };
   return pat.withQuerySpanMaybe(qf).withHap(ef).splitQueries();
@@ -4150,7 +4150,7 @@ export const { loopAtCps, loopatcps } = register(['loopAtCps', 'loopatcps'], fun
 });
 
 /** exposes a custom value at query time. basically allows mutating state without evaluation
- * @param {() => Pattern} accessor
+ * @param {function():Pattern} accessor
  * @returns {Pattern}
  * @tags internals
  */

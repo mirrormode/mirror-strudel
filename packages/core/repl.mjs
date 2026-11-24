@@ -157,7 +157,7 @@ export function repl({
    * $: sound("hh*8")
    * all(x => x.pianoroll())
    * ```
-   * @param {(Pattern) => Pattern} transform
+   * @param {function(Pattern):Pattern} transform
    * @returns {Pattern}
    * @tags combiners
    */
@@ -176,7 +176,7 @@ export function repl({
    * each(fast("<2 3>"))
    * ```
    * @tags combiners
-   * @param {(Pattern) => Pattern} transform
+   * @param {function(Pattern):Pattern} transform
    * @returns {pattern}
    */
   const each = function (transform) {
@@ -316,15 +316,15 @@ export function repl({
 
 export const getSchedule =
   ({ onSchedule }) =>
-  async (hap, t, cps) => {
-    try {
-      if (!hap.context.onSchedule || !hap.context.dominantSchedule) {
-        await onSchedule(hap, t, cps);
+    async (hap, t, cps) => {
+      try {
+        if (!hap.context.onSchedule || !hap.context.dominantSchedule) {
+          await onSchedule(hap, t, cps);
+        }
+        if (hap.context.onSchedule) {
+          await hap.context.onSchedule(hap, t, cps);
+        }
+      } catch (err) {
+        errorLogger(err, 'getSchedule');
       }
-      if (hap.context.onSchedule) {
-        await hap.context.onSchedule(hap, t, cps);
-      }
-    } catch (err) {
-      errorLogger(err, 'getSchedule');
-    }
-  };
+    };
