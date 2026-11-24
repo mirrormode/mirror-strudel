@@ -1,0 +1,27 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import jsdocJson from '../../../doc.json';
+import { computeAvailableFunctions } from '../jsDocsUtils.mjs';
+import { JsDoc } from '@src/docs/JsDoc.jsx';
+const functions = computeAvailableFunctions(jsdocJson);
+const frontmatter = { title: 'Reference', description: '', layout: '' };
+const headings = functions.map((entry) => ({
+  depth: 1,
+  slug: entry.longname,
+  text: entry.name,
+}));
+---
+
+<MainLayout frontmatter={frontmatter} headings={headings}>
+  <h1>Reference</h1>
+  <p>
+    This is the long list of functions you can use. Remember that you don't need to remember all of those and that you
+    can already make music with a small set of functions!
+  </p>
+  {functions.map((entry) => (
+    <Fragment>
+      <h2 id={entry.longname}>{entry.name}</h2>
+      <JsDoc name={entry.longname} h={0} />
+    </Fragment>
+  ))}
+</MainLayout>
