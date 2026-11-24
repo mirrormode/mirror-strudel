@@ -66,7 +66,7 @@ const trimFreq = (freq) => parseFloat(freq.toPrecision(10));
  *
  * @name xen
  * @returns {Pattern}
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {(string | number[] )} scaleNameOrRatios
  * @tags tonal
  * @example
@@ -202,7 +202,7 @@ export const xen = register(
  * @param {number} base
  * @param {number} [originalBase]
  * @tags tonal
- *
+ * @memberof Pattern.prototype
  * @example
  * i("[0 1 2 3] [3 4] [4 3 2 1]").xen("hexany23").withBase("<220 [300 200]>")
  * @example
@@ -246,6 +246,7 @@ export const withBase = register('withBase', (b, pat) => {
  * @tags tonal
  * @param {number} amt
  * @param {number} edoSize (optional)
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  *
  * @example

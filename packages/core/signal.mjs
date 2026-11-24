@@ -635,7 +635,7 @@ export const chooseIn = (...xs) => chooseInWith(rand, xs);
  * the range 0 .. 1.
  * @tags temporal
  * @param  {...any} xs
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  */
 Pattern.prototype.choose = function (...xs) {
@@ -647,7 +647,7 @@ Pattern.prototype.choose = function (...xs) {
  * in the range -1 .. 1
  * @tags temporal
  * @param  {...any} xs
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  */
 Pattern.prototype.choose2 = function (...xs) {
@@ -787,7 +787,7 @@ export const berlin = signal((t, controls) => _berlin(t, controls.randSeed));
  * @name degradeByWith
  * @param {Pattern|number} test
  * @param {Pattern|number} testAgainst
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @tags temporal
  * @returns {Pattern}
  * @example
@@ -809,7 +809,7 @@ export const degradeByWith = register('degradeByWith', (withPat, x, pat) => {
  *
  * @tags temporal
  * @name degradeBy
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {number} amount - a number between 0 and 1
  * @returns {Pattern}
  * @example
@@ -835,7 +835,7 @@ export const degradeBy = register(
  *
  * @tags temporal
  * @name degrade
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * s("hh*8").degrade()
@@ -852,7 +852,7 @@ export const degrade = register('degrade', (pat) => pat._degradeBy(0.5), true, t
  *
  * @tags temporal
  * @name undegradeBy
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {number} amount - a number between 0 and 1
  * @returns {Pattern}
  * @example
@@ -881,7 +881,7 @@ export const undegradeBy = register(
  *
  * @tags temporal
  * @name undegrade
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * s("hh*8").undegrade()
@@ -900,7 +900,7 @@ export const undegrade = register('undegrade', (pat) => pat._undegradeBy(0.5), t
  *
  * @tags temporal
  * @name sometimesBy
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {number | Pattern} probability - a number between 0 and 1
  * @param {Function} function - the transformation to apply
  * @returns {Pattern}
@@ -920,7 +920,7 @@ export const sometimesBy = register('sometimesBy', function (patx, func, pat) {
  *
  * @tags temporal
  * @name sometimes
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {Function} function - the transformation to apply
  * @returns {Pattern}
  * @example
@@ -936,7 +936,7 @@ export const sometimes = register('sometimes', function (func, pat) {
  * Similar to `sometimesBy`
  *
  * @name someCyclesBy
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @param {number | Pattern} probability - a number between 0 and 1
  * @param {Function} function - the transformation to apply
  * @returns {Pattern}
@@ -961,7 +961,7 @@ export const someCyclesBy = register('someCyclesBy', function (patx, func, pat) 
  * Shorthand for `.someCyclesBy(0.5, fn)`
  *
  * @name someCycles
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @tags temporal
  * @example
@@ -976,7 +976,7 @@ export const someCycles = register('someCycles', function (func, pat) {
  * Shorthand for `.sometimesBy(0.75, fn)`
  *
  * @name often
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @tags temporal
  * @example
@@ -991,7 +991,7 @@ export const often = register('often', function (func, pat) {
  * Shorthand for `.sometimesBy(0.25, fn)`
  *
  * @name rarely
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @tags temporal
  * @example
@@ -1007,7 +1007,7 @@ export const rarely = register('rarely', function (func, pat) {
  *
  * @tags temporal
  * @name almostNever
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * s("hh*8").almostNever(x=>x.speed("0.5"))
@@ -1022,7 +1022,7 @@ export const almostNever = register('almostNever', function (func, pat) {
  *
  * @tags temporal
  * @name almostAlways
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * s("hh*8").almostAlways(x=>x.speed("0.5"))
@@ -1037,7 +1037,7 @@ export const almostAlways = register('almostAlways', function (func, pat) {
  *
  * @tags temporal
  * @name never
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * s("hh*8").never(x=>x.speed("0.5"))
@@ -1052,7 +1052,7 @@ export const never = register('never', function (_, pat) {
  *
  * @tags temporal
  * @name always
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * s("hh*8").always(x=>x.speed("0.5"))
@@ -1081,7 +1081,7 @@ export function _keyDown(keyname) {
  *
  * @tags external_io
  * @name whenKey
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * s("bd(5,8)").whenKey("Control:j", x => x.segment(16).color("red")).whenKey("Control:i", x => x.fast(2).color("blue"))
@@ -1098,7 +1098,7 @@ export const whenKey = register('whenKey', function (input, func, pat) {
  *
  * @tags external_io
  * @name keyDown
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * keyDown("Control:j").pick([s("bd(5,8)"), s("cp(3,8)")])

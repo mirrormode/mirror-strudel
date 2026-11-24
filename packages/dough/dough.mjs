@@ -21,7 +21,7 @@ let D;
  *
  * @name initDough
  * @tags external_io
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Promise<void>}
  * @example
  * await initDough()
@@ -56,7 +56,7 @@ export async function doughOutput(hap, targetTime, cps = 1) {
  *
  * @name dough
  * @tags external_io
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * $: chord("<Dm9 Dm11 Dm7>").offset("<-1 0 1 0>").voicing()

@@ -97,8 +97,21 @@ export default [
   jsdoc({
     config: 'flat/recommended-error',
     rules: {
-      'jsdoc/no-undefined-types': ['error', { definedTypes: ['Pattern', 'Hap', 'KabelsalatExpression'] }],
+      'jsdoc/no-undefined-types': ['error', { definedTypes: ['Pattern', 'Pattern.prototype', 'Hap', 'KabelsalatExpression'] }],
       'jsdoc/check-tag-names': ['error', { definedTags: ['tags', 'synonyms', 'noAutocomplete', 'superdirtOnly'] }],
+      "jsdoc/no-restricted-syntax": [
+        "error",
+        {
+          contexts: [
+            {
+              comment: //@memberof without a .prototype
+                'JsdocBlock:has(JsdocTag[tag="memberof"]:not([name=/\\.prototype(?:\\s|$)/]):not([description=/\\.prototype(?:\\s|$)/]))',
+              context: "any",
+              message: "Use '@memberof <Name>.prototype'. Without, it's considered a static function.",
+            },
+          ],
+        },
+      ],
       'jsdoc/no-defaults': 0, //removes defaults with not alternative
       'jsdoc/require-jsdoc': 0,
       'jsdoc/tag-lines': 0,

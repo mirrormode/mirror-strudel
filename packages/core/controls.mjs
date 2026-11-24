@@ -878,7 +878,7 @@ export const { begin } = registerControl('begin');
 /**
  * The same as .begin, but cuts off the end off each sample.
  *
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @name end
  * @tags samples
  * @param {number | Pattern} length 1 = whole sample, .5 = half sample, .25 = quarter sample etc..
@@ -3017,7 +3017,7 @@ export const as = register('as', (mapping, pat) => {
  * in the optional array syntax ex: "0.5:2", the second value controls the speed of playback
  * @name scrub
  * @tags samples
- * @memberof Pattern
+ * @memberof Pattern.prototype
  * @returns {Pattern}
  * @example
  * samples('github:switchangel/pad')
