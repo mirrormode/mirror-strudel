@@ -21,12 +21,29 @@ LOG=1 npx @strudel/sampler # adds logging
 PORT=5555 npx @strudel/sampler # changes port
 ```
 
-## static json
+### --json
 
 when running with `--json`, you will simply get the json logged back:
 
 ```sh
-npx --yes @strudel/sampler --json > strudel.json
+npx @strudel/sampler --json > strudel.json
 ```
 
 this is useful if you want to create a sample pack from the current folder.
+
+### `--dir`
+
+specifies the directory to serve. defaults to cwd
+
+```sh
+npx @strudel/sampler --dir ~/Music/samples
+```
+
+### `--flat`
+
+with `--flat`, each file gets its own name, not grouped by directory.
+
+```sh
+npx @strudel/sampler --flat
+```
+
