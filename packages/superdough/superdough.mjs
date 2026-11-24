@@ -675,7 +675,7 @@ export const superdough = async (value, t, hapDuration, cps = 0.5, cycle = 0.5) 
     chain.connect(initialGain);
 
     // filter
-    const ftype = getFilterType(value.ftype);
+    const ftype = getFilterType(fx.ftype ?? value.ftype);
 
     const filt = (params) => createFilter(ac, t, end, params, cps, cycle);
     if (fx.cutoff !== undefined) {
@@ -700,6 +700,7 @@ export const superdough = async (value, t, hapDuration, cps = 0.5, cycle = 0.5) 
       };
       const lpParams = pickAndRename(fx, lpMap);
       lpParams.type = 'lowpass';
+      lpParams.model = ftype;
       const { filter: lpf1, lfo: lfo1 } = filt(lpParams);
       fxNodes['lpf'] = [lpf1];
       fxNodes['lpf_lfo'] = [lfo1];
