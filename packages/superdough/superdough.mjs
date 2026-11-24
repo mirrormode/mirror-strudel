@@ -676,7 +676,7 @@ export const superdough = async (value, t, hapDuration, cps = 0.5, cycle = 0.5) 
     chain.connect(initialGain);
 
     // filter
-    const ftype = getFilterType(fx.ftype ?? value.ftype);    
+    const ftype = getFilterType(fx.ftype ?? value.ftype);
 
     const filt = (params) => createFilter(ac, t, end, params, cps, cycle);
     if (fx.cutoff !== undefined) {
