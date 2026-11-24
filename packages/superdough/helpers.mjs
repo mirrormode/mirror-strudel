@@ -250,7 +250,7 @@ export function createFilter(context, start, end, params, cps, cycle) {
   } = params;
 
   let frequencyParam, filter;
-  if (model === 'ladder') {
+  if (model === 'ladder' && type === 'lowpass') {
     filter = getWorklet(context, 'ladder-processor', { frequency, q, drive });
     frequencyParam = filter.parameters.get('frequency');
   } else {
