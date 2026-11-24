@@ -144,7 +144,7 @@ export const Reference = memo(function Reference() {
         id="reference-container"
       >
         <div className="prose dark:prose-invert min-w-full px-1 text-sm">
-          <h2>API Reference</h2>
+          <h2>Reference</h2>
           <p className="font-sans text-md">
             This is the long list of functions you can use. Remember that you don't need to remember all of those and
             that you can already make music with a small set of functions!
