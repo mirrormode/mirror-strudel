@@ -2738,7 +2738,9 @@ export const { segment, seg } = register(['segment', 'seg'], function (rate, pat
  * @example
  * s("hh*8").swingBy(1/3, 4)
  */
-export const swingBy = register('swingBy', (swing, n, pat) => pat.inside(n, late(seq(0, swing / 2))));
+export const swingBy = register('swingBy', (swing, n, pat) =>
+  pat.inside(n, late(stack(seq(0, silence), seq(silence, swing / 2).late(swing / 2)))),
+);
 
 /**
  * Shorthand for swingBy with 1/3:
