@@ -1,11 +1,14 @@
-import { defaultKeymap } from '@codemirror/commands';
-import { Prec, EditorState } from '@codemirror/state';
+import { defaultKeymap, toggleLineComment } from '@codemirror/commands';
+import { Facet, Prec, EditorState } from '@codemirror/state';
 import { keymap, ViewPlugin } from '@codemirror/view';
 // import { searchKeymap } from '@codemirror/search';
 import { emacs } from '@replit/codemirror-emacs';
-import { vim } from '@replit/codemirror-vim';
+import { vim, Vim } from '@replit/codemirror-vim';
 // import { vim } from './vim_test.mjs';
 import { vscodeKeymap } from '@replit/codemirror-vscode-keymap';
+
+// Per-editor way to plumb down { onEvaluate, onStop }, provided by initEditor.
+export const editorActions = Facet.define({ combine: (values) => values[0] ?? {} });
 
 const vscodePlugin = ViewPlugin.fromClass(
   class {
@@ -26,7 +29,18 @@ const keymaps = {
   vscode: vscodeExtension,
 };
 
-export { Vim } from '@replit/codemirror-vim';
+export { Vim }; // export for patterns/prebake to define custom actions
+
+Vim.defineEx('write', 'w', (cm) => cm.cm6.state.facet(editorActions).onEvaluate?.());
+Vim.defineEx('quit', 'q', (cm) => cm.cm6.state.facet(editorActions).onStop?.());
+
+Vim.defineOperator('toggleComment', (cm, _args, _ranges, oldAnchor) => {
+  // By the time an operator runs, vim has selected the motion's range in the
+  // real editor so we can just call the normal codemirror command
+  toggleLineComment(cm.cm6);
+  return oldAnchor;
+});
+Vim.mapCommand('gc', 'operator', 'toggleComment', {}, { isEdit: true });
 
 export function keybindings(name) {
   const active = keymaps[name];
