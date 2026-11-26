@@ -1101,7 +1101,7 @@ describe('Pattern', () => {
       );
     });
   });
-  
+
   describe('_steps', () => {
     it('Is correctly preserved/calculated through transformations', () => {
       expect(sequence(0, 1, 2, 3).linger(4)._steps).toStrictEqual(Fraction(4));
