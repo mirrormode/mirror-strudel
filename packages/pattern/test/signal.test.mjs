@@ -6,7 +6,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 import Fraction from 'fraction.js';
 
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 import {
   saw,
@@ -25,7 +25,7 @@ import {
   perx,
   cyclesPer,
 } from '../signal.mjs';
-import { fastcat, sequence, State, TimeSpan, Hap, note } from '../index.mjs';
+import { fastcat, sequence, State, TimeSpan, Hap, seq } from '../index.mjs';
 
 const st = (begin, end) => new State(ts(begin, end));
 const ts = (begin, end) => new TimeSpan(Fraction(begin), Fraction(end));
@@ -122,6 +122,6 @@ describe('perx', () => {
 
 describe('shuffle', () => {
   it('returns original pattern if input is 1', () => {
-    expect(note('c d e f').sound('piano').shuffle(1).firstCycle()).toEqual(note('c d e f').sound('piano').firstCycle());
+    expect(seq(1, 2, 3, 4).shuffle(1).firstCycle()).toEqual(seq(1, 2, 3, 4).firstCycle());
   });
 });

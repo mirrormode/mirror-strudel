@@ -5,7 +5,7 @@ This program is free software: you can redistribute it and/or modify it under th
 */
 
 import createClock from './zyklus.mjs';
-import { errorLogger, logger } from './logger.mjs';
+import { errorLogger, logger } from '@strudel/pattern';
 
 export class Cyclist {
   constructor({
