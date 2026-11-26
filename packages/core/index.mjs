@@ -15,6 +15,7 @@ export * from './repl.mjs';
 export * from './speak.mjs';
 export * from './schedulerState.mjs';
 export * from './ui.mjs';
+export * from './evaluate.mjs';
 import { getClockTime } from './schedulerState.mjs';
 
 // legacy:

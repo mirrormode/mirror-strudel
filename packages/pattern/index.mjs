@@ -8,7 +8,6 @@ export * from './euclid.mjs';
 import Fraction, { lcm } from './fraction.mjs';
 import { logger } from './logger.mjs';
 export { Fraction, lcm };
-export * from './evaluate.mjs';
 export * from './hap.mjs';
 export * from './impure.mjs';
 export * from './logger.mjs';

@@ -26,7 +26,8 @@ import {
 } from './util.mjs';
 import drawLine from './drawLine.mjs';
 import { errorLogger, logger } from './logger.mjs';
-import { strudelScope } from './evaluate.mjs';
+
+export const strudelScope = {};
 
 let stringParser;
 

@@ -1,6 +1,7 @@
 import { NeoCyclist } from './neocyclist.mjs';
 import { Cyclist } from './cyclist.mjs';
-import { evaluate as _evaluate, reset_state } from '@strudel/pattern';
+import { reset_state } from '@strudel/pattern';
+import { evaluate as _evaluate } from './evaluate.mjs';
 import { errorLogger, logger, evalScope, register, Pattern, isPattern, silence, stack } from '@strudel/pattern';
 import {
   setCpsFunc,
