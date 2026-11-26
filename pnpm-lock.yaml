@@ -41,9 +41,6 @@ importers:
       '@strudel/mini':
         specifier: workspace:*
         version: link:packages/mini
-      '@strudel/pattern':
-        specifier: workspace:*
-        version: link:packages/pattern
       '@strudel/tonal':
         specifier: workspace:*
         version: link:packages/tonal
