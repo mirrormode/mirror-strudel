@@ -5,9 +5,9 @@ This program is free software: you can redistribute it and/or modify it under th
 */
 
 export * from './euclid.mjs';
-import Fraction from './fraction.mjs';
+import Fraction, { lcm } from './fraction.mjs';
 import { logger } from './logger.mjs';
-export { Fraction };
+export { Fraction, lcm };
 export * from './evaluate.mjs';
 export * from './hap.mjs';
 export * from './impure.mjs';

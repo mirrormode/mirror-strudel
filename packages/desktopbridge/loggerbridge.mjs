@@ -1,5 +1,5 @@
 import { listen } from '@tauri-apps/api/event';
-import { logger } from '../core/logger.mjs';
+import { logger } from '@strudel/core';
 
 // listen for log events from the Tauri backend and log in the UI
 await listen('log-event', (e) => {

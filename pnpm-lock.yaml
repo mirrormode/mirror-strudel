@@ -41,6 +41,9 @@ importers:
       '@strudel/mini':
         specifier: workspace:*
         version: link:packages/mini
+      '@strudel/pattern':
+        specifier: workspace:*
+        version: link:packages/pattern
       '@strudel/tonal':
         specifier: workspace:*
         version: link:packages/tonal
@@ -413,9 +416,9 @@ importers:
 
   packages/mini:
     dependencies:
-      '@strudel/core':
+      '@strudel/pattern':
         specifier: workspace:*
-        version: link:../core
+        version: link:../pattern
     devDependencies:
       peggy:
         specifier: ^4.2.0

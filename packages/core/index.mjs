@@ -6,10 +6,43 @@ This program is free software: you can redistribute it and/or modify it under th
 
 import * as controls from './controls.mjs'; // legacy
 import createClock from './zyklus.mjs';
-export { Fraction, controls, createClock };
+import { Pattern } from '@strudel/pattern';
+export { controls, createClock };
+export * from '@strudel/pattern';
 export * from './controls.mjs';
 export * from './cyclist.mjs';
 export * from './repl.mjs';
 export * from './speak.mjs';
 export * from './schedulerState.mjs';
 export * from './ui.mjs';
+import { getClockTime } from './schedulerState.mjs';
+
+// legacy:
+Pattern.prototype.onTrigger = function (onTrigger, dominant = true) {
+  console.warn('onTrigger is deprecated.. use onSchedule(hap, time, cps) instead');
+  return this.onSchedule((hap, t, cps) => {
+    const currentTime = getClockTime();
+    return onTrigger(hap, currentTime, cps, t);
+  }, dominant);
+};
+
+/**
+ *
+ * make something happen on event time
+ * uses browser timeout which is innacurate for audio tasks
+ * @param {Function} func
+ * @name onTriggerTime
+ * @tags external_io
+ * @memberof Pattern.prototype
+ * @returns {Pattern}
+ * @example
+ * s("bd!8").onTriggerTime((hap) => {console.log(hap)})
+ */
+Pattern.prototype.onTriggerTime = function (func) {
+  return this.onSchedule((hap, targetTime) => {
+    const diff = targetTime - getClockTime();
+    setTimeout(() => {
+      func(hap);
+    }, diff * 1000);
+  }, false);
+};

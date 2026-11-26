@@ -5,8 +5,8 @@ This program is free software: you can redistribute it and/or modify it under th
 */
 
 import * as krill from './krill-parser.js';
-import * as strudel from '@strudel/core';
-import Fraction, { lcm } from '@strudel/core/fraction.mjs';
+import * as strudel from '@strudel/pattern';
+import { Fraction, lcm } from '@strudel/pattern';
 
 const randOffset = 0.0003;
 

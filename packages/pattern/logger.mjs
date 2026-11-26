@@ -5,7 +5,7 @@ let debounce = 1000,
   lastTime;
 
 export function errorLogger(e, origin = 'cyclist') {
-  if (process.env.NODE_ENV === 'development') {
+  if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
     console.error(e);
   }
   logger(`[${origin}] error: ${e.message}`);

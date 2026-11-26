@@ -58,11 +58,12 @@ import {
   arp,
 } from '../index.mjs';
 
-import { log, logValues, stackCenter } from '../pattern.mjs';
+import { reify, stackCenter } from '../pattern.mjs';
 
 import { steady } from '../signal.mjs';
 
-import { n, s } from '../controls.mjs';
+let n = (value) => reify(value).fmap((v) => ({ n: v }));
+let s = (value) => reify(value).fmap((v) => ({ s: v }));
 
 const st = (begin, end) => new State(ts(begin, end));
 const ts = (begin, end) => new TimeSpan(Fraction(begin), Fraction(end));
@@ -1055,7 +1056,7 @@ describe('Pattern', () => {
   });
   describe('hurry', () => {
     it('Can speed up patterns and sounds', () => {
-      sameFirst(s(sequence('a', 'b')).hurry(2), s(sequence('a', 'b')).fast(2).speed(2));
+      sameFirst(s(sequence('a', 'b')).hurry(2), s(sequence('a', 'b')).fast(2).set({ speed: 2 }));
     });
   });
   /*describe('composable functions', () => {
@@ -1405,7 +1406,7 @@ describe('Pattern', () => {
   describe('logValues', () => {
     it('logs values to console', () => {
       const mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
-      const pattern = pure('a').note('c#').logValues();
+      const pattern = pure({ s: 'bd', speed: 2 }).logValues();
       const haps = pattern.queryArc(0, 1);
 
       // Force a trigger
@@ -1414,7 +1415,7 @@ describe('Pattern', () => {
       });
 
       expect(mockConsoleLog).toHaveBeenCalledWith(
-        '%c[hap] value:a note:c#',
+        '%c[hap] s:bd speed:2',
         'background-color: black;color:white;border-radius:15px',
       );
       mockConsoleLog.mockRestore();

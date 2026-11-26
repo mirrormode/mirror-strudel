@@ -7,7 +7,7 @@ This program is free software: you can redistribute it and/or modify it under th
 import { s, pan, getControlName } from '../controls.mjs';
 import { mini } from '../../mini/mini.mjs';
 import { describe, it, expect } from 'vitest';
-import Fraction from '../fraction.mjs';
+import { Fraction } from '@strudel/pattern';
 
 describe('controls', () => {
   it('should support controls', () => {

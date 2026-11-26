@@ -27,7 +27,6 @@ import {
 import drawLine from './drawLine.mjs';
 import { errorLogger, logger } from './logger.mjs';
 import { strudelScope } from './evaluate.mjs';
-import { getClockTime } from './schedulerState.mjs';
 
 let stringParser;
 
@@ -957,15 +956,6 @@ export class Pattern {
         dominantSchedule: hap.context.dominantSchedule || dominant,
       }),
     );
-  }
-
-  // legacy:
-  onTrigger(onTrigger, dominant = true) {
-    console.warn('onTrigger is deprecated.. use onSchedule(hap, time, cps) instead');
-    return this.onSchedule((hap, t, cps) => {
-      const currentTime = getClockTime();
-      return onTrigger(hap, currentTime, cps, t);
-    }, dominant);
   }
 
   /**
@@ -4056,27 +4046,6 @@ export const slice = register(
   },
   false, // turns off auto-patternification
 );
-
-/**
- *
- * make something happen on event time
- * uses browser timeout which is innacurate for audio tasks
- * @param {Function} func
- * @name onTriggerTime
- * @tags external_io
- * @memberof Pattern.prototype
- * @returns {Pattern}
- * @example
- * s("bd!8").onTriggerTime((hap) => {console.log(hap)})
- */
-Pattern.prototype.onTriggerTime = function (func) {
-  return this.onSchedule((hap, targetTime) => {
-    const diff = targetTime - getClockTime();
-    setTimeout(() => {
-      func(hap);
-    }, diff * 1000);
-  }, false);
-};
 
 /**
  * Works the same as slice, but changes the playback speed of each slice to match the duration of its step.

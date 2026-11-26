@@ -5,8 +5,8 @@ This program is free software: you can redistribute it and/or modify it under th
 */
 
 import { getLeafLocation, getLeafLocations, mini, mini2ast } from '../mini.mjs';
-import '@strudel/core/euclid.mjs';
-import { Fraction } from '@strudel/core/index.mjs';
+import '@strudel/pattern';
+import { Fraction } from '@strudel/pattern';
 import { describe, expect, it } from 'vitest';
 
 describe('mini', () => {

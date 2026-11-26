@@ -1,7 +1,7 @@
 import { NeoCyclist } from './neocyclist.mjs';
 import { Cyclist } from './cyclist.mjs';
-import { evaluate as _evaluate } from './evaluate.mjs';
-import { errorLogger, logger } from './logger.mjs';
+import { evaluate as _evaluate, reset_state } from '@strudel/pattern';
+import { errorLogger, logger, evalScope, register, Pattern, isPattern, silence, stack } from '@strudel/pattern';
 import {
   setCpsFunc,
   setIsStarted,
@@ -10,9 +10,6 @@ import {
   setScheduleFunc,
   setClockTime,
 } from './schedulerState.mjs';
-import { evalScope } from './evaluate.mjs';
-import { register, Pattern, isPattern, silence, stack } from './pattern.mjs';
-import { reset_state } from './impure.mjs';
 
 export function repl({
   onSchedule,

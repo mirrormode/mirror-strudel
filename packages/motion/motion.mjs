@@ -1,6 +1,6 @@
 // motion.mjs
 
-import { signal } from '../core/signal.mjs';
+import { signal } from '@strudel/core';
 
 /**
  *  The accelerometer's x-axis value ranges from 0 to 1.

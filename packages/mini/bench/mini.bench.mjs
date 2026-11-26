@@ -1,6 +1,6 @@
 import { describe, bench } from 'vitest';
 
-import { calculateSteps } from '../../core/index.mjs';
+import { calculateSteps } from '@strudel/pattern';
 import { mini } from '../index.mjs';
 
 describe('mini', () => {

@@ -1,6 +1,5 @@
 import { afterEach } from 'vitest';
-import { useRNG } from './packages/core/signal.mjs';
-import { setDefaultJoin } from './packages/core/pattern.mjs';
+import { useRNG, setDefaultJoin } from './packages/pattern/index.mjs';
 
 afterEach(() => {
   // Avoid bleed between tests
