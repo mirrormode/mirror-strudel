@@ -31,7 +31,7 @@ export const strudelScope = {};
 
 let stringParser;
 
-let __steps = true;
+export let __steps = true;
 
 export const calculateSteps = function (x) {
   __steps = x ? true : false;
@@ -2402,16 +2402,6 @@ export const fast = register(
 );
 
 /**
- * Both speeds up the pattern (like 'fast') and the sample playback (like 'speed').
- * @tags temporal
- * @example
- * s("bd sd:2").hurry("<1 2 4 3>").slow(1.5)
- */
-export const hurry = register('hurry', function (r, pat) {
-  return pat._fast(r).mul(pure({ speed: r }));
-});
-
-/**
  * Slow down a pattern over the given number of cycles. Like the "/" operator in mini notation.
  *
  * @tags temporal
@@ -2912,71 +2902,6 @@ export const palindrome = register(
 );
 
 /**
- * Jux with adjustable stereo width. 0 = mono, 1 = full stereo.
- * @tags temporal
- * @name juxBy
- * @synonyms juxby
- * @example
- * s("bd lt [~ ht] mt cp ~ bd hh").juxBy("<0 .5 1>/2", rev)
- */
-export const { juxBy, juxby } = register(['juxBy', 'juxby'], function (by, func, pat) {
-  by /= 2;
-  const elem_or = function (dict, key, dflt) {
-    if (key in dict) {
-      return dict[key];
-    }
-    return dflt;
-  };
-  const left = pat.withValue((val) => Object.assign({}, val, { pan: elem_or(val, 'pan', 0.5) - by }));
-  const right = func(pat.withValue((val) => Object.assign({}, val, { pan: elem_or(val, 'pan', 0.5) + by })));
-
-  return stack(left, right).setSteps(__steps ? lcm(left._steps, right._steps) : undefined);
-});
-
-/**
- * Like juxBy, except it flips the ears each cycle.
- * @name juxFlipBy
- * @synonyms juxflipby, fluxBy, fluxby
- * @example
- * s("bd lt [~ ht] mt cp ~ bd hh").juxFlipBy(".8", rev)
- */
-export const { juxFlipBy, juxflipby, fluxBy, fluxby } = register(
-  ['juxFlipBy', 'juxflipby', 'fluxBy', 'fluxby'],
-  function (by, func, pat) {
-    return pat.juxBy(slowcat(by, -by), func);
-  },
-);
-
-/**
- * The jux function creates strange stereo effects, by applying a function to a pattern, but only in the right-hand channel.
- * @tags temporal, superdough
- * @example
- * s("bd lt [~ ht] mt cp ~ bd hh").jux(rev)
- * @example
- * s("bd lt [~ ht] mt cp ~ bd hh").jux(press)
- * @example
- * s("bd lt [~ ht] mt cp ~ bd hh").jux(iter(4))
- */
-export const jux = register('jux', function (func, pat) {
-  return pat._juxBy(1, func, pat);
-});
-
-/**
- * Like jux, but flips the ears each cycle.
- * @name juxFlip
- * @synonyms juxflip, flux
- * @example
- * s("bd lt [~ ht] mt cp ~ bd hh").juxFlip(rev)
- * @example
- * s("bd lt [~ ht] mt cp ~ bd hh").juxFlip(press)
- * @example
- * s("bd lt [~ ht] mt cp ~ bd hh").juxFlip(iter(4))
- */
-export const { juxFlip, flux } = register(['juxFlip', 'juxflip', 'flux'], function (func, pat) {
-  return pat._juxFlipBy(1, func, pat);
-});
-
-/**
  * Superimpose and offset multiple times, applying the given function each time.
  * @tags temporal, functional
  * @name echoWith
@@ -2995,36 +2920,6 @@ export const { echoWith, echowith, stutWith, stutwith } = register(
     return stack(...listRange(0, times - 1).map((i) => func(pat.late(Fraction(time).mul(i)), i)));
   },
 );
-
-/**
- * Superimpose and offset multiple times, gradually decreasing the velocity
- * @tags temporal
- * @name echo
- * @memberof Pattern.prototype
- * @returns {Pattern}
- * @param {number} times how many times to repeat
- * @param {number} time cycle offset between iterations
- * @param {number} feedback velocity multiplicator for each iteration
- * @example
- * s("bd sd").echo(3, 1/6, .8)
- */
-export const echo = register('echo', function (times, time, feedback, pat) {
-  return pat._echoWith(times, time, (pat, i) => pat.gain(Math.pow(feedback, i)));
-});
-
-/**
- * Deprecated. Like echo, but the last 2 parameters are flipped.
- * @tags temporal
- * @name stut
- * @param {number} times how many times to repeat
- * @param {number} feedback velocity multiplicator for each iteration
- * @param {number} time cycle offset between iterations
- * @example
- * s("bd sd").stut(3, .8, 1/6)
- */
-export const stut = register('stut', function (times, feedback, time, pat) {
-  return pat._echoWith(times, time, (pat, i) => pat.gain(Math.pow(feedback, i)));
-});
 
 export const applyN = register('applyN', function (n, func, p) {
   let result = p;
@@ -3293,33 +3188,6 @@ export const bypass = register(
 export const { ribbon, rib } = register(['ribbon', 'rib'], (offset, cycles, pat) =>
   pat.early(offset).restart(pure(1).slow(cycles)),
 );
-
-/**
- * Sets the pattern's color to the given [hsla](https://www.w3schools.com/htmL/html_colors_hsl.asp)
- *
- * @name hsla
- * @param {number} hue (0 - 360)
- * @param {number} saturation percentage (0 - 100)
- * @param {number} lightness percentage (0 - 100)
- * @param {number} alpha (transparency) (0.0 - 1.0)
- * @tags visualization
- */
-export const hsla = register('hsla', (h, s, l, a, pat) => {
-  return pat.color(`hsla(${h}turn,${s * 100}%,${l * 100}%,${a})`);
-});
-
-/**
- * Sets the pattern's color to the given [hsl](https://www.w3schools.com/htmL/html_colors_hsl.asp)
- *
- * @name hsl
- * @param {number} hue (0 - 360)
- * @param {number} saturation percentage (0 - 100)
- * @param {number} lightness percentage (0 - 100)
- * @tags visualization
- */
-export const hsl = register('hsl', (h, s, l, pat) => {
-  return pat.color(`hsl(${h}turn,${s * 100}%,${l * 100}%)`);
-});
 
 /**
  * Tags each Hap with an identifier. Good for filtering. The function populates Hap.context.tags (Array).
@@ -3937,189 +3805,6 @@ Pattern.prototype.steps = Pattern.prototype.pace;
 // Control-related functions, i.e. ones that manipulate patterns of
 // objects
 
-/**
- * Cuts each sample into the given number of parts, allowing you to explore a technique known as 'granular synthesis'.
- * It turns a pattern of samples into a pattern of parts of samples.
- * @name chop
- * @tags samples
- * @memberof Pattern.prototype
- * @returns {Pattern}
- * @example
- * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
- * s("rhodes")
- *  .chop(4)
- *  .rev() // reverse order of chops
- *  .loopAt(2) // fit sample into 2 cycles
- *
- */
-export const chop = register('chop', function (n, pat) {
-  const slices = Array.from({ length: n }, (x, i) => i);
-  const slice_objects = slices.map((i) => ({ begin: i / n, end: (i + 1) / n }));
-  const merge = function (a, b) {
-    if ('begin' in a && 'end' in a && a.begin !== undefined && a.end !== undefined) {
-      const d = a.end - a.begin;
-      b = { begin: a.begin + b.begin * d, end: a.begin + b.end * d };
-    }
-    // return a;
-    return Object.assign({}, a, b);
-  };
-  const func = function (o) {
-    return sequence(slice_objects.map((slice_o) => merge(o, slice_o)));
-  };
-  return pat.squeezeBind(func).setSteps(__steps ? Fraction(n).mulmaybe(pat._steps) : undefined);
-});
-
-/**
- * Cuts each sample into the given number of parts, triggering progressive portions of each sample at each loop.
- * @name striate
- * @tags samples
- * @memberof Pattern.prototype
- * @returns {Pattern}
- * @example
- * s("numbers:0 numbers:1 numbers:2").striate(6).slow(3)
- */
-export const striate = register('striate', function (n, pat) {
-  const slices = Array.from({ length: n }, (x, i) => i);
-  const slice_objects = slices.map((i) => ({ begin: i / n, end: (i + 1) / n }));
-  const slicePat = slowcat(...slice_objects);
-  return pat
-    .set(slicePat)
-    ._fast(n)
-    .setSteps(__steps ? Fraction(n).mulmaybe(pat._steps) : undefined);
-});
-
-/**
- * Makes the sample fit the given number of cycles by changing the speed.
- * @param {number} factor
- * @param {Pattern} pat
- * @param {number} [cps=0.5]
- * @name loopAt
- * @tags samples, pitch
- * @memberof Pattern.prototype
- * @returns {Pattern}
- * @example
- * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
- * s("rhodes").loopAt(2)
- */
-const _loopAt = function (factor, pat, cps = 0.5) {
-  return pat
-    .speed((1 / factor) * cps)
-    .unit('c')
-    .slow(factor);
-};
-
-export const { loopAt, loopat } = register(['loopAt', 'loopat'], function (factor, pat) {
-  const steps = pat._steps ? pat._steps.div(factor) : undefined;
-  return new Pattern((state) => _loopAt(factor, pat, state.controls._cps).query(state), steps);
-});
-
-/**
- * Chops samples into the given number of slices, triggering those slices with a given pattern of slice numbers.
- * Instead of a number, it also accepts a list of numbers from 0 to 1 to slice at specific points.
- * @name slice
- * @tags samples
- * @memberof Pattern.prototype
- * @returns {Pattern}
- * @example
- * samples('github:tidalcycles/dirt-samples')
- * s("breaks165").slice(8, "0 1 <2 2*2> 3 [4 0] 5 6 7".every(3, rev)).slow(0.75)
- * @example
- * samples('github:tidalcycles/dirt-samples')
- * s("breaks125").fit().slice([0,.25,.5,.75], "0 1 1 <2 3>")
- */
-
-export const slice = register(
-  'slice',
-  function (npat, ipat, opat) {
-    return npat
-      .innerBind((n) =>
-        ipat.outerBind((i) =>
-          opat.outerBind((o) => {
-            // If it's not an object, assume it's a string and make it a 's' control parameter
-            o = o instanceof Object ? o : { s: o };
-            const begin = Array.isArray(n) ? n[i] : i / n;
-            const end = Array.isArray(n) ? n[i + 1] : (i + 1) / n;
-            return pure({ begin, end, _slices: n, ...o });
-          }),
-        ),
-      )
-      .setSteps(ipat._steps);
-  },
-  false, // turns off auto-patternification
-);
-
-/**
- * Works the same as slice, but changes the playback speed of each slice to match the duration of its step.
- * @name splice
- * @tags samples, pitch
- * @example
- * samples('github:tidalcycles/dirt-samples')
- * s("breaks165")
- * .splice(8,  "0 1 [2 3 0]@2 3 0@2 7")
- */
-
-export const splice = register(
-  'splice',
-  function (npat, ipat, opat) {
-    const sliced = slice(npat, ipat, opat);
-    return new Pattern((state) => {
-      // TODO - default cps to 0.5
-      const cps = state.controls._cps || 1;
-      const haps = sliced.query(state);
-      return haps.map((hap) =>
-        hap.withValue((v) => ({
-          ...{
-            speed: (cps / v._slices / hap.whole.duration) * (v.speed || 1),
-            unit: 'c',
-          },
-          ...v,
-        })),
-      );
-    }).setSteps(ipat._steps);
-  },
-  false, // turns off auto-patternification
-);
-
-/**
- * Makes the sample fit its event duration. Good for rhythmical loops like drum breaks.
- * Similar to `loopAt`.
- * @name fit
- * @tags samples, pitch
- * @example
- * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
- * s("rhodes/2").fit()
- */
-export const fit = register('fit', (pat) =>
-  pat.withHaps((haps, state) =>
-    haps.map((hap) =>
-      hap.withValue((v) => {
-        const slicedur = ('end' in v ? v.end : 1) - ('begin' in v ? v.begin : 0);
-        return {
-          ...v,
-          speed: ((state.controls._cps || 1) / hap.whole.duration) * slicedur,
-          unit: 'c',
-        };
-      }),
-    ),
-  ),
-);
-
-/**
- * Makes the sample fit the given number of cycles and cps value, by
- * changing the speed. deprecated: use loopAt or fit instead, together with setCps / setCpm.
- * @name loopAtCps
- * @tags samples, pitch
- * @memberof Pattern.prototype
- * @deprecated
- * @returns {Pattern}
- * @example
- * samples({ rhodes: 'https://cdn.freesound.org/previews/132/132051_316502-lq.mp3' })
- * s("rhodes").loopAtCps(4,1.5).cps(1.5)
- */
-export const { loopAtCps, loopatcps } = register(['loopAtCps', 'loopatcps'], function (factor, cps, pat) {
-  return _loopAt(factor, pat, cps);
-});
-
 /** exposes a custom value at query time. basically allows mutating state without evaluation
  * @param {function():Pattern} accessor
  * @returns {Pattern}
@@ -4129,37 +3814,6 @@ export const ref = (accessor) =>
   pure(1)
     .withValue(() => reify(accessor()))
     .innerJoin();
-
-let fadeGain = (p) => (p < 0.5 ? 1 : 1 - (p - 0.5) / 0.5);
-
-/**
- * Cross-fades between left and right from 0 to 1:
- * - 0 = (full left, no right)
- * - .5 = (both equal)
- * - 1 = (no left, full right)
- *
- * @param {Pattern} a
- * @param {Pattern} pos
- * @param {Pattern} b
- * @name xfade
- * @tags amplitude
- * @returns {Pattern}
- * @example
- * xfade(s("bd*2"), "<0 .25 .5 .75 1>", s("hh*8"))
- */
-export let xfade = (a, pos, b) => {
-  pos = reify(pos);
-  a = reify(a);
-  b = reify(b);
-  let gaina = pos.fmap((v) => ({ gain: fadeGain(v) }));
-  let gainb = pos.fmap((v) => ({ gain: fadeGain(1 - v) }));
-  return stack(a.mul(gaina), b.mul(gainb));
-};
-
-// the prototype version is actually flipped so left/right makes sense
-Pattern.prototype.xfade = function (pos, b) {
-  return xfade(this, pos, b);
-};
 
 /**
  * creates a structure pattern from divisions of a cycle
@@ -4256,108 +3910,6 @@ export const morph = (frompat, topat, bypat) => {
   bypat = reify(bypat);
   return frompat.innerBind((from) => topat.innerBind((to) => bypat.innerBind((by) => _morph(from, to, by))));
 };
-
-const _distortWithAlg = function (name) {
-  const func = function (args, pat) {
-    const argsPat = reify(args).fmap((v) => (Array.isArray(v) ? [...v, name] : [v, 1, name]));
-    if (!pat) {
-      return pure({}).distort(argsPat);
-    }
-    return pat.distort(argsPat);
-  };
-  Pattern.prototype[name] = function (args) {
-    return func(args, this);
-  };
-  return func;
-};
-
-/**
- * Soft-clipping distortion
- *
- * @name soft
- * @tags distortion, superdough
- * @param {number | Pattern} distortion amount of distortion to apply
- * @param {number | Pattern} volume linear postgain of the distortion
- *
- */
-export const soft = _distortWithAlg('soft');
-
-/**
- * Hard-clipping distortion
- *
- * @name hard
- * @tags distortion, superdough
- * @param {number | Pattern} distortion amount of distortion to apply
- * @param {number | Pattern} volume linear postgain of the distortion
- *
- */
-export const hard = _distortWithAlg('hard');
-
-/**
- * Cubic polynomial distortion
- *
- * @name cubic
- * @tags distortion, superdough
- * @param {number | Pattern} distortion amount of distortion to apply
- * @param {number | Pattern} volume linear postgain of the distortion
- *
- */
-export const cubic = _distortWithAlg('cubic');
-
-/**
- * Diode-emulating distortion
- *
- * @name diode
- * @tags distortion, superdough
- * @param {number | Pattern} distortion amount of distortion to apply
- * @param {number | Pattern} volume linear postgain of the distortion
- *
- */
-export const diode = _distortWithAlg('diode');
-
-/**
- * Asymmetrical diode distortion
- *
- * @name asym
- * @tags distortion, superdough
- * @param {number | Pattern} distortion amount of distortion to apply
- * @param {number | Pattern} volume linear postgain of the distortion
- *
- */
-export const asym = _distortWithAlg('asym');
-
-/**
- * Wavefolding distortion
- *
- * @name fold
- * @tags distortion, superdough
- * @param {number | Pattern} distortion amount of distortion to apply
- * @param {number | Pattern} volume linear postgain of the distortion
- *
- */
-export const fold = _distortWithAlg('fold');
-
-/**
- * Wavefolding distortion composed with sinusoid
- *
- * @name sinefold
- * @tags distortion, superdough
- * @param {number | Pattern} distortion amount of distortion to apply
- * @param {number | Pattern} volume linear postgain of the distortion
- *
- */
-export const sinefold = _distortWithAlg('sinefold');
-
-/**
- * Distortion via Chebyshev polynomials
- *
- * @name chebyshev
- * @tags distortion, superdough
- * @param {number | Pattern} distortion amount of distortion to apply
- * @param {number | Pattern} volume linear postgain of the distortion
- *
- */
-export const chebyshev = _distortWithAlg('chebyshev');
 
 /**
  * Turns a list of patterns into a single pattern which outputs list-values

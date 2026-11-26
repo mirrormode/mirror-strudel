@@ -72,7 +72,7 @@ const hap = (whole, part, value, context = {}) => new Hap(whole, part, value, co
 const third = Fraction(1, 3);
 const twothirds = Fraction(2, 3);
 
-const sameFirst = (a, b) => {
+export const sameFirst = (a, b) => {
   return expect(a.sortHapsByPart().firstCycle()).toStrictEqual(b.sortHapsByPart().firstCycle());
 };
 
@@ -877,24 +877,6 @@ describe('Pattern', () => {
       );
     });
   });
-  describe('jux', () => {
-    it('Can juxtapose', () => {
-      expect(pure({ a: 1 }).jux(fast(2)).sortHapsByPart().firstCycle()).toStrictEqual(
-        stack(pure({ a: 1, pan: 0 }), pure({ a: 1, pan: 1 }).fast(2))
-          .sortHapsByPart()
-          .firstCycle(),
-      );
-    });
-  });
-  describe('juxBy', () => {
-    it('Can juxtapose by half', () => {
-      expect(pure({ a: 1 }).juxBy(0.5, fast(2)).sortHapsByPart().firstCycle()).toStrictEqual(
-        stack(pure({ a: 1, pan: 0.25 }), pure({ a: 1, pan: 0.75 }).fast(2))
-          .sortHapsByPart()
-          .firstCycle(),
-      );
-    });
-  });
   describe('_squeezeJoin', () => {
     it('Can squeeze', () => {
       expect(
@@ -930,46 +912,6 @@ describe('Pattern', () => {
     it('Doesnt drop haps in the 9th cycle', () => {
       // fixed with https://codeberg.org/uzu/strudel/commit/72eeaf446e3d5e186d63cc0d2276f0723cde017a
       expect(sequence(1, 2, 3).ply(2).early(8).firstCycle().length).toBe(6);
-    });
-  });
-  describe('striate', () => {
-    it('Can striate(2)', () => {
-      sameFirst(
-        sequence({ sound: 'a' }).striate(2),
-        sequence({ sound: 'a', begin: 0, end: 0.5 }, { sound: 'a', begin: 0.5, end: 1 }),
-      );
-    });
-  });
-  describe('chop', () => {
-    it('Can _chop(2)', () => {
-      expect(sequence({ sound: 'a' }, { sound: 'b' })._chop(2).firstCycle()).toStrictEqual(
-        sequence(
-          { sound: 'a', begin: 0, end: 0.5 },
-          { sound: 'a', begin: 0.5, end: 1 },
-          { sound: 'b', begin: 0, end: 0.5 },
-          { sound: 'b', begin: 0.5, end: 1 },
-        ).firstCycle(),
-      );
-    });
-    it('Can chop(2,3)', () => {
-      expect(pure({ sound: 'a' }).fast(2).chop(2, 3).sortHapsByPart().firstCycle()).toStrictEqual(
-        sequence(
-          [
-            { sound: 'a', begin: 0, end: 0.5 },
-            { sound: 'a', begin: 0.5, end: 1 },
-          ],
-          [
-            { sound: 'a', begin: 0, end: 1 / 3 },
-            { sound: 'a', begin: 1 / 3, end: 2 / 3 },
-            { sound: 'a', begin: 2 / 3, end: 1 },
-          ],
-        )
-          .sortHapsByPart()
-          .firstCycle(),
-      );
-    });
-    it('Can chop chops', () => {
-      expect(pure({ s: 'bev' }).chop(2).chop(2).firstCycle()).toStrictEqual(pure({ s: 'bev' }).chop(4).firstCycle());
     });
   });
   describe('range', () => {
@@ -1054,11 +996,6 @@ describe('Pattern', () => {
       sameFirst(sequence('a', 'b', 'c', 'd').press(), sequence(silence, 'a', silence, 'b', silence, 'c', silence, 'd'));
     });
   });
-  describe('hurry', () => {
-    it('Can speed up patterns and sounds', () => {
-      sameFirst(s(sequence('a', 'b')).hurry(2), s(sequence('a', 'b')).fast(2).set({ speed: 2 }));
-    });
-  });
   /*describe('composable functions', () => {
     it('Can compose functions', () => {
       sameFirst(sequence(3, 4).fast(2).rev().fast(2), fast(2).rev().fast(2)(sequence(3, 4)));
@@ -1077,32 +1014,6 @@ describe('Pattern', () => {
     });
   });
   */
-  describe('slice', () => {
-    it('Can slice a sample', () => {
-      sameFirst(
-        s('break').slice(4, sequence(0, 1, 2, 3)),
-        sequence(
-          { begin: 0, end: 0.25, s: 'break', _slices: 4 },
-          { begin: 0.25, end: 0.5, s: 'break', _slices: 4 },
-          { begin: 0.5, end: 0.75, s: 'break', _slices: 4 },
-          { begin: 0.75, end: 1, s: 'break', _slices: 4 },
-        ),
-      );
-    });
-  });
-  describe('splice', () => {
-    it('Can splice a sample', () => {
-      sameFirst(
-        s('break').splice(4, sequence(0, 1, 2, 3)),
-        sequence(
-          { begin: 0, end: 0.25, s: 'break', _slices: 4, unit: 'c', speed: 1 },
-          { begin: 0.25, end: 0.5, s: 'break', _slices: 4, unit: 'c', speed: 1 },
-          { begin: 0.5, end: 0.75, s: 'break', _slices: 4, unit: 'c', speed: 1 },
-          { begin: 0.75, end: 1, s: 'break', _slices: 4, unit: 'c', speed: 1 },
-        ),
-      );
-    });
-  });
   describe('chunk', () => {
     it('Processes each cycle of the source pattern multiple times, once for each chunk', () => {
       expect(sequence(0, 1, 2, 3).slow(2).chunk(2, add(10)).fast(4).firstCycleValues).toStrictEqual([
@@ -1190,24 +1101,15 @@ describe('Pattern', () => {
       );
     });
   });
+  
   describe('_steps', () => {
     it('Is correctly preserved/calculated through transformations', () => {
       expect(sequence(0, 1, 2, 3).linger(4)._steps).toStrictEqual(Fraction(4));
       expect(sequence(0, 1, 2, 3).iter(4)._steps).toStrictEqual(Fraction(4));
       expect(sequence(0, 1, 2, 3).fast(4)._steps).toStrictEqual(Fraction(4));
-      expect(sequence(0, 1, 2, 3).hurry(4)._steps).toStrictEqual(Fraction(4));
       expect(sequence(0, 1, 2, 3).rev()._steps).toStrictEqual(Fraction(4));
       expect(sequence(1).segment(10)._steps).toStrictEqual(Fraction(10));
       expect(sequence(1, 0, 1).invert()._steps).toStrictEqual(Fraction(3));
-      expect(sequence({ s: 'bev' }, { s: 'amenbreak' }).chop(4)._steps).toStrictEqual(Fraction(8));
-      expect(sequence({ s: 'bev' }, { s: 'amenbreak' }).striate(4)._steps).toStrictEqual(Fraction(8));
-      expect(sequence({ s: 'bev' }, { s: 'amenbreak' }).slice(4, sequence(0, 1, 2, 3))._steps).toStrictEqual(
-        Fraction(4),
-      );
-      expect(sequence({ s: 'bev' }, { s: 'amenbreak' }).splice(4, sequence(0, 1, 2, 3))._steps).toStrictEqual(
-        Fraction(4),
-      );
-      expect(sequence({ n: 0 }, { n: 1 }, { n: 2 }).chop(4)._steps).toStrictEqual(Fraction(12));
       expect(
         pure((x) => x + 1)
           .setSteps(3)
@@ -1318,11 +1220,6 @@ describe('Pattern', () => {
           stepcat(pure('a'), pure('b').setSteps(0.5)),
         ),
       );
-    });
-  });
-  describe('loopAt', () => {
-    it('maintains steps', () => {
-      expect(s('bev').chop(8).loopAt(2)._steps).toStrictEqual(Fraction(4));
     });
   });
   describe('bite', () => {
