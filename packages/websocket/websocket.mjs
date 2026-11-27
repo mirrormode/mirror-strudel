@@ -20,7 +20,6 @@ function connect(addr) {
   });
   ws.addEventListener('message', (event) => {
     try {
-      console.log(event.data);
       values[addr] = JSON.parse(event.data);
     } catch {
       logger(`[websocket] received invalid json on ${addr}`);
